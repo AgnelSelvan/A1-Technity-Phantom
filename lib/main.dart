@@ -12,17 +12,9 @@ import 'package:stock_q/screens/auth_screen.dart';
 import 'package:stock_q/screens/root_screen.dart';
 import 'package:stock_q/theme/theme_notifier.dart';
 
-void _setTargetPlatformForDesktop() {
-  if (Platform.isLinux || Platform.isWindows) {
-    debugDefaultTargetPlatformOverride = TargetPlatform.fuchsia;
-  }
-}
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  _setTargetPlatformForDesktop();
-  WidgetsFlutterBinding.ensureInitialized();
 
   SharedPreferences.getInstance().then((prefs) {
     var darkModeOn = prefs.getBool('darkMode') ?? true;
@@ -48,11 +40,6 @@ class _MyAppState extends State<MyApp> {
     final themeNotifier = Provider.of<ThemeNotifier>(context);
     return MaterialApp(
       theme: themeNotifier.getTheme(),
-      // theme: snapshot.data ? ThemeData.dark() : ThemeData.light(),
-      // theme: AppTheme.lightTheme,
-      // darkTheme: AppTheme.darkTheme,
-      // themeMode: snapshot.data ? ThemeMode.dark : ThemeMode.light,
-      // home: HomePage(snapshot.data)
       home: FutureBuilder(
         future: _authMethods.getCurrentUser(),
         builder: (context, AsyncSnapshot<FirebaseUser> snapshot) {

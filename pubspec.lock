@@ -182,7 +182,21 @@ packages:
       name: firebase_auth
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.2+1"
+    version: "0.20.0+1"
+  firebase_auth_platform_interface:
+    dependency: transitive
+    description:
+      name: firebase_auth_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.0.1"
+  firebase_auth_web:
+    dependency: transitive
+    description:
+      name: firebase_auth_web
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.2+6"
   firebase_core:
     dependency: "direct main"
     description:
@@ -351,7 +365,7 @@ packages:
       name: intl
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.15.8"
+    version: "0.16.1"
   js:
     dependency: transitive
     description:
@@ -394,13 +408,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.0.4"
-  number_to_words_spelling:
-    dependency: "direct main"
-    description:
-      name: number_to_words_spelling
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.5"
   octo_image:
     dependency: transitive
     description:

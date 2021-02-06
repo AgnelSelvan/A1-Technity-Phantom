@@ -30,7 +30,7 @@ dependencies:
   expandable:
   google_maps_flutter:
   cloud_firestore:
-  firebase_auth:
+  firebase_auth: ^0.20.0+1
   google_sign_in:
   cached_network_image:
   firebase_core:
@@ -49,7 +49,7 @@ dependencies:
   esys_flutter_share:
   http:
   save_in_gallery:
-  number_to_words_spelling:
+  # number_to_words_spelling:
   share_extend:
   country_code_picker:
   flutter_sparkline:
