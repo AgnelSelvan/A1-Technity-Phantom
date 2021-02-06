@@ -1,12 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:stock_q/constants/strings.dart';
 import 'package:stock_q/models/user.dart';
 import 'package:stock_q/utils/utilities.dart';
-import 'package:stock_q/widgets/dialogs.dart';
 
 class AuthMethods {
   static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -16,29 +14,29 @@ class AuthMethods {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   GoogleSignIn _googleSignIn = GoogleSignIn();
 
-  Future<FirebaseUser> getCurrentUser() async {
+  Future<User> getCurrentUser() async {
     DataConnectionStatus connectionStatus = await checkInternet();
     if (connectionStatus == DataConnectionStatus.connected) {
-      FirebaseUser currentUser;
-      currentUser = await _auth.currentUser();
+      User currentUser;
+      currentUser = _auth.currentUser;
       return currentUser;
     } else {
       return null;
     }
   }
 
-  Future<User> getUserDetails() async {
-    FirebaseUser currentUser = await getCurrentUser();
+  Future<UserModel> getUserDetails() async {
+    User currentUser = await getCurrentUser();
 
     DocumentSnapshot documentSnapshot =
         await _userCollection.doc(currentUser.uid).get();
-    return User.fromMap(documentSnapshot.data());
+    return UserModel.fromMap(documentSnapshot.data());
   }
 
-  Future<FirebaseUser> signUp(String email, String password) async {
+  Future<User> signUp(String email, String password) async {
     var result = await _auth.createUserWithEmailAndPassword(
         email: email, password: password);
-    FirebaseUser user = result;
+    User user = result.user;
     return user;
   }
 
@@ -52,14 +50,13 @@ class AuthMethods {
     }
   }
 
-  Future<bool> isPhoneNoExists(FirebaseUser firebaseUser) async {
+  Future<bool> isPhoneNoExists(User firebaseUser) async {
     DocumentSnapshot doc = await _userCollection.doc(firebaseUser.uid).get();
-    User user = User.fromMap(doc.data());
+    UserModel user = UserModel.fromMap(doc.data());
     return user.mobileNo == '' || user.mobileNo == null ? false : true;
   }
 
-  Future<bool> updateMobileNumber(
-      String mobileNumber, FirebaseUser user) async {
+  Future<bool> updateMobileNumber(String mobileNumber, User user) async {
     try {
       _userCollection
           .doc(user.uid)
@@ -70,7 +67,7 @@ class AuthMethods {
     }
   }
 
-  Future<FirebaseUser> googleSignIn() async {
+  Future<User> googleSignIn() async {
     try {
       GoogleSignInAccount _signInAccount = await _googleSignIn.signIn();
       if (await _googleSignIn.isSignedIn()) {
@@ -78,9 +75,9 @@ class AuthMethods {
             await _signInAccount.authentication;
 
         GoogleSignInAccount googleSignInAccount = await GoogleSignIn().signIn();
-        FirebaseUser user = await getCurrentUser();
+        User user = await getCurrentUser();
 
-        return user ;
+        return user;
       } else {
         return null;
       }
@@ -90,7 +87,7 @@ class AuthMethods {
     }
   }
 
-  Future<bool> authenticateUserByEmailId(FirebaseUser user) async {
+  Future<bool> authenticateUserByEmailId(User user) async {
     QuerySnapshot result = await _firestore
         .collection(USERS_COLLECTION)
         .where(EMAIL_FIELD, isEqualTo: user.email)
@@ -101,7 +98,7 @@ class AuthMethods {
     return docs.length == 0 ? true : false;
   }
 
-  Future<bool> authenticateUserByPhone(FirebaseUser user) async {
+  Future<bool> authenticateUserByPhone(User user) async {
     QuerySnapshot result = await _userCollection
         .where(MOBILE_NO_FIELD, isEqualTo: user.phoneNumber.trim())
         .get();
@@ -111,14 +108,14 @@ class AuthMethods {
     return docs.length == 0 ? true : false;
   }
 
-  Future<void> addGoogleDataToDb(FirebaseUser currentUser) async {
+  Future<void> addGoogleDataToDb(User currentUser) async {
     String username = Utils.getUsername(currentUser.email);
 
-    User user = User(
+    UserModel user = UserModel(
         email: currentUser.email,
         uid: currentUser.uid,
         name: currentUser.displayName,
-        profilePhoto: currentUser.photoUrl,
+        profilePhoto: currentUser.photoURL,
         username: username,
         role: USER_STRING);
 
@@ -128,13 +125,13 @@ class AuthMethods {
         .set(user.toMap(user));
   }
 
-  Future<void> addPhoneDataToDb(FirebaseUser currentUser) async {
+  Future<void> addPhoneDataToDb(User currentUser) async {
     String displayName = Utils.getPhoneDisplayName();
 
-    User user = User(
+    UserModel user = UserModel(
         uid: currentUser.uid,
         name: displayName,
-        profilePhoto: currentUser.photoUrl,
+        profilePhoto: currentUser.photoURL,
         mobileNo: currentUser.phoneNumber.trim(),
         username: displayName.toLowerCase(),
         role: USER_STRING);
@@ -145,15 +142,14 @@ class AuthMethods {
         .set(user.toMap(user));
   }
 
-  Future<void> addUserDataToDb(
-      FirebaseUser currentUser, String username) async {
+  Future<void> addUserDataToDb(User currentUser, String username) async {
     String displayName = Utils.getUsername(currentUser.email);
 
-    User user = User(
+    UserModel user = UserModel(
         email: currentUser.email,
         uid: currentUser.uid,
         name: displayName,
-        profilePhoto: currentUser.photoUrl,
+        profilePhoto: currentUser.photoURL,
         username: username,
         role: USER_STRING);
 
@@ -163,11 +159,11 @@ class AuthMethods {
         .set(user.toMap(user));
   }
 
-  Future<User> getUserDetailsById(String userId) async {
+  Future<UserModel> getUserDetailsById(String userId) async {
     try {
       //print("UserId: $userId");
       DocumentSnapshot doc = await _userCollection.doc(userId).get();
-      return User.fromMap(doc.data());
+      return UserModel.fromMap(doc.data());
     } catch (e) {
       //print("get user by details error: $e");
       return null;
