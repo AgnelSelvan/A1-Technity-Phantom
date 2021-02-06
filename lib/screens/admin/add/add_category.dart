@@ -139,7 +139,7 @@ class _AddCategoryState extends State<AddCategory> {
         stream: _adminMethods.fetchAllCategory(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            if (snapshot.data.documents.length != 0) {
+            if (snapshot.data.docs.length != 0) {
               return Column(
                 children: <Widget>[
                   Column(

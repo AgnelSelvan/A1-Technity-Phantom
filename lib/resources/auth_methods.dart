@@ -1,15 +1,15 @@
-import 'package:stock_q/constants/strings.dart';
-import 'package:stock_q/models/user.dart';
-import 'package:stock_q/utils/utilities.dart';
-import 'package:stock_q/widgets/dialogs.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:stock_q/constants/strings.dart';
+import 'package:stock_q/models/user.dart';
+import 'package:stock_q/utils/utilities.dart';
+import 'package:stock_q/widgets/dialogs.dart';
 
 class AuthMethods {
-  static final Firestore _firestore = Firestore.instance;
+  static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   CollectionReference _userCollection = _firestore.collection(USERS_COLLECTION);
 
@@ -31,20 +31,20 @@ class AuthMethods {
     FirebaseUser currentUser = await getCurrentUser();
 
     DocumentSnapshot documentSnapshot =
-        await _userCollection.document(currentUser.uid).get();
-    return User.fromMap(documentSnapshot.data);
+        await _userCollection.doc(currentUser.uid).get();
+    return User.fromMap(documentSnapshot.data());
   }
 
   Future<FirebaseUser> signUp(String email, String password) async {
-    AuthResult result = await _auth.createUserWithEmailAndPassword(
+    var result = await _auth.createUserWithEmailAndPassword(
         email: email, password: password);
-    FirebaseUser user = result.user;
+    FirebaseUser user = result;
     return user;
   }
 
   Future<bool> signIn(String email, String password) async {
     try {
-      AuthResult result = await _auth.signInWithEmailAndPassword(
+      var result = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
       return true;
     } catch (e) {
@@ -53,9 +53,8 @@ class AuthMethods {
   }
 
   Future<bool> isPhoneNoExists(FirebaseUser firebaseUser) async {
-    DocumentSnapshot doc =
-        await _userCollection.document(firebaseUser.uid).get();
-    User user = User.fromMap(doc.data);
+    DocumentSnapshot doc = await _userCollection.doc(firebaseUser.uid).get();
+    User user = User.fromMap(doc.data());
     return user.mobileNo == '' || user.mobileNo == null ? false : true;
   }
 
@@ -63,8 +62,8 @@ class AuthMethods {
       String mobileNumber, FirebaseUser user) async {
     try {
       _userCollection
-          .document(user.uid)
-          .updateData({MOBILE_NO_FIELD: mobileNumber.trim()});
+          .doc(user.uid)
+          .update({MOBILE_NO_FIELD: mobileNumber.trim()});
       return true;
     } catch (e) {
       return false;

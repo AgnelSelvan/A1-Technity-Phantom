@@ -283,16 +283,16 @@ class _RegularCustomerState extends State<RegularCustomer> {
               underline: SizedBox(),
               onChanged: (DocumentSnapshot newValue) {
                 setState(() {
-                  currentUnit = newValue.data['unit'];
+                  currentUnit = newValue['unit'];
                 });
               },
               hint:
                   currentUnit == null ? Text('Select Unit') : Text(currentUnit),
-              items: snapshot.data.documents.map((DocumentSnapshot document) {
+              items: snapshot.data.docs.map((DocumentSnapshot document) {
                 return new DropdownMenuItem<DocumentSnapshot>(
                     value: document,
                     child: new Text(
-                      document.data['unit'],
+                      document['unit'],
                     ));
               }).toList(),
             );

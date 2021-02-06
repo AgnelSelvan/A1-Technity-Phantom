@@ -528,16 +528,16 @@ class _AddProductState extends State<AddProduct> {
               underline: SizedBox(),
               onChanged: (DocumentSnapshot newValue) {
                 setState(() {
-                  currentUnit = newValue.data['unit'];
+                  currentUnit = newValue['unit'];
                 });
               },
               hint:
               currentUnit == null ? Text('Select Unit') : Text(currentUnit),
-              items: snapshot.data.documents.map((DocumentSnapshot document) {
+              items: snapshot.data.docs.map((DocumentSnapshot document) {
                 return new DropdownMenuItem<DocumentSnapshot>(
                     value: document,
                     child: new Text(
-                      document.data['unit'],
+                      document['unit'],
                     ));
               }).toList(),
             );
@@ -584,22 +584,22 @@ class _AddProductState extends State<AddProduct> {
               underline: SizedBox(),
               onChanged: (DocumentSnapshot newValue) {
                 setState(() {
-                  currenthsnCode = newValue.data['hsn_code'];
+                  currenthsnCode = newValue['hsn_code'];
                 });
               },
               hint: currenthsnCode == null
                   ? Text('Select Category')
                   : Text(currenthsnCode),
-              items: snapshot.data.documents.map((DocumentSnapshot document) {
+              items: snapshot.data.docs.map((DocumentSnapshot document) {
                 return new DropdownMenuItem<DocumentSnapshot>(
                     value: document,
                     child: Row(
                       children: <Widget>[
                         new Text(
-                          document.data['hsn_code'],
+                          document['hsn_code'],
                         ),
                         new Text(
-                          "   (${document.data['product_name']})",
+                          "   (${document['product_name']})",
                           style: TextStyle(fontSize: 12),
                         ),
                       ],

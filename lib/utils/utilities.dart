@@ -1,16 +1,14 @@
 import 'dart:io';
 import 'dart:math';
 
-import 'package:stock_q/models/bill.dart';
-import 'package:stock_q/widgets/dialogs.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:pdf/widgets.dart' as pw;
 import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:permission_handler/permission_handler.dart';
+import 'package:stock_q/models/bill.dart';
+import 'package:stock_q/widgets/dialogs.dart';
 
 class Utils {
   static String getUsername(String email) {

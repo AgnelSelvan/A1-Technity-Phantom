@@ -365,17 +365,17 @@ class _AddSubCategoryState extends State<AddSubCategory> {
               underline: SizedBox(),
               onChanged: (DocumentSnapshot newValue) {
                 setState(() {
-                  currenthsnCode = newValue.data['hsn_code'];
+                  currenthsnCode = newValue['hsn_code'];
                 });
               },
               hint: currenthsnCode == null
                   ? Text('Select Category')
                   : Text(currenthsnCode),
-              items: snapshot.data.documents.map((DocumentSnapshot document) {
+              items: snapshot.data.docs.map((DocumentSnapshot document) {
                 return new DropdownMenuItem<DocumentSnapshot>(
                     value: document,
                     child: new Text(
-                      document.data['hsn_code'],
+                      document['hsn_code'],
                     ));
               }).toList(),
             );
