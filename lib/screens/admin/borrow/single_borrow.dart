@@ -89,7 +89,8 @@ class _SingleBorrowState extends State<SingleBorrow> {
       //print("totalSGST:$totalSGST");
     }
     setState(() {
-      amounten = NumberWordsSpelling.toWord(amount.toStringAsFixed(0), 'en_US');
+      // amounten = NumberWordsSpelling.toWord(amount.toStringAsFixed(0), 'en_US');
+      amounten = amount.toStringAsFixed(0);
     });
     generatePakkaBillPdf(context, bill, datas, grossAmount, totalSGST,
         totalCGST, amounten, amount);

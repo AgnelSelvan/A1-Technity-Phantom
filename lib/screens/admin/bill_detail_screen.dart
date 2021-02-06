@@ -65,7 +65,8 @@ class _BillDetailsState extends State<BillDetails> {
       //print("totalSGST:$totalSGST");
     }
     setState(() {
-      amounten = NumberWordsSpelling.toWord(amount.toStringAsFixed(0), 'en_US');
+      // amounten = NumberWordsSpelling.toWord(amount.toStringAsFixed(0), 'en_US');
+      amounten = amount.toStringAsFixed(0);
     });
     generatePakkaBillPdfAndView(
         context, datas, grossAmount, totalSGST, totalCGST, amounten, amount);
