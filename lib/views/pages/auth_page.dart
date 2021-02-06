@@ -1,12 +1,12 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:stock_q/models/user.dart';
-import 'package:stock_q/services/auth.dart';
-import 'package:stock_q/services/datastore.dart';
-import 'package:stock_q/styles/custom.dart';
-import 'package:stock_q/widgets/appbar.dart';
-import 'package:stock_q/widgets/link_button.dart';
-import 'package:stock_q/widgets/primary_button.dart';
+import 'package:stock_q/views/services/auth.dart';
+import 'package:stock_q/views/services/datastore.dart';
+import 'package:stock_q/views/styles/custom.dart';
+import 'package:stock_q/views/widgets/appbar.dart';
+import 'package:stock_q/views/widgets/link_button.dart';
+import 'package:stock_q/views/widgets/primary_button.dart';
 
 class AuthPage extends StatefulWidget {
   final VoidCallback loginCallback;

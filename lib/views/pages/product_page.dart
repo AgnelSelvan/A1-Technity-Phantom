@@ -3,18 +3,17 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:stock_q/dbhelpers/wishlist_dbhelper.dart';
 import 'package:stock_q/models/product.dart';
 import 'package:stock_q/models/wishlist.dart';
-import 'package:stock_q/pages/product_detail_page.dart';
-import 'package:stock_q/services/auth.dart';
-import 'package:stock_q/services/datastore.dart';
-import 'package:stock_q/styles/custom.dart';
-import 'package:stock_q/widgets/SectionTitle.dart';
-import 'package:stock_q/widgets/appbar.dart';
-import 'package:stock_q/widgets/home_page_carousel.dart';
-import 'package:stock_q/widgets/in_section_spacing.dart';
-import 'package:stock_q/widgets/section_spacing.dart';
+import 'package:stock_q/views/pages/product_detail_page.dart';
+import 'package:stock_q/views/services/auth.dart';
+import 'package:stock_q/views/services/datastore.dart';
+import 'package:stock_q/views/styles/custom.dart';
+import 'package:stock_q/views/widgets/SectionTitle.dart';
+import 'package:stock_q/views/widgets/appbar.dart';
+import 'package:stock_q/views/widgets/home_page_carousel.dart';
+import 'package:stock_q/views/widgets/in_section_spacing.dart';
+import 'package:stock_q/views/widgets/section_spacing.dart';
 
 class ProductPage extends StatefulWidget {
   final Auth auth;
@@ -70,7 +69,6 @@ class _ProductPageState extends State<ProductPage> {
   var filters = ['Price. Low to High', 'Price. High to Low'];
   Custom custom = Custom();
   List<Wishlist> inwishlistProductIds;
-  var _dbhelper = WishlistDBHelper();
 
   @override
   void initState() {
@@ -81,7 +79,6 @@ class _ProductPageState extends State<ProductPage> {
   Widget build(BuildContext context) {
     if (inwishlistProductIds == null) {
       inwishlistProductIds = List<Wishlist>();
-      updateWishlist();
     }
     return SingleChildScrollView(
       child: Container(
@@ -155,16 +152,6 @@ class _ProductPageState extends State<ProductPage> {
                           color: Colors.pink[200],
                         ),
                         onTap: () async {
-                          if (id != null) {
-                            w = false;
-                            int i = await _dbhelper.deleteWishlist(id);
-                            inwishlistProductIds.removeWhere((w) => w.id == id);
-                            setState(() {});
-                          } else {
-                            int i = await _dbhelper.insertWishlist(
-                                Wishlist(productId: p.productId));
-                          }
-                          updateWishlist();
                         },
                       )),
                 ),
@@ -176,17 +163,6 @@ class _ProductPageState extends State<ProductPage> {
     );
   }
 
-  void updateWishlist() {
-    Future<Database> dbFuture = _dbhelper.initializeDatabase();
-    dbFuture.then((database) {
-      Future<List<Wishlist>> wishlistFuture = _dbhelper.getWishlist();
-      wishlistFuture.then((wishlists) {
-        setState(() {
-          inwishlistProductIds.addAll(wishlists);
-        });
-      });
-    });
-  }
 }
 
 class ProductCard extends StatefulWidget {

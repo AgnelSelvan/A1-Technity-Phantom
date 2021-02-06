@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:stock_q/models/product.dart';
-import 'package:stock_q/styles/custom.dart';
-import 'package:stock_q/widgets/SectionTitle.dart';
-import 'package:stock_q/widgets/appbar.dart';
-import 'package:stock_q/widgets/in_section_spacing.dart';
-import 'package:stock_q/widgets/preview_image_carousel.dart';
-import 'package:stock_q/widgets/section_spacing.dart';
+import 'package:stock_q/views/styles/custom.dart';
+import 'package:stock_q/views/widgets/SectionTitle.dart';
+import 'package:stock_q/views/widgets/appbar.dart';
+import 'package:stock_q/views/widgets/in_section_spacing.dart';
+import 'package:stock_q/views/widgets/preview_image_carousel.dart';
+import 'package:stock_q/views/widgets/section_spacing.dart';
 
 class ProductPageDetailPage extends StatefulWidget {
   final Product product;

@@ -1,6 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:stock_q/styles/custom.dart';
+import 'package:stock_q/views/styles/custom.dart';
 
 class LinkButton extends StatelessWidget {
   final GestureTapCallback _onPressed;

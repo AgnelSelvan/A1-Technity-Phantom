@@ -5,10 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:stock_q/dbhelpers/wishlist_dbhelper.dart';
 import 'package:stock_q/models/product.dart';
 import 'package:stock_q/models/wishlist.dart';
-import 'package:stock_q/pages/product_detail_page.dart';
+import 'package:stock_q/views/pages/product_detail_page.dart';
 
 class PreviewImageCarousel extends StatefulWidget {
   final Product product;

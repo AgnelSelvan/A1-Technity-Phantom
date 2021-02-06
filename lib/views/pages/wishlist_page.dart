@@ -2,14 +2,13 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:stock_q/dbhelpers/wishlist_dbhelper.dart';
 import 'package:stock_q/models/product.dart';
 import 'package:stock_q/models/wishlist.dart';
-import 'package:stock_q/styles/custom.dart';
-import 'package:stock_q/widgets/SectionTitle.dart';
-import 'package:stock_q/widgets/appbar.dart';
-import 'package:stock_q/widgets/in_section_spacing.dart';
-import 'package:stock_q/widgets/section_spacing.dart';
+import 'package:stock_q/views/styles/custom.dart';
+import 'package:stock_q/views/widgets/SectionTitle.dart';
+import 'package:stock_q/views/widgets/appbar.dart';
+import 'package:stock_q/views/widgets/in_section_spacing.dart';
+import 'package:stock_q/views/widgets/section_spacing.dart';
 
 class WishlistPage extends StatefulWidget {
   @override
@@ -58,13 +57,11 @@ class _WishlistPageState extends State<WishlistPage> {
   ];
 
   List<Wishlist> inwishlistProductIds;
-  var _dbhelper = WishlistDBHelper();
   Custom custom = Custom();
   @override
   Widget build(BuildContext context) {
     if (inwishlistProductIds == null) {
       inwishlistProductIds = List<Wishlist>();
-      updateWishlist();
     }
     return Scaffold(
         appBar: AppBar(
@@ -94,41 +91,21 @@ class _WishlistPageState extends State<WishlistPage> {
                   setState(() {});
                 }
               }
-              return w
-                  ? WishlistProduct(p, () {
-                      if (id != null) {
-                        _dbhelper.deleteWishlist(id);
-                        inwishlistProductIds
-                            .removeWhere((w) => w.productId == p.productId);
-                        setState(() {});
-                      }
-                    })
-                  : Container();
+              return Container();
+                  // ? WishlistProduct(p, () {
+                  //     if (id != null) {
+                  //       _dbhelper.deleteWishlist(id);
+                  //       inwishlistProductIds
+                  //           .removeWhere((w) => w.productId == p.productId);
+                  //       setState(() {});
+                  //     }
+                  //   })
+                  // : Container();
             }).toList()),
           ],
         ))));
   }
 
-  deleteAllProductInWishlist() {
-    for (var p in inwishlistProductIds) {
-      _dbhelper.deleteWishlist(p.id);
-      inwishlistProductIds = [];
-      setState(() {});
-    }
-  }
-
-  void updateWishlist() {
-    Future<Database> dbFuture = _dbhelper.initializeDatabase();
-    dbFuture.then((database) {
-      Future<List<Wishlist>> wishlistFuture = _dbhelper.getWishlist();
-      wishlistFuture.then((wishlists) {
-        setState(() {
-          inwishlistProductIds.addAll(wishlists);
-          log(inwishlistProductIds.toString());
-        });
-      });
-    });
-  }
 }
 
 class WishlistProduct extends StatefulWidget {

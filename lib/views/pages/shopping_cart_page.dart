@@ -4,16 +4,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:stock_q/dbhelpers/wishlist_dbhelper.dart';
 import 'package:stock_q/models/product.dart';
 import 'package:stock_q/models/user.dart' as UserModel;
 import 'package:stock_q/models/wishlist.dart';
-import 'package:stock_q/services/auth.dart';
-import 'package:stock_q/services/datastore.dart';
-import 'package:stock_q/styles/custom.dart';
-import 'package:stock_q/widgets/SectionTitle.dart';
-import 'package:stock_q/widgets/appbar.dart';
-import 'package:stock_q/widgets/in_section_spacing.dart';
+import 'package:stock_q/views/services/auth.dart';
+import 'package:stock_q/views/services/datastore.dart';
+import 'package:stock_q/views/styles/custom.dart';
+import 'package:stock_q/views/widgets/SectionTitle.dart';
+import 'package:stock_q/views/widgets/appbar.dart';
+import 'package:stock_q/views/widgets/in_section_spacing.dart';
 
 class ShoppingCartPage extends StatefulWidget {
   final Datastore datastore;

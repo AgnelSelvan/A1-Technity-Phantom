@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "388305748586",
+    "project_id": "stock-q",
+    "storage_bucket": "stock-q.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:388305748586:android:6e787c3ac40de3649d4013",
+        "android_client_info": {
+          "package_name": "com.example.stock_q"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "388305748586-1fpkoes6qs6cl8efe2jfdvuepjnebfs4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDiuAnMwhaYfd3TLdi6dLM-EVJHgxn3idU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "388305748586-1fpkoes6qs6cl8efe2jfdvuepjnebfs4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

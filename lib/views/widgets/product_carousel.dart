@@ -5,12 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:html/parser.dart';
 import 'package:http/http.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:stock_q/dbhelpers/wishlist_dbhelper.dart';
 import 'package:stock_q/models/product.dart';
 import 'package:stock_q/models/wishlist.dart';
-import 'package:stock_q/pages/product_detail_page.dart';
-import 'package:stock_q/styles/custom.dart';
-import 'package:stock_q/widgets/in_section_spacing.dart';
+import 'package:stock_q/views/pages/product_detail_page.dart';
+import 'package:stock_q/views/styles/custom.dart';
+import 'package:stock_q/views/widgets/in_section_spacing.dart';
 
 class ProductCarousel extends StatefulWidget {
   @override
@@ -58,80 +57,13 @@ class _ProductCarouselState extends State<ProductCarousel> {
     ),
   ];
 
-  List<Wishlist> inwishlistProductIds;
-  var _dbhelper = WishlistDBHelper();
-  void updateWishlist() {
-    Future<Database> dbFuture = _dbhelper.initializeDatabase();
-    dbFuture.then((database) {
-      Future<List<Wishlist>> wishlistFuture = _dbhelper.getWishlist();
-      wishlistFuture.then((wishlists) {
-        setState(() {
-          inwishlistProductIds.addAll(wishlists);
-          log(inwishlistProductIds.toString());
-        });
-      });
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
-    if (inwishlistProductIds == null) {
-      inwishlistProductIds = [];
-      updateWishlist();
-    }
     return Container(
         margin: EdgeInsets.symmetric(horizontal: 16),
         height: 250,
-        child: productsList != null
-            ? productsList.length > 0
-                ? ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: productsList.length,
-                    itemBuilder: (BuildContext ctx, int i) {
-                      var w;
-                      var id;
-
-                      for (var wish in inwishlistProductIds) {
-                        if (wish.productId == productsList[i].productId) {
-                          w = true;
-                          id = wish.id;
-                        }
-                      }
-                      return Stack(children: <Widget>[
-                        ProductCard(productsList[i]),
-                        Align(
-                          alignment: Alignment.topRight,
-                          child: Container(
-                              margin: EdgeInsets.only(left: 8, top: 8),
-                              child: GestureDetector(
-                                child: Icon(
-                                  w != null
-                                      ? w
-                                          ? CupertinoIcons.heart_solid
-                                          : CupertinoIcons.heart
-                                      : CupertinoIcons.heart,
-                                  size: 32,
-                                  color: Colors.pink[200],
-                                ),
-                                onTap: () async {
-                                  if (id != null) {
-                                    w = false;
-                                    _dbhelper.deleteWishlist(id);
-                                    inwishlistProductIds
-                                        .removeWhere((w) => w.id == id);
-                                    setState(() {});
-                                  } else {
-                                    _dbhelper.insertWishlist(Wishlist(
-                                        productId: productsList[i].productId));
-                                  }
-                                  updateWishlist();
-                                },
-                              )),
-                        ),
-                      ]);
-                    })
-                : Container()
-            : Center(child: CircularProgressIndicator()));
+        child: Center(child: CircularProgressIndicator()));
   }
 }
 

@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:stock_q/styles/custom.dart';
+import 'package:stock_q/views/styles/custom.dart';
 
 class SectionTitle extends StatelessWidget {
   final title;

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:stock_q/services/auth.dart';
-import 'package:stock_q/services/datastore.dart';
-import 'package:stock_q/widgets/SectionTitle.dart';
-import 'package:stock_q/widgets/home_page_carousel.dart';
-import 'package:stock_q/widgets/in_section_spacing.dart';
-import 'package:stock_q/widgets/product_carousel.dart';
-import 'package:stock_q/widgets/section_spacing.dart';
+import 'package:stock_q/views/services/auth.dart';
+import 'package:stock_q/views/services/datastore.dart';
+import 'package:stock_q/views/widgets/SectionTitle.dart';
+import 'package:stock_q/views/widgets/home_page_carousel.dart';
+import 'package:stock_q/views/widgets/in_section_spacing.dart';
+import 'package:stock_q/views/widgets/product_carousel.dart';
+import 'package:stock_q/views/widgets/section_spacing.dart';
 
 class HomePage extends StatefulWidget {
 

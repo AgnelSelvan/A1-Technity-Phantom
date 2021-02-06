@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:stock_q/pages/home_page.dart';
-import 'package:stock_q/pages/product_page.dart';
-import 'package:stock_q/pages/profile_page.dart';
-import 'package:stock_q/pages/shopping_cart_page.dart';
-import 'package:stock_q/services/auth.dart';
-import 'package:stock_q/services/datastore.dart';
-import 'package:stock_q/styles/custom.dart';
-import 'package:stock_q/widgets/appbar.dart';
-import 'package:stock_q/widgets/bottom_appbar.dart';
+import 'package:stock_q/views/pages/home_page.dart';
+import 'package:stock_q/views/pages/product_page.dart';
+import 'package:stock_q/views/pages/profile_page.dart';
+import 'package:stock_q/views/pages/shopping_cart_page.dart';
+import 'package:stock_q/views/services/auth.dart';
+import 'package:stock_q/views/services/datastore.dart';
+import 'package:stock_q/views/styles/custom.dart';
+import 'package:stock_q/views/widgets/appbar.dart';
+import 'package:stock_q/views/widgets/bottom_appbar.dart';
 
 class MainPage extends StatefulWidget {
   final Auth auth;
