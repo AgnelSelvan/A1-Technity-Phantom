@@ -16,9 +16,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Toys Shop',
+        title: 'Stock Q',
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(fontFamily: 'Josefin', primaryColor: Colors.grey[100]),
+        theme:
+            ThemeData(fontFamily: 'Montserrat', primaryColor: Colors.grey[100]),
         home: RootPage(auth: Auth(), datastore: Datastore()));
   }
 }
