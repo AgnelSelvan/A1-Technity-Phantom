@@ -23,9 +23,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  cupertino_icons: ^1.0.0
+  cupertino_icons:
   flutter_icons:
-  provider: ^3.1.0
+  provider:
   shared_preferences:
   expandable:
   google_maps_flutter:
@@ -36,29 +36,29 @@ dependencies:
   firebase_core:
   flutter_email_sender:
   url_launcher:
-  flutter_plugin_android_lifecycle: ^1.0.7
+  flutter_plugin_android_lifecycle:
   flutter_barcode_scanner:
-  contacts_service: ^0.4.6
+  contacts_service:
   permission_handler:
   sticky_headers:
   intl:
-  pdf: ^1.3.10
+  pdf:
   path_provider:
   flutter_full_pdf_viewer:
   data_connection_checker:
   esys_flutter_share:
   http:
   save_in_gallery:
-  number_to_words_spelling: ^0.0.5
-  share_extend: ^1.1.7
-  country_code_picker: ^1.4.0
-  flutter_sparkline: "^0.1.0"
-  focused_menu: ^1.0.0
-  csv: ^4.0.3
+  number_to_words_spelling:
+  share_extend:
+  country_code_picker:
+  flutter_sparkline:
+  focused_menu:
+  csv:
   vector_math:
   matrix_gesture_detector:
-  printing: ^3.5.0
-  firebase_database: ^3.1.6
+  printing:
+  firebase_database:
 
 dev_dependencies:
   flutter_test:
