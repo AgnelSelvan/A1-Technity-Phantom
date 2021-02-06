@@ -34,7 +34,7 @@ class Datastore implements BaseDatastore {
     String status = await _firestore
         .collection('users')
         .doc(user.uid)
-        .set(user.toMap())
+        .set(user.toMap(user))
         .then((val) => 'success')
         .catchError((onError) => onError.toString());
     return status;
