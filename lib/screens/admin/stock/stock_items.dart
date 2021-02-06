@@ -29,14 +29,14 @@ class _StockItemsState extends State<StockItems> {
     return StreamBuilder(
         stream: _adminMethods.fetchAllCategory(),
         builder: (context, snapshot) {
-          var docs = snapshot.data.documents;
+          var docs = snapshot.data.docs;
           if (snapshot.hasData) {
             if (snapshot.data == null) return Text("No Items in stock");
 
             return ListView.builder(
               itemCount: docs.length,
               itemBuilder: (context, index) {
-                Category category = Category.fromMap(docs[index].data);
+                Category category = Category.fromMap(docs[index].data());
                 return Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -137,12 +137,12 @@ class _StockItemsState extends State<StockItems> {
     return StreamBuilder(
       stream: _adminMethods.getProductFromHsn(hsnCode),
       builder: (context, snapshot) {
-        var docs = snapshot.data.documents;
+        var docs = snapshot.data.docs;
         if (snapshot.hasData) {
           return ListView.builder(
             itemCount: docs.length,
             itemBuilder: (context, index) {
-              Product product = Product.fromMap(docs[index].data);
+              Product product = Product.fromMap(docs[index].data());
               return Row(
                 children: <Widget>[
                   Text(product.code),
