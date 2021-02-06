@@ -11,6 +11,7 @@ import 'package:stock_q/resources/auth_methods.dart';
 import 'package:stock_q/screens/auth_screen.dart';
 import 'package:stock_q/screens/root_screen.dart';
 import 'package:stock_q/theme/theme_notifier.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,7 +43,7 @@ class _MyAppState extends State<MyApp> {
       theme: themeNotifier.getTheme(),
       home: FutureBuilder(
         future: _authMethods.getCurrentUser(),
-        builder: (context, AsyncSnapshot<FirebaseUser> snapshot) {
+        builder: (context, AsyncSnapshot<User> snapshot) {
           if (snapshot.hasData) {
             return RootScreen();
           } else {

@@ -46,9 +46,9 @@ class AuthScreenState extends State<AuthScreen> {
     _auth.verifyPhoneNumber(
         phoneNumber: '$countryCode${phoneNumberController.text}'.trim(),
         timeout: Duration(seconds: 60),
-        verificationCompleted: (FirebaseUser credential) async {
+        verificationCompleted: (PhoneAuthCredential credential) async {
           // Navigator.pop(context);
-          // FirebaseAuth authResult = await _auth.signInWithCredential(credential);
+          // FirebaseAuth authResult = await _auth.signInWithCredential(credential.token);
           // FirebaseUser user = authResult.user;
           // if (user != null) {
           //   authenticateUserByPhoneLogin(user);
@@ -56,7 +56,7 @@ class AuthScreenState extends State<AuthScreen> {
           //   //print("Login In");
           // }
         },
-        verificationFailed: (AuthException authException) {
+        verificationFailed: (FirebaseAuthException authException) {
           Dialogs.okDialog(
               context, 'Error', authException.message, Colors.red[200]);
           //print(authException.message);
@@ -117,7 +117,7 @@ class AuthScreenState extends State<AuthScreen> {
         codeAutoRetrievalTimeout: null);
   }
 
-  authenticateUserByPhoneLogin(FirebaseUser user) {
+  authenticateUserByPhoneLogin(User user) {
     _authMethods.authenticateUserByPhone(user).then((isNewUser) {
       setState(() {
         isLoading = false;
@@ -599,7 +599,7 @@ class AuthScreenState extends State<AuthScreen> {
                         _authMethods
                             .signUp(
                                 emailController.text, passwordController.text)
-                            .then((FirebaseUser user) {
+                            .then((User user) {
                           _authMethods
                               .authenticateUserByEmailId(user)
                               .then((isNewUser) {
@@ -681,7 +681,7 @@ class AuthScreenState extends State<AuthScreen> {
       isLoading = true;
     });
 
-    _authMethods.googleSignIn().then((FirebaseUser user) {
+    _authMethods.googleSignIn().then((User user) {
       if (user == null) {
         Dialogs.okDialog(
             context, 'Error', 'Error Signing In!', Colors.red[200]);
@@ -698,7 +698,7 @@ class AuthScreenState extends State<AuthScreen> {
     });
   }
 
-  void authenticateUserByGoogleLogin(FirebaseUser user) {
+  void authenticateUserByGoogleLogin(User user) {
     _authMethods.authenticateUserByEmailId(user).then((isNewUser) {
       setState(() {
         isLoading = false;
@@ -722,7 +722,7 @@ class AuthScreenState extends State<AuthScreen> {
     });
   }
 
-  updateMobileNumber(FirebaseUser user) {
+  updateMobileNumber(User user) {
     _authMethods.isPhoneNoExists(user).then((bool isPhoneExists) {
       if (!isPhoneExists) {
         showDialog(
