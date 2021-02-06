@@ -1,3 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
+import 'package:sticky_headers/sticky_headers/widget.dart';
 import 'package:stock_q/models/bill.dart';
 import 'package:stock_q/models/user.dart';
 import 'package:stock_q/resources/admin_methods.dart';
@@ -9,11 +14,6 @@ import 'package:stock_q/widgets/bouncy_page_route.dart';
 import 'package:stock_q/widgets/custom_appbar.dart';
 import 'package:stock_q/widgets/custom_divider.dart';
 import 'package:stock_q/widgets/dialogs.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
-import 'package:sticky_headers/sticky_headers/widget.dart';
 
 AdminMethods _adminMethods = AdminMethods();
 AuthMethods _authMethods = AuthMethods();
@@ -26,7 +26,7 @@ class BorrowList extends StatefulWidget {
 }
 
 class _BorrowListState extends State<BorrowList> {
-  User currentUser;
+  UserModel currentUser;
   bool isLoading = false;
   List<Bill> myBorrowList;
   double myAmount;
@@ -36,18 +36,19 @@ class _BorrowListState extends State<BorrowList> {
       isLoading = true;
     });
 
-    FirebaseUser firebaseUser = await _authMethods.getCurrentUser();
-    User user = await _authMethods.getUserDetailsById(firebaseUser.uid);
+    User firebaseUser = await _authMethods.getCurrentUser();
+    UserModel userModel =
+        await _authMethods.getUserDetailsById(firebaseUser.uid);
     try {
       setState(() {
-        currentUser = user;
+        currentUser = userModel;
         isLoading = false;
       });
     } catch (e) {
       Dialogs.okDialog(
           context, 'Error', 'Somthing went wrong!', Colors.red[200]);
     }
-    if (user.role == 'user') {
+    if (userModel.role == 'user') {
       getBorrowListOfMe();
     }
   }
@@ -90,22 +91,22 @@ class _BorrowListState extends State<BorrowList> {
       body: isLoading
           ? CustomCircularLoading()
           : SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
-              child: Container(
-                padding: EdgeInsets.all(0),
-                child: Column(
-                  children: [
-                    currentUser.role == 'admin'
-                        ? StickyHeader(
-                            header: buildStickyHeaderListView(context),
-                            content: buildAdminStickyBodyListView())
-                        : StickyHeader(
-                            header: buildUserStickyHeaderListView(context),
-                            content: buildUserStickyBodyListView()),
-                  ],
-                ),
-              ),
-            ),
+        physics: BouncingScrollPhysics(),
+        child: Container(
+          padding: EdgeInsets.all(0),
+          child: Column(
+            children: [
+              currentUser.role == 'admin'
+                  ? StickyHeader(
+                  header: buildStickyHeaderListView(context),
+                  content: buildAdminStickyBodyListView())
+                  : StickyHeader(
+                  header: buildUserStickyHeaderListView(context),
+                  content: buildUserStickyBodyListView()),
+            ],
+          ),
+        ),
+      ),
     );
   }
 

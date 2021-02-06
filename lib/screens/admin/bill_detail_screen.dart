@@ -1,3 +1,7 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
+import 'package:intl/intl.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:stock_q/models/bill.dart';
 import 'package:stock_q/models/product.dart';
 import 'package:stock_q/resources/admin_methods.dart';
@@ -9,16 +13,12 @@ import 'package:stock_q/widgets/bouncy_page_route.dart';
 import 'package:stock_q/widgets/custom_appbar.dart';
 import 'package:stock_q/widgets/dialogs.dart';
 import 'package:stock_q/widgets/header.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
-import 'package:intl/intl.dart';
-import 'package:number_to_words_spelling/number_to_words_spelling.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 AdminMethods _adminMethods = AdminMethods();
 
 class BillDetails extends StatefulWidget {
   final String billId;
+
   BillDetails({this.billId});
 
   @override
@@ -55,11 +55,11 @@ class _BillDetailsState extends State<BillDetails> {
           (currentBill.qtyList[i] * currentBill.sellingRateList[i]);
       totalSGST = totalSGST +
           (((currentBill.qtyList[i] * currentBill.sellingRateList[i]) *
-                  (currentBill.taxList[i] / 100)) /
+              (currentBill.taxList[i] / 100)) /
               2);
       totalCGST = totalCGST +
           (((currentBill.qtyList[i] * currentBill.sellingRateList[i]) *
-                  (currentBill.taxList[i] / 100)) /
+              (currentBill.taxList[i] / 100)) /
               2);
       datas.add(data);
       //print("totalSGST:$totalSGST");
@@ -71,8 +71,7 @@ class _BillDetailsState extends State<BillDetails> {
         context, datas, grossAmount, totalSGST, totalCGST, amounten, amount);
   }
 
-  generatePakkaBillPdfAndView(
-      context,
+  generatePakkaBillPdfAndView(context,
       List<List<dynamic>> datas,
       double grossAmount,
       double totalSGST,
@@ -98,8 +97,8 @@ class _BillDetailsState extends State<BillDetails> {
               context,
               BouncyPageRoute(
                   widget: PdfPreviewwScreen(
-                path: fullPath,
-              )));
+                    path: fullPath,
+                  )));
         }
       } catch (e) {
         Dialogs.okDialog(
@@ -122,7 +121,7 @@ class _BillDetailsState extends State<BillDetails> {
         builder: (BuildContext context) {
           return AlertDialog(
             shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
             title: Text('Buyer Info'),
             content: Container(
               height: MediaQuery.of(context).size.height / 5,
@@ -237,103 +236,103 @@ class _BillDetailsState extends State<BillDetails> {
       body: isLoading
           ? CustomCircularLoading()
           : Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: ListView(
+        padding: const EdgeInsets.all(10.0),
+        child: ListView(
+          children: [
+            Center(child: BuildHeader(text: 'Bill Details')),
+            SizedBox(
+              height: 40,
+            ),
+            Container(
+              padding: EdgeInsets.all(10),
+              child: Column(
                 children: [
-                  Center(child: BuildHeader(text: 'Bill Details')),
-                  SizedBox(
-                    height: 40,
+                  Row(
+                    children: [
+                      Text(
+                        'Bill No: ',
+                        style: Variables.inputTextStyle,
+                      ),
+                      Text(currentBill.billNo)
+                    ],
                   ),
-                  Container(
-                    padding: EdgeInsets.all(10),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              'Bill No: ',
-                              style: Variables.inputTextStyle,
-                            ),
-                            Text(currentBill.billNo)
-                          ],
+                  SizedBox(height: 20),
+                  Row(
+                    children: [
+                      Text(
+                        'Date: ',
+                        style: Variables.inputTextStyle,
+                      ),
+                      Text(DateFormat('dd/MM/yy')
+                          .format(currentBill.timestamp.toDate()))
+                    ],
+                  ),
+                  SizedBox(height: 20),
+                  Row(
+                    children: [
+                      Text(
+                        'Customer Name: ',
+                        style: Variables.inputTextStyle,
+                      ),
+                      Text(currentBill.customerName)
+                    ],
+                  ),
+                  SizedBox(height: 20),
+                  Row(
+                    children: [
+                      Text("Product:  "),
+                      Row(
+                        children: List.generate(
+                          currentBill.productList.length,
+                              (index) => Column(
+                            children: [
+                              Text(
+                                  "${currentBill.productList[index]}(${currentBill.qtyList[index]})\t,"),
+                              Text(
+                                  " ₹${currentBill.qtyList[index] * currentBill.sellingRateList[index]}")
+                            ],
+                          ),
                         ),
-                        SizedBox(height: 20),
-                        Row(
-                          children: [
-                            Text(
-                              'Date: ',
-                              style: Variables.inputTextStyle,
-                            ),
-                            Text(DateFormat('dd/MM/yy')
-                                .format(currentBill.timestamp.toDate()))
-                          ],
-                        ),
-                        SizedBox(height: 20),
-                        Row(
-                          children: [
-                            Text(
-                              'Customer Name: ',
-                              style: Variables.inputTextStyle,
-                            ),
-                            Text(currentBill.customerName)
-                          ],
-                        ),
-                        SizedBox(height: 20),
-                        Row(
-                          children: [
-                            Text("Product:  "),
-                            Row(
-                              children: List.generate(
-                                currentBill.productList.length,
-                                (index) => Column(
-                                  children: [
-                                    Text(
-                                        "${currentBill.productList[index]}(${currentBill.qtyList[index]})\t,"),
-                                    Text(
-                                        " ₹${currentBill.qtyList[index] * currentBill.sellingRateList[index]}")
-                                  ],
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                        SizedBox(height: 20),
-                        Row(
-                          children: [
-                            Text(
-                              'Price: ',
-                              style: Variables.inputTextStyle,
-                            ),
-                            Text(currentBill.price.toString())
-                          ],
-                        ),
-                        currentBill.isTax ? SizedBox(height: 20) : Container(),
-                        currentBill.isTax
-                            ? Row(
-                                children: [
-                                  Text(
-                                    'Tax: ',
-                                    style: Variables.inputTextStyle,
-                                  ),
-                                  Text(totalTax.toString()),
-                                ],
-                              )
-                            : Text("No Tax"),
-                        currentBill.isPaid ? Container() : SizedBox(height: 20),
-                        currentBill.isPaid
-                            ? Container()
-                            : Row(
-                                children: [
-                                  Text("Given Amount : "),
-                                  Text(currentBill.givenAmount.toString()),
-                                ],
-                              )
-                      ],
-                    ),
+                      )
+                    ],
+                  ),
+                  SizedBox(height: 20),
+                  Row(
+                    children: [
+                      Text(
+                        'Price: ',
+                        style: Variables.inputTextStyle,
+                      ),
+                      Text(currentBill.price.toString())
+                    ],
+                  ),
+                  currentBill.isTax ? SizedBox(height: 20) : Container(),
+                  currentBill.isTax
+                      ? Row(
+                    children: [
+                      Text(
+                        'Tax: ',
+                        style: Variables.inputTextStyle,
+                      ),
+                      Text(totalTax.toString()),
+                    ],
+                  )
+                      : Text("No Tax"),
+                  currentBill.isPaid ? Container() : SizedBox(height: 20),
+                  currentBill.isPaid
+                      ? Container()
+                      : Row(
+                    children: [
+                      Text("Given Amount : "),
+                      Text(currentBill.givenAmount.toString()),
+                    ],
                   )
                 ],
               ),
-            ),
+            )
+          ],
+        ),
+      ),
     );
   }
 }

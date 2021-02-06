@@ -1,5 +1,23 @@
 import 'dart:io';
 import 'dart:typed_data';
+import 'dart:ui' as ui;
+
+import 'package:esys_flutter_share/esys_flutter_share.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_icons/flutter_icons.dart';
+import 'package:focused_menu/focused_menu.dart';
+import 'package:focused_menu/modals.dart';
+import 'package:image/image.dart' as I;
+import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:permission_handler/permission_handler.dart';
+import 'package:save_in_gallery/save_in_gallery.dart';
+import 'package:sticky_headers/sticky_headers.dart';
 import 'package:stock_q/models/bill.dart';
 import 'package:stock_q/models/product.dart';
 import 'package:stock_q/models/user.dart';
@@ -13,31 +31,14 @@ import 'package:stock_q/widgets/bouncy_page_route.dart';
 import 'package:stock_q/widgets/custom_appbar.dart';
 import 'package:stock_q/widgets/dialogs.dart';
 import 'package:stock_q/widgets/widgets.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_icons/flutter_icons.dart';
-import 'package:focused_menu/focused_menu.dart';
-import 'package:focused_menu/modals.dart';
-import 'package:intl/intl.dart';
-import 'package:number_to_words_spelling/number_to_words_spelling.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:pdf/widgets.dart' as pw;
-import 'package:permission_handler/permission_handler.dart';
-import 'package:save_in_gallery/save_in_gallery.dart';
-import 'package:sticky_headers/sticky_headers.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:pdf/pdf.dart';
-import 'dart:ui' as ui;
-import 'package:image/image.dart' as I;
-import 'package:esys_flutter_share/esys_flutter_share.dart';
 
 AdminMethods _adminMethods = AdminMethods();
 AuthMethods _authMethods = AuthMethods();
 
 class SingleBorrow extends StatefulWidget {
   final String mobileNo;
+
   SingleBorrow({@required this.mobileNo});
 
   @override
@@ -47,7 +48,7 @@ class SingleBorrow extends StatefulWidget {
 class _SingleBorrowState extends State<SingleBorrow> {
   TextEditingController _buyerInfoController = TextEditingController();
   GlobalKey _containerKey = GlobalKey();
-  User currentUser;
+  UserModel currentUser;
   final _imageSaver = ImageSaver();
   bool isLoading = false;
   final pdf = pw.Document();
@@ -143,12 +144,12 @@ class _SingleBorrowState extends State<SingleBorrow> {
     setState(() {
       isLoading = true;
     });
-    FirebaseUser user = await _authMethods.getCurrentUser();
+    User user = await _authMethods.getCurrentUser();
     if (user == null) {
       Dialogs.okDialog(
           context, 'Error', 'Check your internet connection', Colors.red[200]);
     } else {
-      User nowUser = await _authMethods.getUserDetailsById(user.uid);
+      UserModel nowUser = await _authMethods.getUserDetailsById(user.uid);
       setState(() {
         currentUser = nowUser;
         isLoading = false;

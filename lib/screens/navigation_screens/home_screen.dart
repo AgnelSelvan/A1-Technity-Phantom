@@ -1,6 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_icons/flutter_icons.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stock_q/constants/theme.dart';
 import 'package:stock_q/flutter_barcode_scanner.dart';
-import 'package:stock_q/main.dart';
 import 'package:stock_q/models/user.dart';
 import 'package:stock_q/resources/admin_methods.dart';
 import 'package:stock_q/resources/auth_methods.dart';
@@ -15,12 +20,6 @@ import 'package:stock_q/widgets/bouncy_page_route.dart';
 import 'package:stock_q/widgets/custom_appbar.dart';
 import 'package:stock_q/widgets/map.dart';
 import 'package:stock_q/widgets/widgets.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_icons/flutter_icons.dart';
-import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 AdminMethods _adminMethods = AdminMethods();
 
@@ -36,12 +35,12 @@ class _HomeScreenState extends State<HomeScreen>
   final AuthMethods _authMethods = AuthMethods();
   TextEditingController phoneNumberController = TextEditingController();
   String currentUserId;
-  User currentUser;
+  UserModel currentUser;
   bool isDarkTheme = false;
   var darkModeOn = false;
 
   getCurrentUserDetails() async {
-    FirebaseUser user = await _authMethods.getCurrentUser();
+    User user = await _authMethods.getCurrentUser();
     _authMethods.isPhoneNoExists(user).then((bool isPhoneExists) {
       //print('isPhoneExists:$isPhoneExists');
       if (!isPhoneExists) {
@@ -81,11 +80,11 @@ class _HomeScreenState extends State<HomeScreen>
                 actions: <Widget>[
                   buildRaisedButton('Confirm'.toUpperCase(), Colors.white,
                       Variables.primaryColor, () async {
-                    _authMethods.updateMobileNumber(
-                        phoneNumberController.text, user);
-                    Navigator.pop(context);
-                    phoneNumberController.clear();
-                  })
+                        _authMethods.updateMobileNumber(
+                            phoneNumberController.text, user);
+                        Navigator.pop(context);
+                        phoneNumberController.clear();
+                      })
                 ],
               );
             });
@@ -174,14 +173,14 @@ class _HomeScreenState extends State<HomeScreen>
           context,
           BouncyPageRoute(
               widget: ProductDetails(
-            qrCode: barcodeScanRes,
-          )));
+                qrCode: barcodeScanRes,
+              )));
     } else if (!isQrExists) {
       currentUser.role == 'admin'
           ? Navigator.push(
-              context,
-              BouncyPageRoute(
-                  widget: AddProduct(
+          context,
+          BouncyPageRoute(
+              widget: AddProduct(
                 qrCode: barcodeScanRes,
               )))
           : Text("No Items");
