@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:stock_q/models/product.dart';
 import 'package:stock_q/views/pages/add_product_page.dart';
 import 'package:stock_q/views/pages/product_detail_page.dart';
-import 'package:stock_q/views/services/auth.dart';
-import 'package:stock_q/views/services/datastore.dart';
+import 'package:stock_q/services/auth.dart';
+import 'package:stock_q/services/datastore.dart';
 import 'package:stock_q/views/styles/custom.dart';
 import 'package:stock_q/views/widgets/in_section_spacing.dart';
 

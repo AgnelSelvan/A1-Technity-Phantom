@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:stock_q/views/pages/auth/auth_page.dart';
 import 'package:stock_q/views/pages/home_page.dart';
 import 'package:stock_q/views/pages/main_page.dart';
-import 'package:stock_q/views/services/auth.dart';
-import 'package:stock_q/views/services/datastore.dart';
+import 'package:stock_q/services/auth.dart';
+import 'package:stock_q/services/datastore.dart';
 import 'package:stock_q/views/widgets/loading.dart';
 
 enum AuthStatus {

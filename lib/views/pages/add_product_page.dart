@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:stock_q/models/product.dart';
-import 'package:stock_q/views/services/datastore.dart';
+import 'package:stock_q/services/datastore.dart';
 import 'package:stock_q/views/styles/custom.dart';
 import 'package:stock_q/views/widgets/in_section_spacing.dart';
 import 'package:stock_q/views/widgets/primary_button.dart';
