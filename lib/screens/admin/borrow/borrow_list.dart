@@ -213,7 +213,7 @@ class _BorrowListState extends State<BorrowList> {
                 itemBuilder: (context, index) {
                   return FutureBuilder(
                       future: _adminMethods
-                          .getBillById(docsList[index].data['bill_id']),
+                          .getBillById(docsList[index].data()['bill_id']),
                       builder: (context, AsyncSnapshot<Bill> snapshot) {
                         return ListTile(
                           onTap: () {
