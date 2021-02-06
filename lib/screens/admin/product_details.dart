@@ -128,8 +128,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 stream: _adminMethods
                                     .getStockDetailsByProductId(product.id),
                                 builder: (context, snaphot) {
-                                  var docs = snaphot.data.documents;
-                                  Stock stock = Stock.fromMap(docs[0].data);
+                                  var docs = snaphot.data.docs;
+                                  Stock stock = Stock.fromMap(docs[0].data());
                                   return Row(
                                     children: [
                                       Text(
