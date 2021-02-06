@@ -1,3 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:stock_q/models/user.dart';
 import 'package:stock_q/resources/auth_methods.dart';
 import 'package:stock_q/screens/custom_loading.dart';
@@ -5,10 +9,6 @@ import 'package:stock_q/utils/universal_variables.dart';
 import 'package:stock_q/widgets/custom_appbar.dart';
 import 'package:stock_q/widgets/dialogs.dart';
 import 'package:stock_q/widgets/widgets.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
 
 AuthMethods _authMethods = AuthMethods();
 
@@ -18,7 +18,7 @@ class MakeAdminScreen extends StatefulWidget {
 }
 
 class _MakeAdminScreenState extends State<MakeAdminScreen> {
-  User currentSelectedUser;
+  UserModel currentSelectedUser;
   TextEditingController emailController = TextEditingController();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
@@ -86,7 +86,7 @@ class _MakeAdminScreenState extends State<MakeAdminScreen> {
                   }
                   return new DropdownButton<DocumentSnapshot>(
                     onChanged: (DocumentSnapshot newValue) async {
-                      User user = User.fromMap(newValue.data());
+                      UserModel user = UserModel.fromMap(newValue.data());
                       setState(() {
                         currentSelectedUser = user;
                       });
@@ -121,9 +121,9 @@ class _MakeAdminScreenState extends State<MakeAdminScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               buildRaisedButton("Back", Colors.white, Variables.primaryColor,
-                  () {
-                Navigator.pop(context);
-              }),
+                      () {
+                    Navigator.pop(context);
+                  }),
               buildRaisedButton(
                   "Make Admin", Variables.primaryColor, Colors.white, () {
                 makeAdmin();
@@ -176,66 +176,67 @@ class DrawerIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
         child: Padding(
-      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 8),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
-              width: 26,
-              decoration: new BoxDecoration(
-                border: Border(
-                  top: BorderSide(
-                      width: 1.2, color: Theme.of(context).primaryColor),
-                  left: BorderSide(
-                      width: 1.2, color: Theme.of(context).primaryColor),
-                  right: BorderSide(
-                      width: 1.2, color: Theme.of(context).primaryColor),
-                  bottom: BorderSide(
-                      width: 1.2, color: Theme.of(context).primaryColor),
-                ),
-              )),
-          SizedBox(height: 4),
-          Container(
-              alignment: Alignment.topLeft,
-              width: 20,
-              decoration: new BoxDecoration(
-                border: Border(
-                  top: BorderSide(
-                      width: 1.2, color: Theme.of(context).primaryColor),
-                  left: BorderSide(
-                      width: 1.2, color: Theme.of(context).primaryColor),
-                  right: BorderSide(
-                      width: 1.2, color: Theme.of(context).primaryColor),
-                  bottom: BorderSide(
-                      width: 1.2, color: Theme.of(context).primaryColor),
-                ),
-              )),
-          SizedBox(height: 4),
-          Container(
-              width: 26,
-              decoration: new BoxDecoration(
-                border: Border(
-                  top: BorderSide(
-                      width: 1.2, color: Theme.of(context).primaryColor),
-                  left: BorderSide(
-                      width: 1.2, color: Theme.of(context).primaryColor),
-                  right: BorderSide(
-                      width: 1.2, color: Theme.of(context).primaryColor),
-                  bottom: BorderSide(
-                      width: 1.2, color: Theme.of(context).primaryColor),
-                ),
-              )),
-          SizedBox(height: 4),
-        ],
-      ),
-    ));
+          padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 8),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                  width: 26,
+                  decoration: new BoxDecoration(
+                    border: Border(
+                      top: BorderSide(
+                          width: 1.2, color: Theme.of(context).primaryColor),
+                      left: BorderSide(
+                          width: 1.2, color: Theme.of(context).primaryColor),
+                      right: BorderSide(
+                          width: 1.2, color: Theme.of(context).primaryColor),
+                      bottom: BorderSide(
+                          width: 1.2, color: Theme.of(context).primaryColor),
+                    ),
+                  )),
+              SizedBox(height: 4),
+              Container(
+                  alignment: Alignment.topLeft,
+                  width: 20,
+                  decoration: new BoxDecoration(
+                    border: Border(
+                      top: BorderSide(
+                          width: 1.2, color: Theme.of(context).primaryColor),
+                      left: BorderSide(
+                          width: 1.2, color: Theme.of(context).primaryColor),
+                      right: BorderSide(
+                          width: 1.2, color: Theme.of(context).primaryColor),
+                      bottom: BorderSide(
+                          width: 1.2, color: Theme.of(context).primaryColor),
+                    ),
+                  )),
+              SizedBox(height: 4),
+              Container(
+                  width: 26,
+                  decoration: new BoxDecoration(
+                    border: Border(
+                      top: BorderSide(
+                          width: 1.2, color: Theme.of(context).primaryColor),
+                      left: BorderSide(
+                          width: 1.2, color: Theme.of(context).primaryColor),
+                      right: BorderSide(
+                          width: 1.2, color: Theme.of(context).primaryColor),
+                      bottom: BorderSide(
+                          width: 1.2, color: Theme.of(context).primaryColor),
+                    ),
+                  )),
+              SizedBox(height: 4),
+            ],
+          ),
+        ));
   }
 }
 
 class AdminDrawer extends StatelessWidget {
-  User currentUser;
+  UserModel currentUser;
   int orderCount;
+
   AdminDrawer({this.currentUser, this.orderCount});
 
   @override
@@ -261,10 +262,10 @@ class AdminDrawer extends StatelessWidget {
       Icons.payment
     ];
     List<GestureTapCallback> onPressed = [
-      () {
+          () {
         Navigator.pop(context);
       },
-      () {
+          () {
         // Navigator.push(
         //     context,
         //     MaterialPageRoute(
@@ -272,7 +273,7 @@ class AdminDrawer extends StatelessWidget {
         //               currentUser: currentUser,
         //             )));
       },
-      () {
+          () {
         // Navigator.push(
         //     context,
         //     MaterialPageRoute(
@@ -280,7 +281,7 @@ class AdminDrawer extends StatelessWidget {
         //               currentUser: currentUser,
         //             )));
       },
-      () {
+          () {
         // Navigator.push(
         //     context,
         //     MaterialPageRoute(
@@ -288,7 +289,7 @@ class AdminDrawer extends StatelessWidget {
         //               currentUser: currentUser,
         //             )));
       },
-      () {
+          () {
         // Navigator.push(
         //     context,
         //     MaterialPageRoute(
@@ -296,7 +297,7 @@ class AdminDrawer extends StatelessWidget {
         //               currentUser: currentUser,
         //             )));
       },
-      () {
+          () {
         // Navigator.push(
         //     context,
         //     MaterialPageRoute(
@@ -305,7 +306,7 @@ class AdminDrawer extends StatelessWidget {
         //               currentUser: currentUser,
         //             )));
       },
-      () {
+          () {
         // Navigator.push(
         //     context,
         //     MaterialPageRoute(
@@ -313,7 +314,7 @@ class AdminDrawer extends StatelessWidget {
         //               currentUser: currentUser,
         //             )));
       },
-      () {
+          () {
         // Navigator.push(
         //     context,
         //     MaterialPageRoute(
@@ -342,7 +343,7 @@ class AdminDrawer extends StatelessWidget {
               ),
               currentAccountPicture: CircleAvatar(
                 backgroundImage:
-                    CachedNetworkImageProvider('currentUser.photoUrl'),
+                CachedNetworkImageProvider('currentUser.photoUrl'),
               )),
           Container(
             height: double.maxFinite,
@@ -353,30 +354,30 @@ class AdminDrawer extends StatelessWidget {
                     title: new Text(data[i]),
                     leading: orderCount != 0 && data[i] == 'Order Request'
                         ? Stack(
-                            children: <Widget>[
-                              Icon(icon[i]),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 18),
-                                child: Container(
-                                  width: 15,
-                                  height: 15,
-                                  alignment: Alignment.center,
-                                  // padding: EdgeInsets.symmetric(
-                                  //     horizontal: 4, vertical: 2),
-                                  decoration: BoxDecoration(
-                                    color: Theme.of(context).primaryColor,
-                                    borderRadius: BorderRadius.circular(30),
-                                  ),
-                                  child: Text(
-                                    orderCount.toString(),
-                                    style: TextStyle(
-                                        fontSize: 11, color: Colors.white),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          )
+                      children: <Widget>[
+                        Icon(icon[i]),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 18),
+                          child: Container(
+                            width: 15,
+                            height: 15,
+                            alignment: Alignment.center,
+                            // padding: EdgeInsets.symmetric(
+                            //     horizontal: 4, vertical: 2),
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).primaryColor,
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            child: Text(
+                              orderCount.toString(),
+                              style: TextStyle(
+                                  fontSize: 11, color: Colors.white),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
                         : Icon(icon[i]),
                     onTap: onPressed[i],
                   );
