@@ -40,14 +40,14 @@ class _EditScreenState extends State<EditScreen> {
 
   File _image;
   String currentUserId;
-  User currentUser;
+  UserModel currentUser;
 
   getCurrentUserDetails() async {
-    FirebaseUser user = await _authMethods.getCurrentUser();
+    User user = await _authMethods.getCurrentUser();
     setState(() {
       currentUserId = user.uid;
     });
-    await _authMethods.getUserDetailsById(currentUserId).then((User user) {
+    await _authMethods.getUserDetailsById(currentUserId).then((UserModel user) {
       setState(() {
         currentUser = user;
       });
@@ -362,7 +362,7 @@ class _EditScreenState extends State<EditScreen> {
         child: FutureBuilder(
             future: _authMethods.getUserDetailsById(currentUserId),
             builder: (context, snapshot) {
-              User currentUser = snapshot.data;
+              UserModel currentUser = snapshot.data;
               return ListView(
                 padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
                 children: <Widget>[
