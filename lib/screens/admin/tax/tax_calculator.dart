@@ -24,7 +24,7 @@ class _TaxCalculatorState extends State<TaxCalculator> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-          title: Text("Annai Store", style: Variables.appBarTextStyle),
+          title: Text("Stock Q", style: Variables.appBarTextStyle),
           actions: null,
           leading: IconButton(
               icon: Icon(

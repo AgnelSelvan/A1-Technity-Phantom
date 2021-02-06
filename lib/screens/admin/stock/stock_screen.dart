@@ -38,7 +38,7 @@ class _StockScreenState extends State<StockScreen>
       backgroundColor: Variables.lightGreyColor,
       appBar: CustomAppBar(
           bgColor: Colors.white,
-          title: Text("Annai Store", style: Variables.appBarTextStyle),
+          title: Text("Stock Q", style: Variables.appBarTextStyle),
           actions: [
             IconButton(
                 icon: Icon(

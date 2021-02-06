@@ -32,7 +32,7 @@ class _AddSubCategoryState extends State<AddSubCategory> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: CustomAppBar(
-          title: Text("Annai Store", style: Variables.appBarTextStyle),
+          title: Text("Stock Q", style: Variables.appBarTextStyle),
           actions: null,
           leading: IconButton(
               icon: Icon(

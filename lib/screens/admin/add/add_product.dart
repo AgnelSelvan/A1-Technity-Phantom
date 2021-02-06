@@ -53,7 +53,7 @@ class _AddProductState extends State<AddProduct> {
     return Scaffold(
         key: _scaffoldKey,
         appBar: CustomAppBar(
-            title: Text("Annai Store", style: Variables.appBarTextStyle),
+            title: Text("Stock Q", style: Variables.appBarTextStyle),
             actions: [
               IconButton(
                   icon: Icon(

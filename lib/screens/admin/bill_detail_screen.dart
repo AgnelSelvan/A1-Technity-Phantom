@@ -207,7 +207,7 @@ class _BillDetailsState extends State<BillDetails> {
     return Scaffold(
       appBar: CustomAppBar(
           bgColor: Colors.white,
-          title: Text("Annai Store", style: Variables.appBarTextStyle),
+          title: Text("Stock Q", style: Variables.appBarTextStyle),
           actions: [
             IconButton(
                 icon: Icon(

@@ -21,7 +21,7 @@ class _BuildMapState extends State<BuildMap> {
       markerId: MarkerId(_center.toString()),
       position: _center,
       infoWindow: InfoWindow(
-        title: 'Annai Store',
+        title: 'Stock Q',
         snippet: 'This is a snippet',
       ),
       icon: BitmapDescriptor.defaultMarker,
@@ -63,7 +63,7 @@ class _BuildMapState extends State<BuildMap> {
           markerId: MarkerId(_lastMapPosition.toString()),
           position: _lastMapPosition,
           infoWindow: InfoWindow(
-            title: 'Annai Store',
+            title: 'Stock Q',
             snippet: 'This is a snippet',
           ),
           icon: BitmapDescriptor.defaultMarker,

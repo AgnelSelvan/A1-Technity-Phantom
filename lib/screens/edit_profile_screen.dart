@@ -345,7 +345,7 @@ class _EditScreenState extends State<EditScreen> {
     return Scaffold(
       backgroundColor: Variables.lightGreyColor,
       appBar: CustomAppBar(
-          title: Text("Annai Store", style: Variables.appBarTextStyle),
+          title: Text("Stock Q", style: Variables.appBarTextStyle),
           actions: null,
           leading: IconButton(
               icon: Icon(

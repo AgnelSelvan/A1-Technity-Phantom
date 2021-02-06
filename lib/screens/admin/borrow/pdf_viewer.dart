@@ -17,7 +17,7 @@ class PdfPreviewwScreen extends StatelessWidget {
     return PDFViewerScaffold(
         appBar: CustomAppBar(
             title: Text(
-              'Annai Store',
+              'Stock Q',
               style: TextStyle(color: Variables.primaryColor),
             ),
             actions: [

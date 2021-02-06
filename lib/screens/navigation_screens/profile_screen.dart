@@ -78,7 +78,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       key: _scaffoldKey,
       appBar: CustomAppBar(
         bgColor: Colors.yellow[50],
-        title: Text("Annai Store", style: Variables.appBarTextStyle),
+        title: Text("Stock Q", style: Variables.appBarTextStyle),
         actions: <Widget>[
           IconButton(
               icon: Icon(

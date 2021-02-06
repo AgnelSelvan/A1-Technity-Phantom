@@ -59,7 +59,7 @@ class Utils {
                   pw.Container(
                       child: pw.Container(
                           alignment: pw.Alignment.center,
-                          child: pw.Text("Annai Store",
+                          child: pw.Text("Stock Q",
                               style: pw.TextStyle(
                                   fontSize: 30,
                                   fontWeight: pw.FontWeight.bold,
@@ -168,7 +168,7 @@ class Utils {
                       pw.Container(
                           child: pw.Container(
                               alignment: pw.Alignment.center,
-                              child: pw.Text("Annai Store",
+                              child: pw.Text("Stock Q",
                                   style: pw.TextStyle(
                                       fontSize: 28,
                                       fontWeight: pw.FontWeight.bold,
@@ -375,7 +375,7 @@ class Utils {
                                           textAlign: pw.TextAlign.left),
                                     ]),
                                 pw.Column(children: [
-                                  pw.Text('Annai Store',
+                                  pw.Text('Stock Q',
                                       style: pw.TextStyle(
                                           fontWeight: pw.FontWeight.bold),
                                       textAlign: pw.TextAlign.left),

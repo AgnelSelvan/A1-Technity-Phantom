@@ -25,7 +25,7 @@ class _LoadAndViewCsvPageState extends State<LoadAndViewCsvPage> {
     double _previousScale;
     return Scaffold(
       appBar: CustomAppBar(
-        title: Text("Annai Store", style: Variables.appBarTextStyle),
+        title: Text("Stock Q", style: Variables.appBarTextStyle),
         actions: [
           IconButton(
               icon: Icon(

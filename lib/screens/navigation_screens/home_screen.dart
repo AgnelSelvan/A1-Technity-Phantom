@@ -110,7 +110,7 @@ class _HomeScreenState extends State<HomeScreen>
         bgColor: isDarkTheme
             ? Theme.of(context).primaryColorDark
             : Variables.lightGreyColor,
-        title: Text("Annai Store",
+        title: Text("Stock Q",
             style: TextStyle(
                 fontSize: 20,
                 letterSpacing: 1,

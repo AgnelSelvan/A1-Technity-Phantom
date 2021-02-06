@@ -76,7 +76,7 @@ class _BorrowListState extends State<BorrowList> {
     return Scaffold(
       appBar: CustomAppBar(
           bgColor: Colors.white,
-          title: Text("Annai Store", style: Variables.appBarTextStyle),
+          title: Text("Stock Q", style: Variables.appBarTextStyle),
           actions: null,
           leading: GestureDetector(
             onTap: () {
@@ -181,7 +181,7 @@ class _BorrowListState extends State<BorrowList> {
                   BouncyPageRoute(
                       widget: SingleBorrow(mobileNo: borrow.mobileNo)));
             },
-            title: Text("Annai Store"),
+            title: Text("Stock Q"),
             subtitle: Text(borrow.mobileNo),
             leading: CircleAvatar(
               backgroundColor: Variables.primaryColor,
