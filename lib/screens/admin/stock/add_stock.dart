@@ -365,17 +365,17 @@ class _AddStockState extends State<AddStock> {
               underline: SizedBox(),
               onChanged: (DocumentSnapshot newValue) {
                 setState(() {
-                  selectedUnit = Unit.fromMap(newValue.data);
+                  selectedUnit = Unit.fromMap(newValue.data());
                 });
               },
               hint: selectedUnit == null
                   ? Text('Select Unit')
                   : Text(selectedUnit.unitId),
-              items: snapshot.data.documents.map((DocumentSnapshot document) {
+              items: snapshot.data.docs.map((DocumentSnapshot document) {
                 return new DropdownMenuItem<DocumentSnapshot>(
                     value: document,
                     child: new Text(
-                      document.data['unit'],
+                      document.data()['unit'],
                     ));
               }).toList(),
             );
@@ -420,18 +420,18 @@ class _AddStockState extends State<AddStock> {
                         underline: SizedBox(),
                         onChanged: (DocumentSnapshot newValue) async {
                           setState(() {
-                            selectedProduct = Product.fromMap(newValue.data);
+                            selectedProduct = Product.fromMap(newValue.data());
                           });
                         },
                         hint: selectedProduct == null
                             ? Text('Select Product')
                             : Text(selectedProduct.name),
-                        items: snapshot.data.documents
+                        items: snapshot.data.docs
                             .map((DocumentSnapshot document) {
                           return new DropdownMenuItem<DocumentSnapshot>(
                               value: document,
                               child: new Text(
-                                document.data['name'],
+                                document.data()['name'],
                               ));
                         }).toList(),
                       );

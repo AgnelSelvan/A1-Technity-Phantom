@@ -28,7 +28,6 @@ void main() async {
     var darkModeOn = prefs.getBool('darkMode') ?? true;
     runApp(
       ChangeNotifierProvider<ThemeNotifier>(
-        builder: (_) => ThemeNotifier(darkModeOn ? darkTheme : lightTheme),
         create: (_) => ThemeNotifier(darkModeOn ? darkTheme : lightTheme),
         child: MyApp(),
       ),

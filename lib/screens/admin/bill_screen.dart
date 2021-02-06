@@ -694,19 +694,19 @@ class _BillScreenState extends State<BillScreen> {
                             underline: SizedBox(),
                             onChanged: (DocumentSnapshot newValue) async {
                               setState(() async {
-                                currentProduct = Product.fromMap(newValue.data);
+                                currentProduct = Product.fromMap(newValue.data());
                                 createAlertDialog(context, currentProduct);
                               });
                             },
                             hint: currentProduct == null
                                 ? Text('Select Product')
                                 : Text(currentProduct.name),
-                            items: snapshot.data.documents
+                            items: snapshot.data.docs
                                 .map((DocumentSnapshot document) {
                               return new DropdownMenuItem<DocumentSnapshot>(
                                   value: document,
                                   child: new Text(
-                                    document.data['name'],
+                                    document.data()['name'],
                                   ));
                             }).toList(),
                           );

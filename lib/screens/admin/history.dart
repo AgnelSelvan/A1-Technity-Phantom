@@ -31,7 +31,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
     List<DocumentSnapshot> docsList = await _adminMethods.getAllBills();
     for (var doc in docsList) {
       // Bill bill = await _adminMethods.getBillById(doc.data['bill_id']);
-      Bill bill = Bill.fromMap(doc.data);
+      Bill bill = Bill.fromMap(doc.data());
       billsList.add(bill);
     }
     setState(() {
