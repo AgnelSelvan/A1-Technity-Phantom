@@ -1,15 +1,15 @@
-import 'package:stock_q/constants/theme.dart';
-import 'package:flutter/material.dart';
+// import 'package:stock_q/constants/theme.dart';
+// import 'package:flutter/material.dart';
 
-class ThemeNotifier with ChangeNotifier {
-  ThemeData _themeData;
+// class ThemeNotifier with ChangeNotifier {
+//   ThemeData _themeData;
 
-  ThemeNotifier(this._themeData);
+//   ThemeNotifier(this._themeData);
 
-  getTheme() => _themeData;
+//   getTheme() => _themeData;
 
-  setTheme(ThemeData themeData) async {
-    _themeData = themeData;
-    notifyListeners();
-  }
-}
+//   setTheme(ThemeData themeData) async {
+//     _themeData = themeData;
+//     notifyListeners();
+//   }
+// }

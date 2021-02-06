@@ -17,15 +17,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
-  SharedPreferences.getInstance().then((prefs) {
-    var darkModeOn = prefs.getBool('darkMode') ?? true;
-    runApp(
-      ChangeNotifierProvider<ThemeNotifier>(
-        create: (_) => ThemeNotifier(darkModeOn ? darkTheme : lightTheme),
-        child: MyApp(),
-      ),
-    );
-  });
+  runApp(
+    MyApp(),
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -38,9 +32,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    final themeNotifier = Provider.of<ThemeNotifier>(context);
     return MaterialApp(
-      theme: themeNotifier.getTheme(),
       home: FutureBuilder(
         future: _authMethods.getCurrentUser(),
         builder: (context, AsyncSnapshot<User> snapshot) {

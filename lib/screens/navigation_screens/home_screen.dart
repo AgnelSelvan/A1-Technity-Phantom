@@ -104,7 +104,6 @@ class _HomeScreenState extends State<HomeScreen>
 
   @override
   Widget build(BuildContext context) {
-    final themeNotifier = Provider.of<ThemeNotifier>(context);
     return Scaffold(
       key: _scaffoldKey,
       appBar: CustomAppBar(
@@ -133,16 +132,16 @@ class _HomeScreenState extends State<HomeScreen>
                 : AssetImage('assets/images/logo/light-theme-logo.png'),
             child: GestureDetector(
               onDoubleTap: () async {
-                isDarkTheme = !isDarkTheme;
-                if (isDarkTheme) {
-                  themeNotifier.setTheme(darkTheme);
-                } else {
-                  themeNotifier.setTheme(lightTheme);
-                }
-                var prefs = await SharedPreferences.getInstance();
-                prefs.setBool('darkMode', isDarkTheme);
+                // isDarkTheme = !isDarkTheme;
+                // if (isDarkTheme) {
+                //   themeNotifier.setTheme(darkTheme);
+                // } else {
+                //   themeNotifier.setTheme(lightTheme);
+                // }
+                // var prefs = await SharedPreferences.getInstance();
+                // prefs.setBool('darkMode', isDarkTheme);
 
-                //print("Dark Theme");
+                // //print("Dark Theme");
               },
             ),
           ),
