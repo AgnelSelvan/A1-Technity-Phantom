@@ -1,13 +1,13 @@
+import 'package:annaistore/resources/auth_methods.dart';
+import 'package:annaistore/screens/root_screen.dart';
+import 'package:annaistore/utils/universal_variables.dart';
+import 'package:annaistore/widgets/dialogs.dart';
+import 'package:annaistore/widgets/widgets.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:stock_q/resources/auth_methods.dart';
-import 'package:stock_q/screens/root_screen.dart';
-import 'package:stock_q/utils/universal_variables.dart';
-import 'package:stock_q/widgets/dialogs.dart';
-import 'package:stock_q/widgets/widgets.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -157,11 +157,7 @@ class AuthScreenState extends State<AuthScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             // viewPhoneVisible ? buildPhoneUI() : Container(),
-            viewEmailVisible
-                ? isNew
-                    ? signUp()
-                    : login()
-                : Container(),
+            viewEmailVisible ? isNew ? signUp() : login() : Container(),
             Column(
               children: [
                 SizedBox(height: 15),
