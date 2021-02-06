@@ -153,7 +153,7 @@ class AdminMethods {
   Future<void> addCustomerToDb(String name, String email, String address,
       String state, int pincode, int mobileNo, String gstin) async {
     String docId = _customerCollection.doc().id;
-    User user = User(
+    UserModel user = UserModel(
         uid: docId,
         name: name,
         email: email,
@@ -432,7 +432,7 @@ class AdminMethods {
     return product;
   }
 
-  Future<List<Bill>> getBorrowListOfMe(User currentUser) async {
+  Future<List<Bill>> getBorrowListOfMe(UserModel currentUser) async {
     QuerySnapshot docs = await _borrowsCollection.get();
     List<DocumentSnapshot> docsList = docs.docs.toList();
     List<Bill> myBorrowList = List();
