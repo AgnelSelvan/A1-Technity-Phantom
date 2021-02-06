@@ -1,25 +1,75 @@
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/cupertino.dart';
+import 'dart:io';
+import 'package:stock_q/constants/theme.dart';
+import 'package:stock_q/resources/auth_methods.dart';
+import 'package:stock_q/screens/auth_screen.dart';
+import 'package:stock_q/screens/root_screen.dart';
+import 'package:stock_q/theme/theme_notifier.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:stock_q/services/auth.dart';
-import 'package:stock_q/services/datastore.dart';
-import 'package:stock_q/views/pages/root_page.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-
-  runApp(MyApp());
+void _setTargetPlatformForDesktop() {
+  if (Platform.isLinux || Platform.isWindows) {
+    debugDefaultTargetPlatformOverride = TargetPlatform.fuchsia;
+  }
 }
 
-class MyApp extends StatelessWidget {
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  _setTargetPlatformForDesktop();
+  WidgetsFlutterBinding.ensureInitialized();
+
+  SharedPreferences.getInstance().then((prefs) {
+    var darkModeOn = prefs.getBool('darkMode') ?? true;
+    runApp(
+      ChangeNotifierProvider<ThemeNotifier>(
+        builder: (_) => ThemeNotifier(darkModeOn ? darkTheme : lightTheme),
+        create: (_) => ThemeNotifier(darkModeOn ? darkTheme : lightTheme),
+        child: MyApp(),
+      ),
+    );
+  });
+}
+
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final AuthMethods _authMethods = AuthMethods();
+
   @override
   Widget build(BuildContext context) {
+    final themeNotifier = Provider.of<ThemeNotifier>(context);
     return MaterialApp(
+<<<<<<< HEAD
+      theme: themeNotifier.getTheme(),
+      // theme: snapshot.data ? ThemeData.dark() : ThemeData.light(),
+      // theme: AppTheme.lightTheme,
+      // darkTheme: AppTheme.darkTheme,
+      // themeMode: snapshot.data ? ThemeMode.dark : ThemeMode.light,
+      // home: HomePage(snapshot.data)
+      home: FutureBuilder(
+        future: _authMethods.getCurrentUser(),
+        builder: (context, AsyncSnapshot<FirebaseUser> snapshot) {
+          if (snapshot.hasData) {
+            return RootScreen();
+          } else {
+            return AuthScreen();
+          }
+        },
+      ),
+    );
+=======
         title: 'Stock Q',
         debugShowCheckedModeBanner: false,
         theme:
             ThemeData(fontFamily: 'Montserrat', primaryColor: Colors.grey[100]),
         home: RootPage(auth: Auth(), datastore: Datastore()));
+>>>>>>> 273c1025e5391f72ddcacf688aadfa636f61204a
   }
 }
