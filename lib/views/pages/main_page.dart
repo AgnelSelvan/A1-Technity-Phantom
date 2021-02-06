@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stock_q/views/pages/home_page.dart';
 import 'package:stock_q/views/pages/product_page.dart';
-import 'package:stock_q/views/pages/profile_page.dart';
+import 'package:stock_q/views/pages/profile/profile_page.dart';
 import 'package:stock_q/views/pages/shopping_cart_page.dart';
 import 'package:stock_q/views/services/auth.dart';
 import 'package:stock_q/views/services/datastore.dart';

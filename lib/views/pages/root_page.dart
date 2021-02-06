@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:stock_q/views/pages/auth_page.dart';
+import 'package:stock_q/views/pages/auth/auth_page.dart';
 import 'package:stock_q/views/pages/home_page.dart';
 import 'package:stock_q/views/pages/main_page.dart';
 import 'package:stock_q/views/services/auth.dart';

@@ -8,7 +8,7 @@ import 'package:stock_q/models/user.dart' as UserModel;
 import 'package:stock_q/models/wishlist.dart';
 import 'package:stock_q/views/pages/add_product_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:stock_q/views/pages/edit_profile_page.dart';
+import 'package:stock_q/views/pages/profile/edit_profile_page.dart';
 import 'package:stock_q/views/pages/veiw_all_products.page.dart';
 import 'package:stock_q/views/pages/wishlist_page.dart';
 import 'package:stock_q/views/services/auth.dart';
