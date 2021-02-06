@@ -29,6 +29,7 @@ dependencies:
   sqflite:
   path_provider:
   firebase_auth:
+  firebase_core:
   cloud_firestore:
   firebase_storage:
   google_sign_in: ^4.0.1+3

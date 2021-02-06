@@ -1,10 +1,16 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:stock_q/views/pages/root_page.dart';
 import 'package:stock_q/services/auth.dart';
 import 'package:stock_q/services/datastore.dart';
+import 'package:stock_q/views/pages/root_page.dart';
 
-void main() => runApp(MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
