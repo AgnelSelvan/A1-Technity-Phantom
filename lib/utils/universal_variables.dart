@@ -23,7 +23,7 @@ class Variables {
   static final Color gradientColorStart = Colors.yellow[200];
   static final Color gradientColorEnd = Colors.yellow[800];
   static final Gradient fabGradient = LinearGradient(
-      colors: [gradientColorStart, gradientColorEnd],
+      collors: [gradientColorStart, gradientColorEnd],
       begin: Alignment.topLeft,
       end: Alignment.bottomRight);
 }
