@@ -46,6 +46,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     final themeNotifier = Provider.of<ThemeNotifier>(context);
     return MaterialApp(
+<<<<<<< HEAD
       theme: themeNotifier.getTheme(),
       // theme: snapshot.data ? ThemeData.dark() : ThemeData.light(),
       // theme: AppTheme.lightTheme,
@@ -63,5 +64,12 @@ class _MyAppState extends State<MyApp> {
         },
       ),
     );
+=======
+        title: 'Stock Q',
+        debugShowCheckedModeBanner: false,
+        theme:
+            ThemeData(fontFamily: 'Montserrat', primaryColor: Colors.grey[100]),
+        home: RootPage(auth: Auth(), datastore: Datastore()));
+>>>>>>> 273c1025e5391f72ddcacf688aadfa636f61204a
   }
 }
