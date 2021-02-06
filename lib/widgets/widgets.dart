@@ -1,4 +1,3 @@
-import 'package:annaistore/utils/universal_variables.dart';
 import 'package:flutter/material.dart';
 
 RaisedButton buildRaisedButton(
