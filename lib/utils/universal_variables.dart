@@ -10,11 +10,9 @@ class Variables {
 
   static final TextStyle drawerListTextStyle =
       TextStyle(fontSize: 16, letterSpacing: 1, color: Variables.blackColor);
-  static final TextStyle appBarTextStyle = TextStyle(
-      fontSize: 20,
-      letterSpacing: 1,
-      color: Variables.primaryColor,
-   static final TextStyle inputLabelTextStyle =
+  static final TextStyle appBarTextStyle =
+      TextStyle(fontSize: 20, letterSpacing: 1, color: Variables.primaryColor);
+  static final TextStyle inputLabelTextStyle =
       TextStyle(fontSize: 16, color: Color(0xff777777), letterSpacing: 0.5);
   static final TextStyle inputTextStyle =
       TextStyle(fontSize: 16, letterSpacing: 0.5, color: Color(0xff333333));
@@ -26,4 +24,3 @@ class Variables {
       begin: Alignment.topLeft,
       end: Alignment.bottomRight);
 }
-  
