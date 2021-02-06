@@ -1,7 +1,4 @@
-<<<<<<< HEAD
 import 'package:stock_q/utils/universal_variables.dart';
-=======
->>>>>>> 273c1025e5391f72ddcacf688aadfa636f61204a
 import 'package:flutter/material.dart';
 
 RaisedButton buildRaisedButton(
