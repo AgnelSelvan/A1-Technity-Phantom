@@ -213,6 +213,7 @@ class _ReportScreenState extends State<ReportScreen> {
                       data: data1,
                       fillMode: FillMode.below,
                       fillGradient: new LinearGradient(
+                        colors: [Variables. gradientColorStart,Variables. gradientColorEnd],
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
                         // colors: [Colors.amber[800], Colors.amber[200]],
