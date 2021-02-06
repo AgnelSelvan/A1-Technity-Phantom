@@ -16,8 +16,8 @@ class HomePageCarousel extends StatefulWidget {
 
 class _HomePageCarouselState extends State<HomePageCarousel> {
   var _activeSlideIndex = 0;
-  List<Product> productsList = [
-    Product(
+  List<DummyProductModel> productsList = [
+    DummyProductModel(
       productId: '101',
       title: 'Octopus Shootout',
       description:
@@ -29,7 +29,7 @@ class _HomePageCarouselState extends State<HomePageCarousel> {
       },
       price: 5000,
     ),
-    Product(
+    DummyProductModel(
       productId: '102',
       title: 'Octopus Shootout',
       description:
@@ -42,7 +42,7 @@ class _HomePageCarouselState extends State<HomePageCarousel> {
       },
       price: 2200,
     ),
-    Product(
+    DummyProductModel(
       productId: '103',
       title: 'Octopus Shootout',
       description:
@@ -119,7 +119,7 @@ class _HomePageCarouselState extends State<HomePageCarousel> {
 }
 
 class ProductCard extends StatelessWidget {
-  final Product product;
+  final DummyProductModel product;
   ProductCard(this.product);
   @override
   Widget build(BuildContext context) {

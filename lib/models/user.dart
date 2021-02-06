@@ -5,7 +5,7 @@ import 'package:stock_q/models/review.dart';
 class User {
   String uid, username, email, photoUrl;
   Map<String, dynamic> deliveryAddress;
-  List<Product> cartProducts, boughtProducts;
+  List<DummyProductModel> cartProducts, boughtProducts;
   List<Review> reviews;
   String role;
   User(

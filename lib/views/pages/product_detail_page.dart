@@ -8,7 +8,7 @@ import 'package:stock_q/views/widgets/preview_image_carousel.dart';
 import 'package:stock_q/views/widgets/section_spacing.dart';
 
 class ProductPageDetailPage extends StatefulWidget {
-  final Product product;
+  final DummyProductModel product;
   ProductPageDetailPage(this.product);
   @override
   _ProductPageDetailPageState createState() =>
@@ -16,7 +16,7 @@ class ProductPageDetailPage extends StatefulWidget {
 }
 
 class _ProductPageDetailPageState extends State<ProductPageDetailPage> {
-  Product _product;
+  DummyProductModel _product;
   _ProductPageDetailPageState(this._product);
   Custom custom = Custom();
   @override

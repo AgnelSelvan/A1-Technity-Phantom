@@ -59,7 +59,7 @@ class _ViewAllProductPageState extends State<ViewAllProductPage> {
                       snapshot.data.docs[i].data();
                   List<Map<String, dynamic>> previewImages =
                       productMap['previewImages'].cast<Map<String, dynamic>>();
-                  Product _product = Product(
+                  DummyProductModel _product = DummyProductModel(
                       productId: productMap["productId"],
                       title: productMap["title"],
                       description: productMap["description"],
@@ -86,7 +86,7 @@ class _ViewAllProductPageState extends State<ViewAllProductPage> {
 }
 
 class ProductCard extends StatefulWidget {
-  final Product product;
+  final DummyProductModel product;
   final Datastore datastore;
   final String uid;
   ProductCard(this.product, this.datastore, this.uid);

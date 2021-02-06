@@ -25,8 +25,8 @@ class ProductPage extends StatefulWidget {
 }
 
 class _ProductPageState extends State<ProductPage> {
-  List<Product> productsList = [
-    Product(
+  List<DummyProductModel> productsList = [
+    DummyProductModel(
       productId: '101',
       title: 'Octopus Shootout',
       description:
@@ -38,7 +38,7 @@ class _ProductPageState extends State<ProductPage> {
       },
       price: 5000,
     ),
-    Product(
+    DummyProductModel(
       productId: '102',
       title: 'Octopus Shootout',
       description:
@@ -51,7 +51,7 @@ class _ProductPageState extends State<ProductPage> {
       },
       price: 2200,
     ),
-    Product(
+    DummyProductModel(
       productId: '103',
       title: 'Octopus Shootout',
       description:
@@ -166,14 +166,14 @@ class _ProductPageState extends State<ProductPage> {
 }
 
 class ProductCard extends StatefulWidget {
-  final Product product;
+  final DummyProductModel product;
   ProductCard(this.product);
   @override
   _ProductCardState createState() => _ProductCardState(this.product);
 }
 
 class _ProductCardState extends State<ProductCard> {
-  Product _product;
+  DummyProductModel _product;
   _ProductCardState(this._product);
   Custom custom = Custom();
   @override

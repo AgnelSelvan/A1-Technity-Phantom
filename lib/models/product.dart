@@ -1,13 +1,13 @@
 import 'package:stock_q/models/review.dart';
 
-class Product {
+class DummyProductModel {
   String productId, title, description;
   int stock, discount, price, productRating;
   List<Review> reviews;
   List<Map<String, dynamic>> previewImages;
   Map<String, dynamic> thumbnailImage;
 
-  Product(
+  DummyProductModel(
       {this.productId,
       this.title,
       this.description,

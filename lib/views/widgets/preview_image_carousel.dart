@@ -10,7 +10,7 @@ import 'package:stock_q/models/wishlist.dart';
 import 'package:stock_q/views/pages/product_detail_page.dart';
 
 class PreviewImageCarousel extends StatefulWidget {
-  final Product product;
+  final DummyProductModel product;
   PreviewImageCarousel({this.product});
   @override
   _PreviewImageCarouselState createState() => _PreviewImageCarouselState();

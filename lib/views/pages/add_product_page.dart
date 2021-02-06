@@ -14,7 +14,7 @@ import 'package:stock_q/views/widgets/section_spacing.dart';
 
 class AddProductPage extends StatefulWidget {
   final Datastore datastore;
-  final Product product;
+  final DummyProductModel product;
   AddProductPage({this.datastore, this.product});
   @override
   _AddProductPageState createState() => _AddProductPageState();

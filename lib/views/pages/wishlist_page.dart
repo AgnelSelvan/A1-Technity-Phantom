@@ -16,8 +16,8 @@ class WishlistPage extends StatefulWidget {
 }
 
 class _WishlistPageState extends State<WishlistPage> {
-  List<Product> productsList = [
-    Product(
+  List<DummyProductModel> productsList = [
+    DummyProductModel(
       productId: '101',
       title: 'Octopus Shootout',
       description:
@@ -29,7 +29,7 @@ class _WishlistPageState extends State<WishlistPage> {
       },
       price: 5000,
     ),
-    Product(
+    DummyProductModel(
       productId: '102',
       title: 'Octopus Shootout',
       description:
@@ -42,7 +42,7 @@ class _WishlistPageState extends State<WishlistPage> {
       },
       price: 2200,
     ),
-    Product(
+    DummyProductModel(
       productId: '103',
       title: 'Octopus Shootout',
       description:
@@ -109,7 +109,7 @@ class _WishlistPageState extends State<WishlistPage> {
 }
 
 class WishlistProduct extends StatefulWidget {
-  final Product product;
+  final DummyProductModel product;
   final GestureTapCallback onPressed;
   WishlistProduct(this.product, this.onPressed);
   @override
@@ -118,7 +118,7 @@ class WishlistProduct extends StatefulWidget {
 }
 
 class _WishlistProductState extends State<WishlistProduct> {
-  Product _product;
+  DummyProductModel _product;
   GestureTapCallback _onPressed;
   _WishlistProductState(this._product, this._onPressed);
   Custom custom = Custom();
