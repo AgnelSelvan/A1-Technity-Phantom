@@ -1,4 +1,4 @@
-import 'package:annaistore/constants/theme.dart';
+import 'package:stock_q/constants/theme.dart';
 import 'package:flutter/material.dart';
 
 class ThemeNotifier with ChangeNotifier {

@@ -1,5 +1,5 @@
-import 'package:annaistore/models/product.dart';
-import 'package:annaistore/utils/universal_variables.dart';
+import 'package:stock_q/models/product.dart';
+import 'package:stock_q/utils/universal_variables.dart';
 import 'package:flutter/material.dart';
 
 enum DialogAction { yes, Abort }

@@ -1,7 +1,7 @@
-import 'package:annaistore/constants/strings.dart';
-import 'package:annaistore/models/user.dart';
-import 'package:annaistore/utils/utilities.dart';
-import 'package:annaistore/widgets/dialogs.dart';
+import 'package:stock_q/constants/strings.dart';
+import 'package:stock_q/models/user.dart';
+import 'package:stock_q/utils/utilities.dart';
+import 'package:stock_q/widgets/dialogs.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:firebase_auth/firebase_auth.dart';

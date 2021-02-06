@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:annaistore/utils/universal_variables.dart';
+import 'package:stock_q/utils/universal_variables.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';

@@ -1,4 +1,4 @@
-import 'package:annaistore/utils/universal_variables.dart';
+import 'package:stock_q/utils/universal_variables.dart';
 import 'package:flutter/material.dart';
 
 class CustomDivider extends StatelessWidget {
