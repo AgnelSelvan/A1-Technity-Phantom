@@ -29,34 +29,36 @@ class _AuthPageState extends State<AuthPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: MyAppBar(title: toggleSignUp ? 'Sign up' : 'Login'),
-        body: Container(
-          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-          child: Form(
-            key: formKey,
-            child: ListView(children: [
-              toggleSignUp
-                  ? Padding(
-                      padding: const EdgeInsets.only(bottom: 16),
-                      child: _buildUsernameField(),
-                    )
-                  : Container(),
-              _buildEmailField(),
-              SizedBox(height: 16),
-              _buildPasswordField(),
-              SizedBox(height: 24),
-              _authActions(),
-              SizedBox(height: 32),
-              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                Text(!toggleSignUp
-                    ? 'Not have an account ? '
-                    : 'Already have an account ? '),
-                LinkButton(!toggleSignUp ? 'Sign up' : 'Login', () {
-                  setState(() {
-                    toggleSignUp = !toggleSignUp;
-                  });
-                })
-              ])
-            ]),
+        body: Center(
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+            child: Form(
+              key: formKey,
+              child: ListView(children: [
+                toggleSignUp
+                    ? Padding(
+                        padding: const EdgeInsets.only(bottom: 16),
+                        child: _buildUsernameField(),
+                      )
+                    : Container(),
+                _buildEmailField(),
+                SizedBox(height: 16),
+                _buildPasswordField(),
+                SizedBox(height: 24),
+                _authActions(),
+                SizedBox(height: 32),
+                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Text(!toggleSignUp
+                      ? 'Not have an account ? '
+                      : 'Already have an account ? '),
+                  LinkButton(!toggleSignUp ? 'Sign up' : 'Login', () {
+                    setState(() {
+                      toggleSignUp = !toggleSignUp;
+                    });
+                  })
+                ])
+              ]),
+            ),
           ),
         ));
   }

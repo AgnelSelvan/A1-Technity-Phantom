@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+const primaryColor = Color(0xFFe76d1e);
 class Custom {
   Color appBarColor = Colors.grey[100];
   Color bodyTextColor = Color(0xff333333);
