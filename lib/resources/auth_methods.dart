@@ -77,13 +77,10 @@ class AuthMethods {
         GoogleSignInAuthentication _signInAuthentication =
             await _signInAccount.authentication;
 
-        final AuthCredential credential = GoogleAuthProvider.getCredential(
-            idToken: _signInAuthentication.idToken,
-            accessToken: _signInAuthentication.accessToken);
-        AuthResult result = await _auth.signInWithCredential(credential);
-        FirebaseUser user = result.user;
+        GoogleSignInAccount googleSignInAccount = await GoogleSignIn().signIn();
+        FirebaseUser user = await getCurrentUser();
 
-        return user;
+        return user ;
       } else {
         return null;
       }
@@ -97,9 +94,9 @@ class AuthMethods {
     QuerySnapshot result = await _firestore
         .collection(USERS_COLLECTION)
         .where(EMAIL_FIELD, isEqualTo: user.email)
-        .getDocuments();
+        .get();
 
-    final List<DocumentSnapshot> docs = result.documents;
+    final List<DocumentSnapshot> docs = result.docs;
 
     return docs.length == 0 ? true : false;
   }
@@ -107,9 +104,9 @@ class AuthMethods {
   Future<bool> authenticateUserByPhone(FirebaseUser user) async {
     QuerySnapshot result = await _userCollection
         .where(MOBILE_NO_FIELD, isEqualTo: user.phoneNumber.trim())
-        .getDocuments();
+        .get();
 
-    final List<DocumentSnapshot> docs = result.documents;
+    final List<DocumentSnapshot> docs = result.docs;
 
     return docs.length == 0 ? true : false;
   }
@@ -127,8 +124,8 @@ class AuthMethods {
 
     _firestore
         .collection(USERS_COLLECTION)
-        .document(currentUser.uid)
-        .setData(user.toMap(user));
+        .doc(currentUser.uid)
+        .set(user.toMap(user));
   }
 
   Future<void> addPhoneDataToDb(FirebaseUser currentUser) async {
@@ -144,8 +141,8 @@ class AuthMethods {
 
     _firestore
         .collection(USERS_COLLECTION)
-        .document(currentUser.uid)
-        .setData(user.toMap(user));
+        .doc(currentUser.uid)
+        .set(user.toMap(user));
   }
 
   Future<void> addUserDataToDb(
@@ -162,15 +159,15 @@ class AuthMethods {
 
     _firestore
         .collection(USERS_COLLECTION)
-        .document(currentUser.uid)
-        .setData(user.toMap(user));
+        .doc(currentUser.uid)
+        .set(user.toMap(user));
   }
 
   Future<User> getUserDetailsById(String userId) async {
     try {
       //print("UserId: $userId");
-      DocumentSnapshot doc = await _userCollection.document(userId).get();
-      return User.fromMap(doc.data);
+      DocumentSnapshot doc = await _userCollection.doc(userId).get();
+      return User.fromMap(doc.data());
     } catch (e) {
       //print("get user by details error: $e");
       return null;
@@ -193,7 +190,7 @@ class AuthMethods {
 
   Future<bool> makeAdmin(String userId) async {
     try {
-      await _userCollection.document(userId).updateData({'role': 'admin'});
+      await _userCollection.doc(userId).update({'role': 'admin'});
       return true;
     } catch (e) {
       return false;
@@ -202,7 +199,7 @@ class AuthMethods {
 
   Future<bool> demoteAdminToUser(String userId) async {
     try {
-      await _userCollection.document(userId).updateData({'role': 'user'});
+      await _userCollection.doc(userId).update({'role': 'user'});
       return true;
     } catch (e) {
       return false;

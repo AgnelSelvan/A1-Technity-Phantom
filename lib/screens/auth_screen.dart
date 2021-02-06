@@ -107,7 +107,7 @@ class AuthScreenState extends State<AuthScreen> {
                       // } else {
                       //   //print("Erro");
                       // }
-                      // Navigator.pop(context);
+                      Navigator.pop(context);
                       codeController.clear();
                     })
                   ],
