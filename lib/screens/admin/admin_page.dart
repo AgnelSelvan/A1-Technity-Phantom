@@ -81,12 +81,12 @@ class _MakeAdminScreenState extends State<MakeAdminScreen> {
                     return CustomCircularLoading();
                   }
 
-                  if (snapshot.data.documents.length == 0) {
+                  if (snapshot.data.docs.length == 0) {
                     return Text("No User exists to select admin");
                   }
                   return new DropdownButton<DocumentSnapshot>(
                     onChanged: (DocumentSnapshot newValue) async {
-                      User user = User.fromMap(newValue.data);
+                      User user = User.fromMap(newValue.data());
                       setState(() {
                         currentSelectedUser = user;
                       });
@@ -94,7 +94,7 @@ class _MakeAdminScreenState extends State<MakeAdminScreen> {
                     hint: currentSelectedUser == null
                         ? Text('Select Admin')
                         : Text(currentSelectedUser.name),
-                    items: snapshot.data.documents
+                    items: snapshot.data.docs
                         .map((DocumentSnapshot document) {
                       return new DropdownMenuItem<DocumentSnapshot>(
                           value: document,
@@ -102,10 +102,10 @@ class _MakeAdminScreenState extends State<MakeAdminScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               new Text(
-                                document.data['email'],
+                                document.data()['email'],
                               ),
                               new Text(
-                                "(${document.data['name']})",
+                                "(${document.data()['name']})",
                                 style: TextStyle(fontSize: 11),
                               ),
                             ],

@@ -24,7 +24,7 @@ class Utils {
   }
 
   static String getDocId() {
-    return Firestore.instance.collection('customers').document().documentID;
+    return FirebaseFirestore.instance.collection('customers').doc().id;
   }
 
   static String getPhoneDisplayName() {
@@ -118,7 +118,7 @@ class Utils {
 
       File file = File("$documentPath/example.pdf");
 
-      file.writeAsBytesSync(pdf.save());
+      file.writeAsBytesSync(await pdf.save());
       return file;
     } else {
       return null;
@@ -221,7 +221,7 @@ class Utils {
                       pw.SizedBox(height: 8),
                       pw.Table.fromTextArray(
                           border: pw.TableBorder(
-                            width: 1,
+                            // width: 1,
                           ),
                           context: context,
                           data: <List<dynamic>>[
@@ -397,7 +397,7 @@ class Utils {
 
     File file = File("$documentPath/example.pdf");
     try {
-      file.writeAsBytesSync(pdf.save());
+      file.writeAsBytesSync(await pdf.save());
       return file.path;
     } catch (e) {
       return 'textfieldError';

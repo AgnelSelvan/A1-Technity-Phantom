@@ -46,15 +46,15 @@ class AuthScreenState extends State<AuthScreen> {
     _auth.verifyPhoneNumber(
         phoneNumber: '$countryCode${phoneNumberController.text}'.trim(),
         timeout: Duration(seconds: 60),
-        verificationCompleted: (AuthCredential credential) async {
-          Navigator.pop(context);
-          AuthResult authResult = await _auth.signInWithCredential(credential);
-          FirebaseUser user = authResult.user;
-          if (user != null) {
-            authenticateUserByPhoneLogin(user);
-            //print(user.phoneNumber);
-            //print("Login In");
-          }
+        verificationCompleted: (FirebaseUser credential) async {
+          // Navigator.pop(context);
+          // FirebaseAuth authResult = await _auth.signInWithCredential(credential);
+          // FirebaseUser user = authResult.user;
+          // if (user != null) {
+          //   authenticateUserByPhoneLogin(user);
+          //   //print(user.phoneNumber);
+          //   //print("Login In");
+          // }
         },
         verificationFailed: (AuthException authException) {
           Dialogs.okDialog(
@@ -93,21 +93,21 @@ class AuthScreenState extends State<AuthScreen> {
                     buildRaisedButton('Confirm'.toUpperCase(), Colors.white,
                         Variables.primaryColor, () async {
                       final code = codeController.text.trim();
-                      AuthCredential credential =
-                          PhoneAuthProvider.getCredential(
-                              verificationId: verificationId, smsCode: code);
+                      // AuthCredential credential =
+                      //     PhoneAuthProvider.getCredential(
+                      //         verificationId: verificationId, smsCode: code);
 
-                      AuthResult result =
-                          await _auth.signInWithCredential(credential);
+                      // AuthResult result =
+                      //     await _auth.signInWithCredential(credential);
 
-                      FirebaseUser user = result.user;
-                      if (user != null) {
-                        authenticateUserByPhoneLogin(user);
-                        //print("Login In");
-                      } else {
-                        //print("Erro");
-                      }
-                      Navigator.pop(context);
+                      // FirebaseUser user = result.user;
+                      // if (user != null) {
+                      //   authenticateUserByPhoneLogin(user);
+                      //   //print("Login In");
+                      // } else {
+                      //   //print("Erro");
+                      // }
+                      // Navigator.pop(context);
                       codeController.clear();
                     })
                   ],
@@ -167,7 +167,7 @@ class AuthScreenState extends State<AuthScreen> {
                     ? signUp()
                     : login()
                 : Container(),
-            Column(
+ Column(
               children: [
                 SizedBox(height: 15),
                 Text(
