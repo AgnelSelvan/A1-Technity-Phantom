@@ -87,172 +87,177 @@ class _SignUpState extends State<SignUp> {
                 margin: EdgeInsets.symmetric(
                   horizontal: SizeUtils.marginHorizontal,
                 ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                        alignment: Alignment.topLeft,
+                alignment: Alignment.center,
+                child: SingleChildScrollView(
+                  physics: ClampingScrollPhysics(),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            "SIGN UP",
+                            style: TextStyle(
+                                color: Variables.primaryColor,
+                                fontSize: 28,
+                                fontWeight: FontWeight.bold),
+                          )),
+                      SizedBox(height: 20),
+                      _buildUsername(),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      _buildEmail(),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      _buildPassword(),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      RaisedButton(
+                        color: Variables.primaryColor,
+                        onPressed: () async {
+                          loading = true;
+                          handleState();
+
+                          if (userNameController.text.trim().isEmpty) {
+                            usernameError = 'Username cant be empty';
+                            handleState();
+                            return null;
+                          }
+
+                          usernameError = null;
+
+                          if (emailController.text.trim().isEmpty) {
+                            emailError = 'Email is Required';
+                            handleState();
+                            return null;
+                          }
+
+                          if (!RegExp(
+                                  r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
+                              .hasMatch(emailController.text.trim())) {
+                            emailError = 'Please enter a valid email Address';
+                            handleState();
+                            return null;
+                          }
+
+                          emailError = null;
+
+                          if (passwordController.text.trim().isEmpty) {
+                            passError = 'Passwords can\'t be empty';
+                            handleState();
+                            return null;
+                          }
+
+                          if (passwordController.text.trim().length < 6) {
+                            passError =
+                                'Passwords should be at least 6 characters';
+                            handleState();
+                            return null;
+                          }
+
+                          passError = null;
+
+                          loading = true;
+
+                          handleState();
+
+                          try {
+                            var result = await Auth.auth
+                                .createUserWithEmailAndPassword(
+                                    email: emailController.text.trim(),
+                                    password: passwordController.text.trim());
+
+                            User user = result.user;
+
+                            if (user != null) {
+                              bool newUser = await _authMethods
+                                  .authenticateUserByEmailId(user);
+
+                              if (newUser) {
+                                await _authMethods.addUserDataToDb(
+                                    user, userNameController.text);
+                              }
+
+                              Navigator.of(Get.context).pushAndRemoveUntil(
+                                  MaterialPageRoute(
+                                      builder: (_) => RootScreen()),
+                                  (route) => false);
+                            } else {
+                              loading = false;
+                              handleState();
+                              Utils.showSnackBar(
+                                  text: 'Error SignUp',
+                                  bgColor: Colors.red.shade800);
+                            }
+                          } catch (e) {
+                            loading = false;
+                            handleState();
+                            FirebaseAuthException exception = e;
+                            log(exception.message);
+                            Utils.showSnackBar(text: exception.message);
+                          }
+                        },
                         child: Text(
                           "SIGN UP",
                           style: TextStyle(
-                              color: Variables.primaryColor,
-                              fontSize: 28,
-                              fontWeight: FontWeight.bold),
-                        )),
-                    SizedBox(height: 20),
-                    _buildUsername(),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    _buildEmail(),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    _buildPassword(),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    RaisedButton(
-                      color: Variables.primaryColor,
-                      onPressed: () async {
-                        loading = true;
-                        handleState();
-
-                        if (userNameController.text.trim().isEmpty) {
-                          usernameError = 'Username cant be empty';
-                          handleState();
-                          return null;
-                        }
-
-                        usernameError = null;
-
-                        if (emailController.text.trim().isEmpty) {
-                          emailError = 'Email is Required';
-                          handleState();
-                          return null;
-                        }
-
-                        if (!RegExp(
-                                r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
-                            .hasMatch(emailController.text.trim())) {
-                          emailError = 'Please enter a valid email Address';
-                          handleState();
-                          return null;
-                        }
-
-                        emailError = null;
-
-                        if (passwordController.text.trim().isEmpty) {
-                          passError = 'Passwords can\'t be empty';
-                          handleState();
-                          return null;
-                        }
-
-                        if (passwordController.text.trim().length < 6) {
-                          passError =
-                              'Passwords should be at least 6 characters';
-                          handleState();
-                          return null;
-                        }
-
-                        passError = null;
-
-                        loading = true;
-
-                        handleState();
-
-                        try {
-                          var result = await Auth.auth
-                              .createUserWithEmailAndPassword(
-                                  email: emailController.text.trim(),
-                                  password: passwordController.text.trim());
-
-                          User user = result.user;
-
-                          if (user != null) {
-                            bool newUser = await _authMethods
-                                .authenticateUserByEmailId(user);
-
-                            if (newUser) {
-                              await _authMethods.addUserDataToDb(
-                                  user, userNameController.text);
-                            }
-
-                            Navigator.of(Get.context).pushAndRemoveUntil(
-                                MaterialPageRoute(builder: (_) => RootScreen()),
-                                (route) => false);
-                          } else {
-                            loading = false;
-                            handleState();
-                            Utils.showSnackBar(
-                                text: 'Error SignUp',
-                                bgColor: Colors.red.shade800);
-                          }
-                        } catch (e) {
-                          loading = false;
-                          handleState();
-                          FirebaseAuthException exception = e;
-                          log(exception.message);
-                          Utils.showSnackBar(text: exception.message);
-                        }
-                      },
-                      child: Text(
-                        "SIGN UP",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, color: Colors.white),
+                              fontWeight: FontWeight.bold, color: Colors.white),
+                        ),
                       ),
-                    ),
-                    SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          "Already have an account ? ",
-                          style: TextStyle(
-                              color: Colors.grey,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16),
-                        ),
-                        SizedBox(width: 10),
-                        InkWell(
-                            onTap: () {
-                              Get.back();
-                            },
-                            child: Text("LOGIN",
-                                style: TextStyle(
-                                    color: Variables.primaryColor,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16))),
-                        SizedBox(height: 20),
-                      ],
-                    ),
-                    SizedBox(height: 30),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        CircleAvatar(
-                          backgroundColor: Colors.white,
-                          child: IconButton(
-                              icon: Icon(
-                                FontAwesome.google,
-                                color: Colors.orange,
-                              ),
-                              onPressed: () {
-                                performGoogleLogin();
-                              }),
-                        ),
-                        CircleAvatar(
-                          backgroundColor: Colors.grey,
-                          child: IconButton(
-                              icon: Icon(
-                                Icons.mail,
-                                color: Colors.white,
-                              ),
-                              onPressed: () {}),
-                        ),
-                      ],
-                    ),
-                  ],
+                      SizedBox(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            "Already have an account ? ",
+                            style: TextStyle(
+                                color: Colors.grey,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16),
+                          ),
+                          SizedBox(width: 10),
+                          InkWell(
+                              onTap: () {
+                                Get.back();
+                              },
+                              child: Text("LOGIN",
+                                  style: TextStyle(
+                                      color: Variables.primaryColor,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16))),
+                          SizedBox(height: 20),
+                        ],
+                      ),
+                      SizedBox(height: 30),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          CircleAvatar(
+                            backgroundColor: Colors.white,
+                            child: IconButton(
+                                icon: Icon(
+                                  FontAwesome.google,
+                                  color: Colors.orange,
+                                ),
+                                onPressed: () {
+                                  performGoogleLogin();
+                                }),
+                          ),
+                          CircleAvatar(
+                            backgroundColor: Colors.grey,
+                            child: IconButton(
+                                icon: Icon(
+                                  Icons.mail,
+                                  color: Colors.white,
+                                ),
+                                onPressed: () {}),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
       ),

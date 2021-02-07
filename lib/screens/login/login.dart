@@ -85,151 +85,156 @@ class _LoginState extends State<Login> {
                 margin: EdgeInsets.symmetric(
                   horizontal: SizeUtils.marginHorizontal,
                 ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                        alignment: Alignment.topLeft,
-                        child: Text(
-                          "LOGIN",
-                          style: Get.textTheme.headline4.copyWith(
-                              color: Variables.primaryColor,
-                              fontWeight: FontWeight.bold),
-                        )),
-                    SizedBox(
-                      height: 30,
-                    ),
-                    _buildEmail(),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    _buildPassword(),
-                    SizedBox(
-                      height: 30,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        InkWell(
-                            onTap: () {},
-                            child: Text(
-                              "Forget Password ?",
-                              style: Get.textTheme.headline6
-                                  .copyWith(color: Colors.grey, fontSize: 18),
-                            )),
-                        RaisedButton(
-                          color: Variables.primaryColor,
-                          textColor: Colors.white,
-                          onPressed: () async {
-                            if (emailController.text.trim().isEmpty) {
-                              emailError = 'Email is Required';
-                              handleState();
-                              return null;
-                            }
-
-                            if (!RegExp(
-                                    r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
-                                .hasMatch(emailController.text.trim())) {
-                              emailError = 'Please enter a valid email Address';
-                              handleState();
-                              return null;
-                            }
-
-                            emailError = null;
-
-                            if (passwordController.text.trim().isEmpty) {
-                              passError = 'Passwords can\'t be empty';
-                              handleState();
-                              return null;
-                            }
-
-                            if (passwordController.text.trim().length < 6) {
-                              passError =
-                                  'Passwords should be at least 6 characters';
-                              handleState();
-                              return null;
-                            }
-
-                            passError = null;
-
-                            loading = true;
-
-                            handleState();
-
-                            bool signedIn = await Auth.signInEmail(
-                                emailController.text.trim(),
-                                passwordController.text.trim());
-
-                            if (signedIn) {
-                              return Navigator.of(Get.context)
-                                  .pushAndRemoveUntil(
-                                      MaterialPageRoute(
-                                          builder: (_) => RootScreen()),
-                                      (route) => false);
-                            }
-
-                            loading = false;
-                            handleState();
-                          },
+                alignment: Alignment.center,
+                child: SingleChildScrollView(
+                  physics: ClampingScrollPhysics(),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                          alignment: Alignment.topLeft,
                           child: Text(
-                            "login".toUpperCase(),
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 30),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text(
-                          "Don't have an account ? ",
-                          style: TextStyle(
-                              color: Colors.grey,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16),
-                        ),
-                        SizedBox(width: 10),
-                        GestureDetector(
-                            onTap: () async {
-                              Get.to(SignUp());
+                            "LOGIN",
+                            style: Get.textTheme.headline4.copyWith(
+                                color: Variables.primaryColor,
+                                fontWeight: FontWeight.bold),
+                          )),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      _buildEmail(),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      _buildPassword(),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          InkWell(
+                              onTap: () {},
+                              child: Text(
+                                "Forget Password ?",
+                                style: Get.textTheme.headline6
+                                    .copyWith(color: Colors.grey, fontSize: 18),
+                              )),
+                          RaisedButton(
+                            color: Variables.primaryColor,
+                            textColor: Colors.white,
+                            onPressed: () async {
+                              if (emailController.text.trim().isEmpty) {
+                                emailError = 'Email is Required';
+                                handleState();
+                                return null;
+                              }
+
+                              if (!RegExp(
+                                      r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
+                                  .hasMatch(emailController.text.trim())) {
+                                emailError =
+                                    'Please enter a valid email Address';
+                                handleState();
+                                return null;
+                              }
+
+                              emailError = null;
+
+                              if (passwordController.text.trim().isEmpty) {
+                                passError = 'Passwords can\'t be empty';
+                                handleState();
+                                return null;
+                              }
+
+                              if (passwordController.text.trim().length < 6) {
+                                passError =
+                                    'Passwords should be at least 6 characters';
+                                handleState();
+                                return null;
+                              }
+
+                              passError = null;
+
+                              loading = true;
+
+                              handleState();
+
+                              bool signedIn = await Auth.signInEmail(
+                                  emailController.text.trim(),
+                                  passwordController.text.trim());
+
+                              if (signedIn) {
+                                return Navigator.of(Get.context)
+                                    .pushAndRemoveUntil(
+                                        MaterialPageRoute(
+                                            builder: (_) => RootScreen()),
+                                        (route) => false);
+                              }
+
+                              loading = false;
+                              handleState();
                             },
-                            child: Text("Sign Up",
-                                style: TextStyle(
-                                    color: Variables.primaryColor,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16)))
-                      ],
-                    ),
-                    SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        CircleAvatar(
-                          backgroundColor: Colors.white,
-                          child: IconButton(
-                              icon: Icon(
-                                FontAwesome.google,
-                                color: Colors.orange,
-                              ),
-                              onPressed: () {
-                                performGoogleLogin();
-                              }),
-                        ),
-                        CircleAvatar(
-                          backgroundColor: Colors.grey,
-                          child: IconButton(
-                              icon: Icon(
-                                Icons.mail,
-                                color: Colors.white,
-                              ),
-                              onPressed: () {}),
-                        ),
-                      ],
-                    ),
-                  ],
+                            child: Text(
+                              "login".toUpperCase(),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 30),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            "Don't have an account ? ",
+                            style: TextStyle(
+                                color: Colors.grey,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16),
+                          ),
+                          SizedBox(width: 10),
+                          GestureDetector(
+                              onTap: () async {
+                                Get.to(SignUp());
+                              },
+                              child: Text("Sign Up",
+                                  style: TextStyle(
+                                      color: Variables.primaryColor,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16)))
+                        ],
+                      ),
+                      SizedBox(height: 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          CircleAvatar(
+                            backgroundColor: Colors.white,
+                            child: IconButton(
+                                icon: Icon(
+                                  FontAwesome.google,
+                                  color: Colors.orange,
+                                ),
+                                onPressed: () {
+                                  performGoogleLogin();
+                                }),
+                          ),
+                          CircleAvatar(
+                            backgroundColor: Colors.grey,
+                            child: IconButton(
+                                icon: Icon(
+                                  Icons.mail,
+                                  color: Colors.white,
+                                ),
+                                onPressed: () {}),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
       ),
