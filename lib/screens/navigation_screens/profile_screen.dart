@@ -6,6 +6,7 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:stock_q/models/user.dart';
 import 'package:stock_q/resources/auth_methods.dart';
 import 'package:stock_q/screens/admin/add/add_category.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:stock_q/screens/admin/add/add_product.dart';
 import 'package:stock_q/screens/admin/add/add_sub_category.dart';
 import 'package:stock_q/screens/admin/add/add_unit.dart';
@@ -17,13 +18,17 @@ import 'package:stock_q/screens/admin/tax/tax_calculator.dart';
 import 'package:stock_q/screens/admin/tax/tax_report.dart';
 import 'package:stock_q/screens/auth_screen.dart';
 import 'package:stock_q/screens/chat_screen.dart';
+import 'package:stock_q/resources/admin_methods.dart';
 import 'package:stock_q/screens/custom_loading.dart';
 import 'package:stock_q/screens/edit_profile_screen.dart';
+import 'package:flutter/services.dart';
 import 'package:stock_q/screens/report_screen.dart';
 import 'package:stock_q/utils/universal_variables.dart';
 import 'package:stock_q/widgets/bouncy_page_route.dart';
 import 'package:stock_q/widgets/custom_appbar.dart';
 import 'package:stock_q/widgets/dialogs.dart';
+
+AdminMethods _adminMethods = AdminMethods();
 
 class ProfileScreen extends StatefulWidget {
   ProfileScreen({Key key}) : super(key: key);
@@ -40,6 +45,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   bool isAdmin = false;
   bool isLoading = false;
 
+
   @override
   void initState() {
     super.initState();
@@ -47,6 +53,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   getUserDetails() async {
+    setState(() {
+      isLoading = true;
+    });
     User firebaseUser = await _authMethods.getCurrentUser();
     setState(() {
       currentUserId = firebaseUser.uid;
@@ -55,6 +64,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     //print("currentUser:${user.role}");
     setState(() {
       currentUser = user;
+      isLoading = false;
     });
     if (user.role == 'admin') {
       setState(() {
@@ -108,58 +118,45 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: Column(
               children: <Widget>[
                 SizedBox(height: 30),
-                FutureBuilder(
-                    future:
-                    _authMethods.getUserDetailsById(currentUserId),
-                    builder: (context, snapshot) {
-                      UserModel currentUser = snapshot.data;
-                            if (snapshot.hasData) {
-                              return Column(
-                                children: <Widget>[
-                                  currentUser.profilePhoto == null
-                                      ? ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(120),
-                                          child: Container(
-                                            width: 100,
-                                            child: Image.asset(
-                                                'assets/images/unknown_user.jpeg'),
-                                ))
-                                : ClipRRect(
-                              borderRadius:
-                              BorderRadius.circular(20),
-                              child: CachedNetworkImage(
-                                  imageUrl:
-                                  currentUser.profilePhoto),
-                            ),
-                            SizedBox(height: 10),
-                            Text(
-                              currentUser.name,
-                              style: TextStyle(
-                                color: Variables.blackColor,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 18,
-                                letterSpacing: 0.7,
-                              ),
-                            ),
-                            SizedBox(height: 10),
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 7, horizontal: 15),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(50),
-                                  color: Colors.white),
-                              child: Text(
-                                currentUser.username,
-                                style: TextStyle(
-                                    color: Variables.primaryColor),
-                              ),
-                            ),
-                          ],
-                        );
-                      }
-                      return CustomCircularLoading();
-                    }),
+                currentUser.profilePhoto == null
+                  ? ClipRRect(
+                      borderRadius:
+                          BorderRadius.circular(120),
+                      child: Container(
+                        width: 100,
+                        child: Image.asset(
+                            'assets/images/unknown_user.jpeg'),
+                    ))
+                    : ClipRRect(
+                  borderRadius:
+                  BorderRadius.circular(20),
+                  child: CachedNetworkImage(
+                      imageUrl:
+                      currentUser.profilePhoto),
+                ),
+                SizedBox(height: 10),
+                Text(
+                  currentUser.name,
+                  style: TextStyle(
+                    color: Variables.blackColor,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 18,
+                    letterSpacing: 0.7,
+                  ),
+                ),
+                SizedBox(height: 10),
+                Container(
+                  padding: EdgeInsets.symmetric(
+                      vertical: 7, horizontal: 15),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(50),
+                      color: Colors.white),
+                  child: Text(
+                    currentUser.username,
+                    style: TextStyle(
+                        color: Variables.primaryColor),
+                  ),
+                ),
                 SizedBox(height: 10),
                 Expanded(
                   child: Container(
@@ -172,134 +169,121 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     child: ListView(
                       physics: BouncingScrollPhysics(),
                       children: <Widget>[
-                        FutureBuilder(
-                          future: _authMethods
-                              .getUserDetailsById(currentUserId),
-                          builder:
-                              (context,
-                                    AsyncSnapshot<UserModel> snapshot) {
-                                  if (snapshot.hasData) {
-                                    UserModel currentUser = snapshot.data;
-                                    //print(currentUser.role);
-                                    return currentUser.role == 'admin'
-                                        ? ExpandableTheme(
-                                            data: const ExpandableThemeData(
-                                              iconColor: Colors.yellow,
-                                              useInkWell: true,
-                                            ),
-                                            child: ExpandableNotifier(
-                                                child: ScrollOnExpand(
-                                                    scrollOnExpand: true,
-                                                    scrollOnCollapse: false,
-                                          child: ExpandablePanel(
-                                            theme:
-                                            const ExpandableThemeData(
-                                              headerAlignment:
-                                              ExpandablePanelHeaderAlignment
-                                                  .center,
-                                              tapBodyToCollapse: true,
-                                            ),
-                                            header: Padding(
-                                              padding:
-                                              EdgeInsets.all(10),
-                                              child: ListTile(
-                                                leading: Icon(
-                                                  Icons.add,
-                                                  size: 16,
-                                                  color: Variables
-                                                      .primaryColor,
-                                                ),
-                                                title: Text(
-                                                  'Add',
-                                                  style: TextStyle(
-                                                      color: Variables
-                                                          .blackColor,
-                                                      fontSize: 16,
-                                                      letterSpacing:
-                                                      0.3,
-                                                      fontWeight:
-                                                      FontWeight
-                                                          .w400),
-                                                ),
-                                              ),
-                                            ),
-                                            expanded: Column(
-                                              children: <Widget>[
-                                                CustomTile(
-                                                  text: "Add Stock",
-                                                  icon: FontAwesome
-                                                      .stack_overflow,
-                                                  onTap: () {
-                                                    Navigator.push(
-                                                        context,
-                                                        BouncyPageRoute(
-                                                            widget:
-                                                            StockScreen()));
-                                                  },
-                                                ),
-                                                CustomTile(
-                                                  text:
-                                                  "Add Category",
-                                                  icon: FontAwesome
-                                                      .list_alt,
-                                                  onTap: () {
-                                                    Navigator.push(
-                                                        context,
-                                                        BouncyPageRoute(
-                                                            widget:
-                                                            AddCategory()));
-                                                  },
-                                                ),
-                                                // CustomTile(
-                                                //   text:
-                                                //   "Add Sub-Category",
-                                                //   icon: FontAwesome
-                                                //       .list_alt,
-                                                //   onTap: () {
-                                                //     Navigator.push(
-                                                //         context,
-                                                //         BouncyPageRoute(
-                                                //             widget:
-                                                //             AddSubCategory()));
-                                                //   },
-                                                // ),
-                                                CustomTile(
-                                                  text: "Add Product",
-                                                  icon: FontAwesome
-                                                      .product_hunt,
-                                                  onTap: () {
-                                                    Navigator.push(
-                                                        context,
-                                                        BouncyPageRoute(
-                                                            widget:
-                                                            AddProduct()));
-                                                  },
-                                                ),
-                                                // CustomTile(
-                                                //   text: "Add Unit",
-                                                //   icon: Icons.ac_unit,
-                                                //   onTap: () {
-                                                //     Navigator.push(
-                                                //         context,
-                                                //         BouncyPageRoute(
-                                                //             widget:
-                                                //             AddUnit()));
-                                                //   },
-                                                // ),
-                                                // CustomTile(
-                                                //   text:
-                                                //   "Add Regular Customer",
-                                                //   icon: Icons.report,
-                                                //   onTap: () {},
-                                                // )
-                                              ],
-                                            ),
-                                          ))))
-                                  : Container();
-                            }
-                            return CustomCircularLoading();
-                          },
-                        ),
+                        currentUser.role == 'admin'
+                          ? ExpandableTheme(
+                              data: const ExpandableThemeData(
+                                iconColor: Colors.yellow,
+                                useInkWell: true,
+                              ),
+                              child: ExpandableNotifier(
+                                  child: ScrollOnExpand(
+                                      scrollOnExpand: true,
+                                      scrollOnCollapse: false,
+                            child: ExpandablePanel(
+                              theme:
+                              const ExpandableThemeData(
+                                headerAlignment:
+                                ExpandablePanelHeaderAlignment
+                                    .center,
+                                tapBodyToCollapse: true,
+                              ),
+                              header: Padding(
+                                padding:
+                                EdgeInsets.all(10),
+                                child: ListTile(
+                                  leading: Icon(
+                                    Icons.add,
+                                    size: 16,
+                                    color: Variables
+                                        .primaryColor,
+                                  ),
+                                  title: Text(
+                                    'Add',
+                                    style: TextStyle(
+                                        color: Variables
+                                            .blackColor,
+                                        fontSize: 16,
+                                        letterSpacing:
+                                        0.3,
+                                        fontWeight:
+                                        FontWeight
+                                            .w400),
+                                  ),
+                                ),
+                              ),
+                              expanded: Column(
+                                children: <Widget>[
+                                  CustomTile(
+                                    text: "Add Stock",
+                                    icon: FontAwesome
+                                        .stack_overflow,
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          BouncyPageRoute(
+                                              widget:
+                                              StockScreen()));
+                                    },
+                                  ),
+                                  CustomTile(
+                                    text:
+                                    "Add Category",
+                                    icon: FontAwesome
+                                        .list_alt,
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          BouncyPageRoute(
+                                              widget:
+                                              AddCategory()));
+                                    },
+                                  ),
+                                  // CustomTile(
+                                  //   text:
+                                  //   "Add Sub-Category",
+                                  //   icon: FontAwesome
+                                  //       .list_alt,
+                                  //   onTap: () {
+                                  //     Navigator.push(
+                                  //         context,
+                                  //         BouncyPageRoute(
+                                  //             widget:
+                                  //             AddSubCategory()));
+                                  //   },
+                                  // ),
+                                  CustomTile(
+                                    text: "Add Product",
+                                    icon: FontAwesome
+                                        .product_hunt,
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          BouncyPageRoute(
+                                              widget:
+                                              AddProduct()));
+                                    },
+                                  ),
+                                  // CustomTile(
+                                  //   text: "Add Unit",
+                                  //   icon: Icons.ac_unit,
+                                  //   onTap: () {
+                                  //     Navigator.push(
+                                  //         context,
+                                  //         BouncyPageRoute(
+                                  //             widget:
+                                  //             AddUnit()));
+                                  //   },
+                                  // ),
+                                  // CustomTile(
+                                  //   text:
+                                  //   "Add Regular Customer",
+                                  //   icon: Icons.report,
+                                  //   onTap: () {},
+                                  // )
+                                ],
+                              ),
+                            ))))
+                    : Container(),
                         isAdmin
                             ? CustomTile(
                           text: "Make Admin",
