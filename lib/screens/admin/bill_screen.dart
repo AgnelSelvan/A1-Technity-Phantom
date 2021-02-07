@@ -32,6 +32,7 @@ class BillScreen extends StatefulWidget {
 class _BillScreenState extends State<BillScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   String randomNumber;
+  TextEditingController _codeFieldController = TextEditingController();
   TextEditingController _billNumberController;
   TextEditingController _qtyController;
   TextEditingController _priceController;
@@ -69,6 +70,25 @@ class _BillScreenState extends State<BillScreen> {
     });
   }
 
+  Future<void> scanQR() async {
+    String barcodeScanRes;
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    try {
+      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
+          "#ff6666", "Cancel", true, ScanMode.QR);
+      //print(barcodeScanRes);
+    } on PlatformException {
+      barcodeScanRes = 'Failed to get platform version.';
+    }
+
+    if (!mounted) return;
+    final bool isQrExists = await _adminMethods.isQrExists(barcodeScanRes);
+    setState(() {
+      _codeFieldController = TextEditingController(text: barcodeScanRes);
+    });
+  
+  }
+
   void showWidget() {
     //print(viewVisible);
     setState(() {
@@ -85,7 +105,14 @@ class _BillScreenState extends State<BillScreen> {
         appBar: CustomAppBar(
             bgColor: Colors.white,
             title: Text("Stock Q", style: Variables.appBarTextStyle),
-            actions: null,
+            actions:  [
+              IconButton(
+                  icon: Icon(
+                    FontAwesome.barcode,
+                    color: Variables.primaryColor,
+                  ),
+                  onPressed: () => scanQR())
+            ],
             leading: GestureDetector(
               onTap: () {
                 Navigator.pop(context);
