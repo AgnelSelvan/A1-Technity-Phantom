@@ -24,7 +24,7 @@ class _TaxCalculatorState extends State<TaxCalculator> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-          title: Text("Annai Store", style: Variables.appBarTextStyle),
+          title: Text("Stock Q", style: Variables.appBarTextStyle),
           actions: null,
           leading: IconButton(
               icon: Icon(
@@ -130,7 +130,7 @@ class _TaxCalculatorState extends State<TaxCalculator> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 buildRaisedButton(
-                    'Calculate', Variables.lightPrimaryColor, Colors.white, () {
+                    'Calculate', Colors.yellow[100], Colors.white, () {
                   calcuateAmount();
                 }),
                 buildRaisedButton(

@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:stock_q/constants/strings.dart';
 import 'package:stock_q/models/bill.dart';
-import 'package:stock_q/models/borrow.dart';
 import 'package:stock_q/models/category.dart';
 import 'package:stock_q/models/paid.dart';
 import 'package:stock_q/models/product.dart';
@@ -21,7 +20,6 @@ class AdminMethods {
       _firestore.collection('sub_categories');
   CollectionReference _productCollection = _firestore.collection('product');
   CollectionReference _customerCollection = _firestore.collection('customers');
-  CollectionReference _borrowsCollection = _firestore.collection('borrows');
   CollectionReference _stocksCollection = _firestore.collection('stocks');
   CollectionReference _billsCollection = _firestore.collection('bills');
   CollectionReference _paidsCollection = _firestore.collection('paids');
@@ -157,11 +155,7 @@ class AdminMethods {
         uid: docId,
         name: name,
         email: email,
-        address: address,
-        state: state,
-        pincode: pincode,
-        mobileNo: mobileNo.toString().trim(),
-        gstin: gstin);
+        mobileNo: mobileNo.toString().trim(),);
     _customerCollection.doc(docId).set(user.toMap(user));
   }
 
@@ -258,144 +252,7 @@ class AdminMethods {
     return product;
   }
 
-  // Future<void> addBorrowToDb(BorrowModel borrowModel) async {
-  //   QuerySnapshot docs = await _borrowsCollection.getDocuments();
-  //   List<DocumentSnapshot> docsList = docs.documents.toList();
-  //   bool isDataExists = false;
-  //   String existsBorrowId;
-  //   for (var doc in docsList) {
-  //     BorrowModel borrow = BorrowModel.fromMap(doc.data);
-  //     if (borrow.customerName == borrowModel.customerName) {
-  //       isDataExists = true;
-  //       existsBorrowId = borrow.borrowId;
-  //     }
-  //   }
-  //   //print(isDataExists);
-  //   if (isDataExists) {
-  //     //print(existsBorrowId);
-  //     await _borrowsCollection
-  //         .document(existsBorrowId)
-  //         .collection('same_user_borrow')
-  //         .document(borrowModel.borrowId)
-  //         .setData(borrowModel.toMap(borrowModel));
-  //   } else {
-  //     await _borrowsCollection
-  //         .document(borrowModel.borrowId)
-  //         .setData(borrowModel.toMap(borrowModel));
-  //   }
-  // }
 
-  Future<void> addBorrowToDb(Borrow borrow) async {
-    QuerySnapshot docs = await _borrowsCollection.get();
-    List<DocumentSnapshot> docsList = docs.docs.toList();
-    DocumentSnapshot recentBill =
-        await _billsCollection.doc(borrow.billId).get();
-    bool isDataExists = false;
-    String existsBorrowId;
-    for (var doc in docsList) {
-      Borrow oldBorrow = Borrow.fromMap(doc.data());
-      DocumentSnapshot billDoc =
-          await _billsCollection.doc(oldBorrow.billId).get();
-      Bill oldBill = Bill.fromMap(billDoc.data());
-      if (oldBill.mobileNo == recentBill['mobile_no']) {
-        isDataExists = true;
-        existsBorrowId = oldBorrow.borrowId;
-      }
-    }
-    if (isDataExists) {
-      _borrowsCollection
-          .doc(existsBorrowId)
-          .collection('same_user_borrow')
-          .doc(borrow.borrowId)
-          .set(borrow.toMap(borrow));
-    } else {
-      await _borrowsCollection.doc(borrow.borrowId).set(borrow.toMap(borrow));
-    }
-  }
-
-  // Future<int> getTotalAmountByBillId(String borrowId) async {
-  //   var amount = 0;
-  //   DocumentSnapshot doc = await _borrowsCollection.document(borrowId).get();
-  //   amount = amount + (doc.data['price'] - doc.data['given_amount']);
-
-  //   QuerySnapshot docs = await _borrowsCollection
-  //       .document(borrowId)
-  //       .collection('same_user_borrow')
-  //       .getDocuments();
-  //   List<DocumentSnapshot> docsList = docs.documents.toList();
-  //   for (var doc in docsList) {
-  //     BorrowModel borrowModel = BorrowModel.fromMap(doc.data);
-  //     amount = amount + (borrowModel.price - borrowModel.givenAmount);
-  //   }
-
-  //   return amount;
-  // }
-  Future<double> getTotalAmountByBorrowId(String borrowId) async {
-    double amount = 0;
-    DocumentSnapshot doc = await _borrowsCollection.doc(borrowId).get();
-    DocumentSnapshot billDoc = await _billsCollection.doc(doc['bill_id']).get();
-
-    amount = amount + (billDoc['price'] - billDoc['given_amount']);
-
-    QuerySnapshot docs = await _borrowsCollection
-        .doc(borrowId)
-        .collection('same_user_borrow')
-        .get();
-    List<DocumentSnapshot> docsList = docs.docs.toList();
-    for (var doc in docsList) {
-      Borrow borrow = Borrow.fromMap(doc.data());
-      DocumentSnapshot borrowDocSearch =
-          await _billsCollection.doc(borrow.billId).get();
-      Bill bill = Bill.fromMap(borrowDocSearch.data());
-      amount = amount + (bill.price - bill.givenAmount);
-    }
-
-    return amount;
-  }
-
-  Future<List<DocumentSnapshot>> getListOfBorrow(String borrowId) async {
-    QuerySnapshot docs = await _borrowsCollection
-        .doc(borrowId)
-        .collection('same_user_borrow')
-        .get();
-    List<DocumentSnapshot> docsList = docs.docs.toList();
-    // for (var doc in docsList) {
-    //   BorrowModel borrowModel = BorrowModel.fromMap(doc.data);
-    //   //print(borrowModel.borrowId);
-    // }
-    return docsList;
-  }
-
-  Stream<QuerySnapshot> getAllBorrowList() {
-    return _borrowsCollection.snapshots();
-  }
-
-  Future<double> totalAmountYouWillGet() async {
-    QuerySnapshot docs = await _borrowsCollection.get();
-    List<DocumentSnapshot> docList = docs.docs.toList();
-    double sum = 0;
-    for (var i = 0; i < docList.length; i++) {
-      Borrow borrow = Borrow.fromMap(docList[i].data());
-      QuerySnapshot manyBorrow = await _borrowsCollection
-          .doc(borrow.borrowId)
-          .collection('same_user_borrow')
-          .get();
-
-      List<DocumentSnapshot> sameUserborrowsList = manyBorrow.docs.toList();
-
-      DocumentSnapshot doc = await _billsCollection.doc(borrow.billId).get();
-      Bill bill = Bill.fromMap(doc.data());
-      sum = sum + (bill.price - bill.givenAmount);
-      for (var sameUserBorrow in sameUserborrowsList) {
-        Borrow lastborrow = Borrow.fromMap(sameUserBorrow.data());
-        DocumentSnapshot doc =
-            await _billsCollection.doc(lastborrow.billId).get();
-        Bill bill = Bill.fromMap(doc.data());
-        sum = sum + (bill.price - bill.givenAmount);
-      }
-    }
-    return sum;
-  }
 
   Future<List<DocumentSnapshot>> getAllBills() async {
     QuerySnapshot docs =
@@ -419,49 +276,12 @@ class AdminMethods {
     }
   }
 
-  Future<Borrow> getBorrowById(String borrowId) async {
-    DocumentSnapshot doc = await _borrowsCollection.doc(borrowId).get();
-    Borrow borrowModel = Borrow.fromMap(doc.data());
-    return borrowModel;
-  }
 
   Future<Product> getProductDetailsFromProductId(String productId) async {
     DocumentSnapshot doc = await _productCollection.doc(productId).get();
 
     Product product = Product.fromMap(doc.data());
     return product;
-  }
-
-  Future<List<Bill>> getBorrowListOfMe(UserModel currentUser) async {
-    QuerySnapshot docs = await _borrowsCollection.get();
-    List<DocumentSnapshot> docsList = docs.docs.toList();
-    List<Bill> myBorrowList = List();
-
-    // for (var doc in docsList) {
-    //   DocumentSnapshot myBill =
-    //       await _billsCollection.document(doc['bill_id']).get();
-
-    //   QuerySnapshot myList = await _billsCollection
-    //       .where('mobile_no',
-    //           isEqualTo: currentUser.mobileNo.replaceAll(' ', ''))
-    //       .getDocuments();
-    //   myBorrowList = myList.documents.toList();
-    // }
-    //print("currentUser.mobileNo:${currentUser.mobileNo}");
-    for (var doc in docsList) {
-      Borrow thisDoc = Borrow.fromMap(doc.data());
-      Bill bill = await getBillById(thisDoc.billId);
-      //print("bill.mobileNo:${bill.mobileNo}");
-      if (currentUser.mobileNo == bill.mobileNo) {
-        myBorrowList.add(bill);
-      }
-    }
-
-    // QuerySnapshot docs = await _borrowsCollection
-    //     .where('mobile_no', isEqualTo: currentUser.mobileNo.trim())
-    //     .getDocuments();
-
-    return myBorrowList;
   }
 
   Future<bool> addBillToDb(Bill bill) async {
@@ -533,43 +353,4 @@ class AdminMethods {
     return billsList;
   }
 
-  updateGivenAmount(Bill bill, double amount) async {
-    double totalAmount = bill.givenAmount + amount;
-    await _billsCollection.doc(bill.billId).set({'given_amount': totalAmount});
-
-    Bill recentBill = await getBillById(bill.billId);
-    //print(recentBill.isPaid);
-
-    double totalTax = 0;
-    for (var tax in recentBill.taxList) {
-      totalTax = totalTax + tax;
-    }
-    if (recentBill.isTax) {
-      if (recentBill.givenAmount.round() ==
-          (recentBill.price + (recentBill.price * (totalTax / 100))).round()) {
-        //print((recentBill.price + (recentBill.price * (totalTax / 100)))
-        // .round()
-        // .toString());
-        //print(recentBill.givenAmount.toString());
-        await _billsCollection.doc(bill.billId).update({'is_paid': true});
-        await _borrowsCollection.doc(recentBill.borrowId).delete();
-        await _borrowsCollection
-            .doc()
-            .collection('same_user_borrow')
-            .doc(recentBill.borrowId)
-            .delete();
-        String buyId = Utils.getDocId();
-        Paid paid = Paid(billId: recentBill.billId, buyId: buyId);
-        await _paidsCollection.doc(buyId).set(paid.toMap(paid));
-      }
-    } else {
-      if (recentBill.givenAmount.round() == totalAmount.round()) {
-        await _billsCollection.doc(bill.billId).update({'is_paid': true});
-        await _borrowsCollection.doc(recentBill.borrowId).delete();
-        String buyId = Utils.getDocId();
-        Paid paid = Paid(billId: recentBill.billId, buyId: buyId);
-        await _paidsCollection.doc(buyId).set(paid.toMap(paid));
-      }
-    }
-  }
 }

@@ -35,7 +35,7 @@ class _AddUnitState extends State<AddUnit> {
     return Scaffold(
         key: _scaffoldKey,
         appBar: CustomAppBar(
-            title: Text("Annai Store", style: Variables.appBarTextStyle),
+            title: Text("Stock Q", style: Variables.appBarTextStyle),
             actions: null,
             leading: IconButton(
                 icon: Icon(
@@ -122,7 +122,7 @@ class _AddUnitState extends State<AddUnit> {
                   stream: _adminMethods.fetchAllUnit(),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
-                      if (snapshot.data.documents.length != 0) {
+                      if (snapshot.data.docs.length != 0) {
                         return Column(
                           children: <Widget>[
                             Column(
@@ -172,14 +172,14 @@ class _AddUnitState extends State<AddUnit> {
                                   child: StreamBuilder(
                                     stream: _adminMethods.fetchAllUnit(),
                                     builder: (context, snapshot) {
-                                      var docs = snapshot.data.documents;
+                                      var docs = snapshot.data.docs;
                                       if (snapshot.hasData) {
                                         return ListView.builder(
                                           physics: BouncingScrollPhysics(),
                                           itemCount: docs.length,
                                           itemBuilder: (context, index) {
                                             Unit unit =
-                                                Unit.fromMap(docs[index].data);
+                                                Unit.fromMap(docs[index].data());
                                             return Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment.spaceAround,

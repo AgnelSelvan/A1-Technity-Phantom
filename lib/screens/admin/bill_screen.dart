@@ -5,7 +5,6 @@ import 'package:stock_q/models/paid.dart';
 import 'package:stock_q/models/product.dart';
 import 'package:stock_q/resources/admin_methods.dart';
 import 'package:stock_q/screens/admin/add/add_product.dart';
-import 'package:stock_q/screens/admin/borrow/borrow.dart';
 import 'package:stock_q/screens/custom_loading.dart';
 import 'package:stock_q/screens/root_screen.dart';
 import 'package:stock_q/utils/universal_variables.dart';
@@ -85,7 +84,7 @@ class _BillScreenState extends State<BillScreen> {
         backgroundColor: Variables.lightGreyColor,
         appBar: CustomAppBar(
             bgColor: Colors.white,
-            title: Text("Annai Store", style: Variables.appBarTextStyle),
+            title: Text("Stock Q", style: Variables.appBarTextStyle),
             actions: null,
             leading: GestureDetector(
               onTap: () {
@@ -242,38 +241,7 @@ class _BillScreenState extends State<BillScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        buildRaisedButton('Borrow', Colors.red[300], Colors.white, () {
-          Navigator.push(
-              context,
-              BouncyPageRoute(
-                  widget: BorrowScreen(
-                productListId: productListId,
-                qtyList: qtyList,
-                productList: productList,
-                sellingRateList: sellingRateList,
-                totalPrice: totalPrice,
-                billNo: _billNumberController.text,
-                taxList: taxList,
-                isTax: _isTaxCheckBox,
-              )));
-        }),
         buildRaisedButton('Paid', Colors.green[300], Colors.white, () {
-          // Buys buys = Buys(
-          //     buyId: Utils.getDocId(),
-          //     productList: productList,
-          //     productListId: productListId,
-          //     qtyList: qtyList,
-          //     taxList: taxList,
-          //     sellingRateList: sellingRateList,
-          //     price: totalPrice.toInt(),
-          //     billNo: _billNumberController.text,
-          //     isTax: _isTaxCheckBox,
-          //     isPaid: true,
-          //     timestamp: Timestamp.now());
-          // _adminMethods.addBuyedDetailsToDb(buys);
-          // Navigator.pop(context);
-          // Dialogs.okDialog(
-          //     context, 'Successfull', 'Added Successfully', Colors.green[200]);
           showDialog(
               context: context,
               builder: (context) {

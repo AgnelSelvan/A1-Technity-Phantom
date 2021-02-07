@@ -42,103 +42,6 @@ class AuthScreenState extends State<AuthScreen> {
   bool viewGoogleVisible = false;
   bool viewEmailVisible = true;
 
-  void mobileLogin() {
-    _auth.verifyPhoneNumber(
-        phoneNumber: '$countryCode${phoneNumberController.text}'.trim(),
-        timeout: Duration(seconds: 60),
-        verificationCompleted: (PhoneAuthCredential credential) async {
-          // Navigator.pop(context);
-          // FirebaseAuth authResult = await _auth.signInWithCredential(credential.token);
-          // FirebaseUser user = authResult.user;
-          // if (user != null) {
-          //   authenticateUserByPhoneLogin(user);
-          //   //print(user.phoneNumber);
-          //   //print("Login In");
-          // }
-        },
-        verificationFailed: (FirebaseAuthException authException) {
-          Dialogs.okDialog(
-              context, 'Error', authException.message, Colors.red[200]);
-          //print(authException.message);
-        },
-        codeSent: (String verificationId, [int forceResendingCode]) {
-          showDialog(
-              context: context,
-              barrierDismissible: false,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
-                  title: Text("Enter Code"),
-                  content: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 15),
-                    decoration: BoxDecoration(
-                        color: Colors.yellow[100],
-                        borderRadius: BorderRadius.circular(8)),
-                    child: TextFormField(
-                      cursorColor: Variables.primaryColor,
-                      validator: (value) {
-                        if (value.isEmpty)
-                          return "You cannot have an empty code!";
-                      },
-                      maxLines: 1,
-                      keyboardType: TextInputType.number,
-                      style: Variables.inputTextStyle,
-                      decoration: InputDecoration(
-                          border: InputBorder.none, hintText: '*****'),
-                      controller: codeController,
-                    ),
-                  ),
-                  actions: <Widget>[
-                    buildRaisedButton('Confirm'.toUpperCase(), Colors.white,
-                        Variables.primaryColor, () async {
-                      final code = codeController.text.trim();
-                      // AuthCredential credential =
-                      //     PhoneAuthProvider.getCredential(
-                      //         verificationId: verificationId, smsCode: code);
-
-                      // AuthResult result =
-                      //     await _auth.signInWithCredential(credential);
-
-                      // FirebaseUser user = result.user;
-                      // if (user != null) {
-                      //   authenticateUserByPhoneLogin(user);
-                      //   //print("Login In");
-                      // } else {
-                      //   //print("Erro");
-                      // }
-                      Navigator.pop(context);
-                      codeController.clear();
-                    })
-                  ],
-                );
-              });
-        },
-        codeAutoRetrievalTimeout: null);
-  }
-
-  authenticateUserByPhoneLogin(User user) {
-    _authMethods.authenticateUserByPhone(user).then((isNewUser) {
-      setState(() {
-        isLoading = false;
-      });
-
-      if (isNewUser) {
-        _authMethods.addPhoneDataToDb(user).then((value) {
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) {
-            return RootScreen();
-          }));
-        });
-      } else {
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) {
-          return RootScreen();
-        }));
-      }
-    });
-  }
-
   checkInternet() async {
     DataConnectionStatus checker = await _authMethods.checkInternet();
     if (checker == DataConnectionStatus.disconnected) {
@@ -156,18 +59,18 @@ class AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // viewPhoneVisible ? buildPhoneUI() : Container(),
             viewEmailVisible
                 ? isNew
                     ? signUp()
                     : login()
                 : Container(),
- Column(
+            Column(
               children: [
                 SizedBox(height: 15),
                 Text(
@@ -226,126 +129,6 @@ class AuthScreenState extends State<AuthScreen> {
             )
           ],
         ),
-      ),
-    );
-    // return Scaffold(
-    //   body: Stack(
-    //     children: [
-    //       Center(
-    //         child: isNew ? signUp() : login(),
-    //       ),
-    //       isLoading
-    //           ? Center(
-    //               child: CustomCircularLoading(),
-    //             )
-    //           : Container()
-    //     ],
-    //   ),
-    // );
-  }
-
-  buildPhoneUI() {
-    return Visibility(
-      maintainSize: true,
-      maintainAnimation: true,
-      maintainState: true,
-      visible: viewPhoneVisible,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 25),
-        child: Container(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    "Phone",
-                    style: TextStyle(
-                        fontSize: 28,
-                        color: Variables.primaryColor,
-                        fontWeight: FontWeight.bold),
-                  )),
-              SizedBox(height: 20),
-              Form(
-                  key: _formKey,
-                  child: Column(
-                    children: <Widget>[
-                      Row(
-                        children: [
-                          Container(
-                            child: CountryCodePicker(
-                              onChanged: (CountryCode value) {
-                                setState(() {
-                                  countryCode = value.dialCode;
-                                });
-                              },
-                              initialSelection: '+91',
-                              favorite: ['+91', 'IND'],
-                              showCountryOnly: false,
-                              // optional. Shows only country name and flag when popup is closed.
-                              showOnlyCountryWhenClosed: false,
-                              onInit: (code) => print(
-                                  "on init ${code.name} ${code.dialCode} ${code.name}"),
-                              alignLeft: false,
-                            ),
-                          ),
-                          buildPhoneNumberField(),
-                        ],
-                      ),
-                      SizedBox(height: 20),
-                      buildRaisedButton('Login'.toUpperCase(),
-                          Variables.primaryColor, Colors.white, () {
-                        if (_formKey.currentState.validate()) {
-                          //print(countryCode);
-                          mobileLogin();
-                        }
-                      }),
-                    ],
-                  )),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  buildPhoneNumberField() {
-    return Container(
-      width: MediaQuery.of(context).size.width / 1.7,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            "Mobile Number",
-            style: Variables.inputLabelTextStyle,
-          ),
-          SizedBox(height: 4),
-          Container(
-            height: 48,
-            padding: EdgeInsets.symmetric(horizontal: 8),
-            decoration: BoxDecoration(
-                color: Colors.grey[200],
-                borderRadius: BorderRadius.circular(8)),
-            child: TextFormField(
-              controller: phoneNumberController,
-              maxLines: 1,
-              keyboardType: TextInputType.number,
-              style: Variables.inputTextStyle,
-              decoration: InputDecoration(
-                  border: InputBorder.none, hintText: '123456789'),
-              validator: (String value) {
-                if (value.isEmpty) {
-                  return 'Mobile number is Required';
-                }
-                if (value.length != 10) {
-                  return 'Invalid Mobile number!';
-                }
-
-                return null;
-              },
-            ),
-          ),
-        ],
       ),
     );
   }
@@ -706,14 +489,12 @@ class AuthScreenState extends State<AuthScreen> {
 
       if (isNewUser) {
         _authMethods.addGoogleDataToDb(user).then((value) {
-          updateMobileNumber(user);
           Navigator.pushReplacement(context,
               MaterialPageRoute(builder: (context) {
             return RootScreen();
           }));
         });
       } else {
-        updateMobileNumber(user);
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context) {
           return RootScreen();
@@ -722,48 +503,4 @@ class AuthScreenState extends State<AuthScreen> {
     });
   }
 
-  updateMobileNumber(User user) {
-    _authMethods.isPhoneNoExists(user).then((bool isPhoneExists) {
-      if (!isPhoneExists) {
-        showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10)),
-                title: Text("Enter Code"),
-                content: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 15),
-                  decoration: BoxDecoration(
-                      color: Colors.yellow[100],
-                      borderRadius: BorderRadius.circular(8)),
-                  child: TextFormField(
-                    cursorColor: Variables.primaryColor,
-                    validator: (value) {
-                      if (value.isEmpty)
-                        return "You cannot have an Mobile number!";
-                    },
-                    maxLines: 1,
-                    keyboardType: TextInputType.number,
-                    style: Variables.inputTextStyle,
-                    decoration: InputDecoration(
-                        border: InputBorder.none, hintText: '1234567890'),
-                    controller: phoneNumberController,
-                  ),
-                ),
-                actions: <Widget>[
-                  buildRaisedButton('Confirm'.toUpperCase(), Colors.white,
-                      Variables.primaryColor, () async {
-                    _authMethods.updateMobileNumber(
-                        phoneNumberController.text, user);
-                    Navigator.pop(context);
-                    phoneNumberController.clear();
-                  })
-                ],
-              );
-            });
-      }
-    });
-  }
 }

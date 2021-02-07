@@ -19,7 +19,7 @@ class _ChatScreenState extends State<ChatScreen> {
     return Scaffold(
       appBar: CustomAppBar(
           bgColor: Colors.white,
-          title: Text("Annai Store", style: Variables.appBarTextStyle),
+          title: Text("Stock Q", style: Variables.appBarTextStyle),
           actions: null,
           leading: GestureDetector(
             onTap: () {
