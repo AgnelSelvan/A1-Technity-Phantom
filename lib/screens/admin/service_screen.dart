@@ -29,6 +29,8 @@ class ServiceScreen extends StatefulWidget {
 
 class _ServiceScreenState extends State<ServiceScreen> {
   TextEditingController _billNumberController = TextEditingController();
+  TextEditingController serviceReasonController = TextEditingController();
+  TextEditingController serviceAmountController = TextEditingController();
   
   Future<void> scanQR() async {
     String barcodeScanRes;
@@ -73,7 +75,185 @@ class _ServiceScreenState extends State<ServiceScreen> {
               ),
             ),
             centerTitle: true),
-      body: Text("Hello"),
+      body: ListView(
+          physics: const BouncingScrollPhysics(),
+          children: <Widget>[
+            Container(
+              padding: EdgeInsets.only(left: 5),
+              color: Colors.white,
+              child: Card(
+                elevation: 3,
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+                  child: Column(
+                    children: <Widget>[
+                      BuildHeader(
+                        text: "SERVICES",
+                      ),
+                      SizedBox(
+                        height: 25,
+                      ),
+                      buildBillNoField(),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      buildServiceReasonField(),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      buildAmountField(),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      buildBottomContainer()
+
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
     );
   }
+  
+  buildBottomContainer() {
+    return buildRaisedButton('Paid', Colors.green[300], Colors.white, () {
+      showDialog(
+          context: context,
+          builder: (context) {
+            TextEditingController _customerNameController =
+                TextEditingController();
+            return AlertDialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10)),
+              title: Text("Enter Customer Name"),
+              content: Container(
+                padding: EdgeInsets.symmetric(horizontal: 5),
+                decoration: BoxDecoration(
+                    color: Colors.grey[100],
+                    borderRadius: BorderRadius.circular(8)),
+                child: TextFormField(
+                  cursorColor: Variables.primaryColor,
+                  validator: (value) {
+                    if (value.trim().isEmpty)
+                      return "You cannot have an empty name!";
+                    return null;
+                  },
+                  maxLines: 1,
+                  style: Variables.inputTextStyle,
+                  decoration: InputDecoration(
+                      prefixIcon: Icon(
+                        Icons.person,
+                        size: 16,
+                      ),
+                      border: InputBorder.none,
+                      hintText: 'Ram'),
+                  controller: _customerNameController,
+                ),
+              ),
+              actions: [
+                buildRaisedButton(
+                    "Confirm", Variables.primaryColor, Colors.white,
+                    () async {
+                  //print(_customerNameController.text);
+                  
+                  // bool isBillSubmitted =
+                  //     await _adminMethods.addBillToDb(bill);
+                  // if (isBillSubmitted) {
+                  //   _adminMethods.addBuyToDb(paid);
+                  //   Navigator.pushAndRemoveUntil(
+                  //       context,
+                  //       BouncyPageRoute(widget: RootScreen()),
+                  //       (route) => true);
+                  //   Dialogs.okDialog(context, 'Successfull',
+                  //       'Added Successfully', Colors.green[200]);
+                  // } else {
+                  //   Dialogs.okDialog(context, 'Error',
+                  //       'Somthing went wrong', Colors.red[200]);
+                  // }
+                })
+              ],
+            );
+          });
+    });
+  }
+
+  buildBillNoField() {
+    return Row(
+      children: [
+        Expanded(
+          child: Container(
+            height: 48,
+            padding: EdgeInsets.symmetric(horizontal: 15),
+            decoration: BoxDecoration(
+                color: Colors.yellow[100],
+                borderRadius: BorderRadius.circular(8)),
+            child: TextField(
+              enabled: false,
+              maxLines: 1,
+              style: Variables.inputTextStyle,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                  border: InputBorder.none, hintText: 'Bill number'),
+              controller: _billNumberController,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+
+  buildServiceReasonField() {
+    return Row(
+      children: [
+        Expanded(
+          child: Container(
+            height: 48,
+            padding: EdgeInsets.symmetric(horizontal: 15),
+            decoration: BoxDecoration(
+                color: Colors.yellow[100],
+                borderRadius: BorderRadius.circular(8)),
+            child: TextField(
+              enabled: false,
+              maxLines: 1,
+              style: Variables.inputTextStyle,
+              keyboardType: TextInputType.text,
+              decoration: InputDecoration(
+                  border: InputBorder.none, hintText: 'Service Reason'),
+              controller: serviceReasonController,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  buildAmountField() {
+    return Row(
+      children: [
+        Expanded(
+          child: Container(
+            height: 48,
+            padding: EdgeInsets.symmetric(horizontal: 15),
+            decoration: BoxDecoration(
+                color: Colors.yellow[100],
+                borderRadius: BorderRadius.circular(8)),
+            child: TextField(
+              enabled: false,
+              maxLines: 1,
+              style: Variables.inputTextStyle,
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                  border: InputBorder.none, hintText: 'Enter Service Amount'),
+              controller: serviceAmountController,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
 }
