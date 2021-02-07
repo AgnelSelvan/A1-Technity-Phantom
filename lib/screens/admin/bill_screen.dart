@@ -82,9 +82,9 @@ class _BillScreenState extends State<BillScreen> {
     }
 
     if (!mounted) return;
-    final bool isQrExists = await _adminMethods.isQrExists(barcodeScanRes);
+
     setState(() {
-      _codeFieldController = TextEditingController(text: barcodeScanRes);
+      _billNumberController = TextEditingController(text: barcodeScanRes);
     });
   
   }
@@ -108,7 +108,7 @@ class _BillScreenState extends State<BillScreen> {
             actions:  [
               IconButton(
                   icon: Icon(
-                    FontAwesome.barcode,
+                    FontAwesome.qrcode,
                     color: Variables.primaryColor,
                   ),
                   onPressed: () => scanQR())

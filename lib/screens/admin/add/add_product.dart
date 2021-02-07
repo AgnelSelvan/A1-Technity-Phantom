@@ -57,7 +57,7 @@ class _AddProductState extends State<AddProduct> {
             actions: [
               IconButton(
                   icon: Icon(
-                    FontAwesome.barcode,
+                    FontAwesome.qrcode,
                     color: Variables.primaryColor,
                   ),
                   onPressed: () => scanQR())

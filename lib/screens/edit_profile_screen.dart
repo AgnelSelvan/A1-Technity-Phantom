@@ -215,33 +215,35 @@ class _EditScreenState extends State<EditScreen> {
         TextEditingController(text: currentUser.username ?? '');
 
     Widget _buildUsername(String username) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            "Username",
-            style: Variables.inputLabelTextStyle,
-          ),
-          SizedBox(height: 4),
-          Container(
-            height: 48,
-            padding: EdgeInsets.symmetric(horizontal: 8),
-            decoration: BoxDecoration(
-                color: Colors.grey[200],
-                borderRadius: BorderRadius.circular(8)),
-            child: TextFormField(
-              maxLines: 1,
-              style: Variables.inputTextStyle,
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
-                  border: InputBorder.none, hintText: 'yourname'),
-              controller: userNameController,
-              validator: (value) =>
-                  value.isEmpty ? 'Username can\'t be empty' : null,
-              onSaved: (value) => _username = value.trim(),
+      return SingleChildScrollView(
+              child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              "Username",
+              style: Variables.inputLabelTextStyle,
             ),
-          )
-        ],
+            SizedBox(height: 4),
+            Container(
+              height: 48,
+              padding: EdgeInsets.symmetric(horizontal: 8),
+              decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  borderRadius: BorderRadius.circular(8)),
+              child: TextFormField(
+                maxLines: 1,
+                style: Variables.inputTextStyle,
+                keyboardType: TextInputType.emailAddress,
+                decoration: InputDecoration(
+                    border: InputBorder.none, hintText: 'yourname'),
+                controller: userNameController,
+                validator: (value) =>
+                    value.isEmpty ? 'Username can\'t be empty' : null,
+                onSaved: (value) => _username = value.trim(),
+              ),
+            )
+          ],
+        ),
       );
     }
 

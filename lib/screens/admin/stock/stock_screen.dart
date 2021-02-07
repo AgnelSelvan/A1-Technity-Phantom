@@ -42,7 +42,7 @@ class _StockScreenState extends State<StockScreen>
           actions: [
             IconButton(
                 icon: Icon(
-                  FontAwesome.barcode,
+                  FontAwesome.qrcode,
                   color: Variables.primaryColor,
                 ),
                 onPressed: () {

@@ -106,7 +106,7 @@ class _AddStockState extends State<AddStock> {
               ),
             ),
             Icon(
-              FontAwesome.barcode,
+              FontAwesome.qrcode,
               color: Colors.grey,
             ),
             Icon(
@@ -141,7 +141,7 @@ class _AddStockState extends State<AddStock> {
               ),
             ),
             Icon(
-              FontAwesome.barcode,
+              FontAwesome.qrcode,
               color: Colors.grey,
             ),
             Icon(
