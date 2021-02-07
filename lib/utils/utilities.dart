@@ -2,18 +2,48 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:pdf/pdf.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:permission_handler/permission_handler.dart';
 import 'package:stock_q/models/bill.dart';
-import 'package:stock_q/widgets/dialogs.dart';
+
+import 'size_utils.dart';
 
 class Utils {
   static String getUsername(String email) {
     return "${email.split('@')[0]}";
+  }
+
+  static Widget noInternet() {
+    return Center(
+        child: Text(
+      'No Internet',
+      style: Get.textTheme.headline5,
+    ));
+  }
+
+  static Widget waitingScreen() {
+    return Scaffold(
+      body: Stack(
+        children: [
+          Center(
+              child: Text(
+            'STOCK Q',
+            style: Get.textTheme.headline5,
+          )),
+          Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                  margin: EdgeInsets.only(
+                      bottom: (SizeUtils.screenHeight / 100) * 4.92),
+                  child: CircularProgressIndicator())),
+        ],
+      ),
+    );
   }
 
   static String getUniqueId() {

@@ -60,6 +60,12 @@ dependencies:
   printing:
   firebase_database:
 
+  # For Easy Authentication and other...
+  get:
+
+  # Check Internet Connectivity as Stream
+  connectivity_widget:
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

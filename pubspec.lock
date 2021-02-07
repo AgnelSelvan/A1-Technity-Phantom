@@ -92,6 +92,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.15.0-nullsafety.3"
+  connectivity_widget:
+    dependency: "direct main"
+    description:
+      name: connectivity_widget
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.7"
   contacts_service:
     dependency: "direct main"
     description:
@@ -303,6 +310,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.2"
+  get:
+    dependency: "direct main"
+    description:
+      name: get
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.24.0"
   google_maps_flutter:
     dependency: "direct main"
     description:
@@ -554,7 +568,7 @@ packages:
       name: rxdart
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.25.0"
+    version: "0.24.1"
   save_in_gallery:
     dependency: "direct main"
     description:
@@ -611,6 +625,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.0.2+3"
+  simple_connectivity:
+    dependency: transitive
+    description:
+      name: simple_connectivity
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.1"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -658,6 +679,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0-nullsafety.1"
+  stream_disposable:
+    dependency: transitive
+    description:
+      name: stream_disposable
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.0"
   stream_transform:
     dependency: transitive
     description:
