@@ -26,7 +26,6 @@ dependencies:
   cupertino_icons:
   flutter_icons:
   provider:
-  shared_preferences:
   expandable:
   google_maps_flutter:
   cloud_firestore:
