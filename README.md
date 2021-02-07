@@ -18,3 +18,9 @@ Download the project and run
 flutter pub get
 
 and run your project
+
+## Some Screenshots of our work
+
+- Authentication
+
+![](https://raw.githubusercontent.com/AgnelSelvan/A1-Technity-Phantom/master/screenshots/login.jpg) | ![](https://raw.githubusercontent.com/AgnelSelvan/A1-Technity-Phantom/master/screenshots/signup.jpg)
