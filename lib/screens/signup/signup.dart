@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:get/get.dart';
 import 'package:stock_q/resources/auth.dart';
+import 'package:stock_q/resources/auth_controller.dart';
 import 'package:stock_q/resources/auth_methods.dart';
 import 'package:stock_q/screens/root_screen.dart';
 import 'package:stock_q/utils/size_utils.dart';
@@ -54,18 +55,22 @@ class _SignUpState extends State<SignUp> {
   }
 
   void authenticateUserByGoogleLogin(User user) {
-    _authMethods.authenticateUserByEmailId(user).then((isNewUser) {
+    _authMethods.authenticateUserByEmailId(user).then((isNewUser) async {
       loading = false;
       handleState();
 
+      AuthController authController = Get.put(AuthController());
+
       if (isNewUser) {
-        _authMethods.addGoogleDataToDb(user).then((value) {
+        _authMethods.addGoogleDataToDb(user).then((value) async {
+          await authController.getUserData();
           Navigator.pushReplacement(context,
               MaterialPageRoute(builder: (context) {
             return RootScreen();
           }));
         });
       } else {
+        await authController.getUserData();
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context) {
           return RootScreen();
@@ -180,6 +185,11 @@ class _SignUpState extends State<SignUp> {
                                 await _authMethods.addUserDataToDb(
                                     user, userNameController.text);
                               }
+
+                              AuthController authController =
+                                  Get.put(AuthController());
+
+                              await authController.getUserData();
 
                               Navigator.of(Get.context).pushAndRemoveUntil(
                                   MaterialPageRoute(
