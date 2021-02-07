@@ -27,7 +27,6 @@ dependencies:
   flutter_icons:
   provider:
   expandable:
-  google_maps_flutter:
   cloud_firestore:
   firebase_auth: ^0.20.0+1
   google_sign_in:

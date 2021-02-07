@@ -10,11 +10,10 @@ import 'package:stock_q/resources/auth_methods.dart';
 import 'package:stock_q/screens/admin/add/add_product.dart';
 import 'package:stock_q/screens/admin/product_details.dart';
 import 'package:stock_q/screens/canvas_screen.dart';
-import 'package:stock_q/screens/thread_screen.dart';
+import 'package:stock_q/screens/bag_screen.dart';
 import 'package:stock_q/utils/universal_variables.dart';
 import 'package:stock_q/widgets/bouncy_page_route.dart';
 import 'package:stock_q/widgets/custom_appbar.dart';
-import 'package:stock_q/widgets/map.dart';
 import 'package:stock_q/widgets/widgets.dart';
 
 AdminMethods _adminMethods = AdminMethods();
@@ -112,6 +111,7 @@ class _HomeScreenState extends State<HomeScreen>
                 letterSpacing: 1,
                 color: Theme.of(context).accentColor,
                 fontWeight: FontWeight.w400)),
+                leading: null,
         actions: [
           IconButton(
               icon: Icon(FontAwesome.qrcode,
@@ -185,13 +185,13 @@ class _HomeScreenState extends State<HomeScreen>
                     )),
               ),
               Tab(
-                child: Text('Paper Canvas',
+                child: Text('Shoes',
                     style: TextStyle(
                       fontSize: 18.0,
                     )),
               ),
               Tab(
-                child: Text('Rolls',
+                child: Text('Shirts',
                     style: TextStyle(
                       fontSize: 18.0,
                     )),
@@ -202,15 +202,10 @@ class _HomeScreenState extends State<HomeScreen>
             width: double.infinity,
             child: TabBarView(controller: _tabController, children: [
               BagScreen(),
-              CanvasScreen(),
+              BagScreen(),
               BagScreen(),
             ])),
         SizedBox(height: 15.0),
-        Container(
-          width: MediaQuery.of(context).size.width * 0.9,
-          height: 300,
-          child: BuildMap(),
-        )
       ],
     );
   }

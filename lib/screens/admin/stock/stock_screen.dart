@@ -319,7 +319,7 @@ class Card1 extends StatelessWidget {
                   color: Variables.primaryColor,
                   shape: BoxShape.rectangle,
                 ),
-                child: Image.asset('assets/images/vardham-thread.jpg'),
+                child: Image.asset('assets/images/bag.jpg'),
               ),
             ),
             ScrollOnExpand(
@@ -465,7 +465,7 @@ class Card2 extends StatelessWidget {
                   color: Colors.orange,
                   shape: BoxShape.rectangle,
                 ),
-                child: Image.asset('assets/images/paper-canvas.jpg'),
+                child: Image.asset('assets/images/bag.jpg'),
               ),
             ),
             ScrollOnExpand(

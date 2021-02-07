@@ -20,13 +20,13 @@ class BagScreen extends StatelessWidget {
                 children: <Widget>[
                   BuildThreadCard(
                     name: 'Vardhaman Thread(100m)',
-                    imgPath: 'assets/images/vardham-thread.jpg',
+                    imgPath: 'assets/images/bag.jpg',
                     isFavorite: true,
                     context: context,
                   ),
                   BuildThreadCard(
                     name: 'Ameto cream(100m)',
-                    imgPath: 'assets/images/vardham-thread.jpg',
+                    imgPath: 'assets/images/bag.jpg',
                     isFavorite: true,
                     context: context,
                   ),
@@ -56,13 +56,13 @@ class BagScreen extends StatelessWidget {
                             children: <Widget>[
                               BuildThreadCard(
                                 name: 'Vardhaman Thread(500m)',
-                                imgPath: 'assets/images/vardham-thread.jpg',
+                                imgPath: 'assets/images/bag.jpg',
                                 isFavorite: false,
                                 context: context,
                               ),
                               BuildThreadCard(
                                 name: 'Coats Thread(100m)',
-                                imgPath: 'assets/images/vardham-thread.jpg',
+                                imgPath: 'assets/images/bag.jpg',
                                 isFavorite: false,
                                 context: context,
                               ),
@@ -165,7 +165,7 @@ class BuildThreadCard extends StatelessWidget {
                           child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                Text('1 Box',
+                                Text('2 Bag',
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: Variables.blackColor,
@@ -185,7 +185,7 @@ class BuildThreadCard extends StatelessWidget {
                       Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            Text('1 Thread',
+                            Text('1 Bag',
                                 style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: Variables.blackColor,

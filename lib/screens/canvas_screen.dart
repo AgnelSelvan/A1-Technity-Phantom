@@ -20,13 +20,13 @@ class CanvasScreen extends StatelessWidget {
                 children: <Widget>[
                   BuildCanvasCard(
                     name: 'Paper Canvas',
-                    imgPath: 'assets/images/paper-canvas.jpg',
+                    imgPath: 'assets/images/bag.jpg',
                     isFavorite: true,
                     context: context,
                   ),
                   BuildCanvasCard(
                     name: 'Cookie cream',
-                    imgPath: 'assets/images/paper-canvas.jpg',
+                    imgPath: 'assets/images/bag.jpg',
                     isFavorite: true,
                     context: context,
                   ),
@@ -56,13 +56,13 @@ class CanvasScreen extends StatelessWidget {
                             children: <Widget>[
                               BuildCanvasCard(
                                 name: 'Cookie mint',
-                                imgPath: 'assets/images/paper-canvas.jpg',
+                                imgPath: 'assets/images/bag.jpg',
                                 isFavorite: false,
                                 context: context,
                               ),
                               BuildCanvasCard(
                                 name: 'Cookie mint',
-                                imgPath: 'assets/images/paper-canvas.jpg',
+                                imgPath: 'assets/images/bag.jpg',
                                 isFavorite: false,
                                 context: context,
                               ),

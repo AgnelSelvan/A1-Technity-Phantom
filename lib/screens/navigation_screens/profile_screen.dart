@@ -324,18 +324,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           },
                         )
                             : Container(),
-                        isAdmin
-                            ? CustomTile(
-                          text: "Tax Report",
-                          icon: FontAwesome.hand_paper_o,
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                BouncyPageRoute(
-                                    widget: TaxReport()));
-                          },
-                        )
-                            : Container(),
+                        // isAdmin
+                        //     ? CustomTile(
+                        //   text: "Tax Report",
+                        //   icon: FontAwesome.hand_paper_o,
+                        //   onTap: () {
+                        //     Navigator.push(
+                        //         context,
+                        //         BouncyPageRoute(
+                        //             widget: TaxReport()));
+                        //   },
+                        // )
+                        //     : Container(),
                         isAdmin
                             ? CustomTile(
                           text: "History",
