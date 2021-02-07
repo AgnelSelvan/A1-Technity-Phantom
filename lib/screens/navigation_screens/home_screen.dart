@@ -10,7 +10,6 @@ import 'package:stock_q/resources/auth_methods.dart';
 import 'package:stock_q/screens/admin/add/add_product.dart';
 import 'package:stock_q/screens/admin/product_details.dart';
 import 'package:stock_q/screens/canvas_screen.dart';
-import 'package:stock_q/screens/map_screen.dart';
 import 'package:stock_q/screens/thread_screen.dart';
 import 'package:stock_q/utils/universal_variables.dart';
 import 'package:stock_q/widgets/bouncy_page_route.dart';
@@ -119,30 +118,6 @@ class _HomeScreenState extends State<HomeScreen>
                   color: Theme.of(context).accentColor),
               onPressed: () => scanQR())
         ],
-        leading: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: CircleAvatar(
-            radius: 10,
-            backgroundColor: Theme.of(context).primaryColor,
-            backgroundImage: isDarkTheme
-                ? AssetImage('assets/images/logo/dark-theme-logo.png')
-                : AssetImage('assets/images/logo/light-theme-logo.png'),
-            child: GestureDetector(
-              onDoubleTap: () async {
-                // isDarkTheme = !isDarkTheme;
-                // if (isDarkTheme) {
-                //   themeNotifier.setTheme(darkTheme);
-                // } else {
-                //   themeNotifier.setTheme(lightTheme);
-                // }
-                // var prefs = await SharedPreferences.getInstance();
-                // prefs.setBool('darkMode', isDarkTheme);
-
-                // //print("Dark Theme");
-              },
-            ),
-          ),
-        ),
         centerTitle: true,
       ),
       body: Container(
@@ -204,7 +179,7 @@ class _HomeScreenState extends State<HomeScreen>
             unselectedLabelColor: Color(0xFFCDCDCD),
             tabs: [
               Tab(
-                child: Text('Threads',
+                child: Text('Bags',
                     style: TextStyle(
                       fontSize: 18.0,
                     )),
@@ -226,21 +201,10 @@ class _HomeScreenState extends State<HomeScreen>
             height: MediaQuery.of(context).size.height / 2.3,
             width: double.infinity,
             child: TabBarView(controller: _tabController, children: [
-              ThreadScreen(),
+              BagScreen(),
               CanvasScreen(),
-              ThreadScreen(),
+              BagScreen(),
             ])),
-        SizedBox(height: 15.0),
-        GestureDetector(
-          onTap: () {
-            Navigator.push(context, BouncyPageRoute(widget: MapScreen()));
-          },
-          child: Text('Location',
-              style: TextStyle(
-                  fontSize: 28.0,
-                  color: Variables.blackColor,
-                  fontWeight: FontWeight.bold)),
-        ),
         SizedBox(height: 15.0),
         Container(
           width: MediaQuery.of(context).size.width * 0.9,

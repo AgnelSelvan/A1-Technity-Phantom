@@ -71,7 +71,7 @@ class _StockScreenState extends State<StockScreen>
                                       child: Container(
                                     margin: EdgeInsets.only(top: 8.0),
                                     child: FlatButton(
-                                      color: Variables.lightPrimaryColor,
+                                      color: Colors.yellow[100],
                                       child: new Text(
                                         "Single Product",
                                         style: TextStyle(
@@ -89,7 +89,7 @@ class _StockScreenState extends State<StockScreen>
                                       child: Container(
                                     margin: EdgeInsets.only(top: 8.0),
                                     child: FlatButton(
-                                      color: Variables.lightPrimaryColor,
+                                      color: Colors.yellow[100],
                                       child: new Text(
                                         "Bulk Product",
                                         style: TextStyle(

@@ -250,19 +250,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                             AddCategory()));
                                                   },
                                                 ),
-                                                CustomTile(
-                                                  text:
-                                                  "Add Sub-Category",
-                                                  icon: FontAwesome
-                                                      .list_alt,
-                                                  onTap: () {
-                                                    Navigator.push(
-                                                        context,
-                                                        BouncyPageRoute(
-                                                            widget:
-                                                            AddSubCategory()));
-                                                  },
-                                                ),
+                                                // CustomTile(
+                                                //   text:
+                                                //   "Add Sub-Category",
+                                                //   icon: FontAwesome
+                                                //       .list_alt,
+                                                //   onTap: () {
+                                                //     Navigator.push(
+                                                //         context,
+                                                //         BouncyPageRoute(
+                                                //             widget:
+                                                //             AddSubCategory()));
+                                                //   },
+                                                // ),
                                                 CustomTile(
                                                   text: "Add Product",
                                                   icon: FontAwesome
@@ -275,23 +275,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                             AddProduct()));
                                                   },
                                                 ),
-                                                CustomTile(
-                                                  text: "Add Unit",
-                                                  icon: Icons.ac_unit,
-                                                  onTap: () {
-                                                    Navigator.push(
-                                                        context,
-                                                        BouncyPageRoute(
-                                                            widget:
-                                                            AddUnit()));
-                                                  },
-                                                ),
-                                                CustomTile(
-                                                  text:
-                                                  "Add Regular Customer",
-                                                  icon: Icons.report,
-                                                  onTap: () {},
-                                                )
+                                                // CustomTile(
+                                                //   text: "Add Unit",
+                                                //   icon: Icons.ac_unit,
+                                                //   onTap: () {
+                                                //     Navigator.push(
+                                                //         context,
+                                                //         BouncyPageRoute(
+                                                //             widget:
+                                                //             AddUnit()));
+                                                //   },
+                                                // ),
+                                                // CustomTile(
+                                                //   text:
+                                                //   "Add Regular Customer",
+                                                //   icon: Icons.report,
+                                                //   onTap: () {},
+                                                // )
                                               ],
                                             ),
                                           ))))
@@ -348,14 +348,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           },
                         )
                             : Container(),
-                        CustomTile(
-                          text: "Tax Calculator",
-                          icon: FontAwesome.calculator,
-                          onTap: () {
-                            Navigator.push(context,
-                                BouncyPageRoute(widget: TaxCalculator()));
-                          },
-                        ),
+                        // CustomTile(
+                        //   text: "Tax Calculator",
+                        //   icon: FontAwesome.calculator,
+                        //   onTap: () {
+                        //     Navigator.push(context,
+                        //         BouncyPageRoute(widget: TaxCalculator()));
+                        //   },
+                        // ),
                         CustomTile(
                           text: "Edit Account",
                           icon: Icons.edit,
@@ -364,26 +364,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 BouncyPageRoute(widget: EditScreen()));
                           },
                         ),
-                        isAdmin
-                            ? CustomTile(
-                          text: "Reports",
-                          icon: Icons.report,
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                BouncyPageRoute(
-                                    widget: ReportScreen()));
-                          },
-                        )
-                            : Container(),
-                        CustomTile(
-                          text: "Give your suggestion",
-                          icon: Icons.chat,
-                          onTap: () {
-                            Navigator.push(context,
-                                BouncyPageRoute(widget: ChatScreen()));
-                          },
-                        ),
+                        // isAdmin
+                        //     ? CustomTile(
+                        //   text: "Reports",
+                        //   icon: Icons.report,
+                        //   onTap: () {
+                        //     Navigator.push(
+                        //         context,
+                        //         BouncyPageRoute(
+                        //             widget: ReportScreen()));
+                        //   },
+                        // )
+                        //     : Container(),
+                        // CustomTile(
+                        //   text: "Give your suggestion",
+                        //   icon: Icons.chat,
+                        //   onTap: () {
+                        //     Navigator.push(context,
+                        //         BouncyPageRoute(widget: ChatScreen()));
+                        //   },
+                        // ),
                       ],
                     ),
                   ),

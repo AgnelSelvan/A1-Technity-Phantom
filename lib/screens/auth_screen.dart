@@ -488,14 +488,12 @@ class AuthScreenState extends State<AuthScreen> {
 
       if (isNewUser) {
         _authMethods.addGoogleDataToDb(user).then((value) {
-          updateMobileNumber(user);
           Navigator.pushReplacement(context,
               MaterialPageRoute(builder: (context) {
             return RootScreen();
           }));
         });
       } else {
-        updateMobileNumber(user);
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context) {
           return RootScreen();
@@ -504,48 +502,4 @@ class AuthScreenState extends State<AuthScreen> {
     });
   }
 
-  updateMobileNumber(User user) {
-    _authMethods.isPhoneNoExists(user).then((bool isPhoneExists) {
-      if (!isPhoneExists) {
-        showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10)),
-                title: Text("Enter Code"),
-                content: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 15),
-                  decoration: BoxDecoration(
-                      color: Colors.yellow[100],
-                      borderRadius: BorderRadius.circular(8)),
-                  child: TextFormField(
-                    cursorColor: Variables.primaryColor,
-                    validator: (value) {
-                      if (value.isEmpty)
-                        return "You cannot have an Mobile number!";
-                    },
-                    maxLines: 1,
-                    keyboardType: TextInputType.number,
-                    style: Variables.inputTextStyle,
-                    decoration: InputDecoration(
-                        border: InputBorder.none, hintText: '1234567890'),
-                    controller: phoneNumberController,
-                  ),
-                ),
-                actions: <Widget>[
-                  buildRaisedButton('Confirm'.toUpperCase(), Colors.white,
-                      Variables.primaryColor, () async {
-                    _authMethods.updateMobileNumber(
-                        phoneNumberController.text, user);
-                    Navigator.pop(context);
-                    phoneNumberController.clear();
-                  })
-                ],
-              );
-            });
-      }
-    });
-  }
 }

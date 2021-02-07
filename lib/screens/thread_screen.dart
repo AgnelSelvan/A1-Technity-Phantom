@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:stock_q/utils/universal_variables.dart';
 import 'package:stock_q/widgets/custom_divider.dart';
 
-class ThreadScreen extends StatelessWidget {
+class BagScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -41,13 +41,14 @@ class AuthMethods {
   }
 
   Future<bool> signIn(String email, String password) async {
-    try {
+    // try {
       var result = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
+      print(result.user.email);
       return true;
-    } catch (e) {
-      return false;
-    }
+    // } catch (e) {
+    //   return false;
+    // }
   }
 
   Future<bool> isPhoneNoExists(User firebaseUser) async {

@@ -20,7 +20,6 @@ class AdminMethods {
       _firestore.collection('sub_categories');
   CollectionReference _productCollection = _firestore.collection('product');
   CollectionReference _customerCollection = _firestore.collection('customers');
-  CollectionReference _borrowsCollection = _firestore.collection('borrows');
   CollectionReference _stocksCollection = _firestore.collection('stocks');
   CollectionReference _billsCollection = _firestore.collection('bills');
   CollectionReference _paidsCollection = _firestore.collection('paids');
@@ -156,11 +155,7 @@ class AdminMethods {
         uid: docId,
         name: name,
         email: email,
-        address: address,
-        state: state,
-        pincode: pincode,
-        mobileNo: mobileNo.toString().trim(),
-        gstin: gstin);
+        mobileNo: mobileNo.toString().trim(),);
     _customerCollection.doc(docId).set(user.toMap(user));
   }
 
@@ -257,23 +252,6 @@ class AdminMethods {
     return product;
   }
 
-
-  Future<List<DocumentSnapshot>> getListOfBorrow(String borrowId) async {
-    QuerySnapshot docs = await _borrowsCollection
-        .doc(borrowId)
-        .collection('same_user_borrow')
-        .get();
-    List<DocumentSnapshot> docsList = docs.docs.toList();
-    // for (var doc in docsList) {
-    //   BorrowModel borrowModel = BorrowModel.fromMap(doc.data);
-    //   //print(borrowModel.borrowId);
-    // }
-    return docsList;
-  }
-
-  Stream<QuerySnapshot> getAllBorrowList() {
-    return _borrowsCollection.snapshots();
-  }
 
 
   Future<List<DocumentSnapshot>> getAllBills() async {
@@ -375,43 +353,4 @@ class AdminMethods {
     return billsList;
   }
 
-  updateGivenAmount(Bill bill, double amount) async {
-    double totalAmount = bill.givenAmount + amount;
-    await _billsCollection.doc(bill.billId).set({'given_amount': totalAmount});
-
-    Bill recentBill = await getBillById(bill.billId);
-    //print(recentBill.isPaid);
-
-    double totalTax = 0;
-    for (var tax in recentBill.taxList) {
-      totalTax = totalTax + tax;
-    }
-    if (recentBill.isTax) {
-      if (recentBill.givenAmount.round() ==
-          (recentBill.price + (recentBill.price * (totalTax / 100))).round()) {
-        //print((recentBill.price + (recentBill.price * (totalTax / 100)))
-        // .round()
-        // .toString());
-        //print(recentBill.givenAmount.toString());
-        await _billsCollection.doc(bill.billId).update({'is_paid': true});
-        await _borrowsCollection.doc(recentBill.borrowId).delete();
-        await _borrowsCollection
-            .doc()
-            .collection('same_user_borrow')
-            .doc(recentBill.borrowId)
-            .delete();
-        String buyId = Utils.getDocId();
-        Paid paid = Paid(billId: recentBill.billId, buyId: buyId);
-        await _paidsCollection.doc(buyId).set(paid.toMap(paid));
-      }
-    } else {
-      if (recentBill.givenAmount.round() == totalAmount.round()) {
-        await _billsCollection.doc(bill.billId).update({'is_paid': true});
-        await _borrowsCollection.doc(recentBill.borrowId).delete();
-        String buyId = Utils.getDocId();
-        Paid paid = Paid(billId: recentBill.billId, buyId: buyId);
-        await _paidsCollection.doc(buyId).set(paid.toMap(paid));
-      }
-    }
-  }
 }
