@@ -11,7 +11,6 @@ import 'package:stock_q/screens/admin/add/add_sub_category.dart';
 import 'package:stock_q/screens/admin/add/add_unit.dart';
 import 'package:stock_q/screens/admin/admin_page.dart';
 import 'package:stock_q/screens/admin/bill_screen.dart';
-import 'package:stock_q/screens/admin/borrow/borrow_list.dart';
 import 'package:stock_q/screens/admin/history.dart';
 import 'package:stock_q/screens/admin/stock/stock_screen.dart';
 import 'package:stock_q/screens/admin/tax/tax_calculator.dart';
@@ -325,14 +324,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           },
                         )
                             : Container(),
-                        CustomTile(
-                          text: "Borrow",
-                          icon: Icons.edit,
-                          onTap: () {
-                            Navigator.push(context,
-                                BouncyPageRoute(widget: BorrowList()));
-                          },
-                        ),
                         isAdmin
                             ? CustomTile(
                           text: "Tax Report",

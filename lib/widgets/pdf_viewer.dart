@@ -1,4 +1,3 @@
-import 'package:stock_q/screens/admin/borrow/borrow_list.dart';
 import 'package:stock_q/utils/universal_variables.dart';
 import 'package:stock_q/widgets/bouncy_page_route.dart';
 import 'package:stock_q/widgets/custom_appbar.dart';
