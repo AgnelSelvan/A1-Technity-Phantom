@@ -1,9 +1,3 @@
-import 'package:stock_q/resources/auth_methods.dart';
-import 'package:stock_q/screens/root_screen.dart';
-import 'package:stock_q/utils/universal_variables.dart';
-import 'package:stock_q/widgets/dialogs.dart';
-import 'package:stock_q/widgets/widgets.dart';
-import 'package:country_code_picker/country_code_picker.dart';
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +6,6 @@ import 'package:stock_q/resources/auth_methods.dart';
 import 'package:stock_q/screens/root_screen.dart';
 import 'package:stock_q/utils/universal_variables.dart';
 import 'package:stock_q/widgets/dialogs.dart';
-import 'package:stock_q/widgets/widgets.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
