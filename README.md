@@ -28,6 +28,39 @@ and run your project
   </tr>
   <tr>
     <td><img src="screenshots/login.jpg" width=270 height=480></td>
-    <td><img src="signup.jpg" width=270 height=480></td>
+    <td><img src="screenshots/signup.jpg" width=270 height=480></td>
+  </tr>
+ </table>
+ 
+ <table>
+  <tr>
+    <td>Home Page</td>
+     <td>Profile Admin Page</td>
+  </tr>
+  <tr>
+    <td><img src="screenshots/home.jpg" width=270 height=480></td>
+    <td><img src="screenshots/profile_admin.jpg" width=270 height=480></td>
+  </tr>
+ </table>
+ 
+ <table>
+  <tr>
+    <td>Add Stock</td>
+     <td>Add Category</td>
+    <td>Add Product</td>
+  </tr>
+  <tr>
+    <td><img src="screenshots/add_stock.jpg" width=270 height=480></td>
+    <td><img src="screenshots/add_category.jpg" width=270 height=480></td>
+    <td><img src="screenshots/add_product.jpg" width=270 height=480></td>
+  </tr>
+ </table>
+ 
+ <table>
+  <tr>
+    <td>Bill Details</td>
+  </tr>
+  <tr>
+    <td><img src="screenshots/bill_details.jpg" width=270 height=480></td>
   </tr>
  </table>
