@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:stock_q/models/services.dart';
 import 'package:stock_q/screens/admin/service_screen.dart';
 import 'package:stock_q/screens/custom_loading.dart';
+import 'package:stock_q/utils/universal_variables.dart';
+import 'package:stock_q/widgets/custom_appbar.dart';
 
 class ServiceHistoryScreen extends StatefulWidget {
   final String billNo;
@@ -24,6 +27,9 @@ class _ServiceHistoryScreenState extends State<ServiceHistoryScreen> {
         listServicesModel = value;
         isLoading = false;
       });
+      for (var i = 0; i < listServicesModel.length; i++) {
+        print(listServicesModel[i].customerName);
+      }
     });
   }
 
@@ -36,6 +42,20 @@ class _ServiceHistoryScreenState extends State<ServiceHistoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: CustomAppBar(
+        bgColor: Colors.white,
+        title: Text("Service History " + widget.billNo, style: Variables.appBarTextStyle),
+        actions: null,
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: Icon(
+            Ionicons.ios_arrow_back,
+            color: Variables.primaryColor,
+          ),
+        ),
+        centerTitle: true),
       body: isLoading ? CustomCircularLoading() : Container(
         padding: EdgeInsets.all(8),
         child: SingleChildScrollView(
@@ -46,12 +66,12 @@ class _ServiceHistoryScreenState extends State<ServiceHistoryScreen> {
                 color: Colors.red
               ),),
             ) : listServicesModel.map((e) => 
-              ListTile(
-                title: Text(e.customerName,),
-                subtitle: Text(e.serviceReason,),
-                trailing: Text("₹ " + e.serviceAmount.toString())
-              )
-            )
+                ListTile(
+                  title: Text(e.customerName,),
+                  subtitle: Text(e.serviceReason,),
+                  trailing: Text("₹ " + e.serviceAmount.toString())
+                )
+            ).toList()
           ),
         ),
       ) ,
