@@ -1,11 +1,11 @@
-import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:stock_q/constants/strings.dart';
 import 'package:stock_q/models/user.dart';
 import 'package:stock_q/resources/auth_controller.dart';
-import 'package:stock_q/resources/auth_methods.dart';
 import 'package:stock_q/utils/universal_variables.dart';
 import 'package:stock_q/widgets/custom_appbar.dart';
 import 'package:stock_q/widgets/header.dart';
@@ -17,8 +17,6 @@ class EditScreen extends StatefulWidget {
 }
 
 class _EditScreenState extends State<EditScreen> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final AuthMethods _authMethods = AuthMethods();
   TextEditingController currentPasswordController = TextEditingController();
   TextEditingController changePasswordController = TextEditingController();
   TextEditingController confirmChangePasswordController =
@@ -30,16 +28,9 @@ class _EditScreenState extends State<EditScreen> {
       _username,
       _currentPassword,
       errorMessage,
-      successMessage;
-  List<String> _locations = [
-    'Rajasthan',
-    'Punjab',
-    'Tamil Nadu',
-    'Kerala',
-    'Maharashtra'
-  ]; // Option 2
+      successMessage,
+      userNameError;
 
-  File _image;
   String currentUserId;
   UserModel currentUser;
 
@@ -222,23 +213,21 @@ class _EditScreenState extends State<EditScreen> {
             "Username",
             style: Variables.inputLabelTextStyle,
           ),
-          SizedBox(height: 4),
+          SizedBox(height: 5),
           Container(
-            height: 48,
             padding: EdgeInsets.symmetric(horizontal: 8),
             decoration: BoxDecoration(
                 color: Colors.grey[200],
                 borderRadius: BorderRadius.circular(8)),
-            child: TextFormField(
+            child: TextField(
               maxLines: 1,
               style: Variables.inputTextStyle,
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
-                  border: InputBorder.none, hintText: 'yourname'),
+                  errorText: userNameError,
+                  border: InputBorder.none,
+                  hintText: 'Your name'),
               controller: userNameController,
-              validator: (value) =>
-                  value.isEmpty ? 'Username can\'t be empty' : null,
-              onSaved: (value) => _username = value.trim(),
             ),
           )
         ],
@@ -439,6 +428,30 @@ class _EditScreenState extends State<EditScreen> {
                       buildRaisedButton("Save Changes", Colors.yellow[100],
                           Variables.blackColor, () {
                         // _updateUsername();
+
+                        if (userNameController.text.isEmpty) {
+                          setState(() {
+                            userNameError = "Username cant be empty";
+                          });
+                          return;
+                        }
+
+                        if (userNameController.text == currentUser.username) {
+                          setState(() {
+                            userNameError = " Username is same as old";
+                          });
+                          return;
+                        }
+
+                        setState(() {
+                          userNameError = null;
+                        });
+
+                        FirebaseFirestore.instance
+                            .collection(USERS_COLLECTION)
+                            .doc(currentUser.uid)
+                            .update(
+                                {"username": userNameController.text.trim()});
                       }),
                     ],
                   ),
