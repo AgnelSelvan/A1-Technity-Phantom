@@ -21,6 +21,13 @@ and run your project
 
 ## Some Screenshots of our work
 
-- Authentication
-
-![](https://raw.githubusercontent.com/AgnelSelvan/A1-Technity-Phantom/master/screenshots/login.jpg) ![](https://raw.githubusercontent.com/AgnelSelvan/A1-Technity-Phantom/master/screenshots/signup.jpg)
+<table>
+  <tr>
+    <td>Login Page</td>
+     <td>SignUp Page</td>
+  </tr>
+  <tr>
+    <td><img src="screenshots/login.jpg" width=270 height=480></td>
+    <td><img src="signup.jpg" width=270 height=480></td>
+  </tr>
+ </table>
