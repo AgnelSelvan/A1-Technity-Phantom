@@ -23,4 +23,4 @@ and run your project
 
 - Authentication
 
-![](https://raw.githubusercontent.com/AgnelSelvan/A1-Technity-Phantom/master/screenshots/login.jpg) | ![](https://raw.githubusercontent.com/AgnelSelvan/A1-Technity-Phantom/master/screenshots/signup.jpg)
+![](https://raw.githubusercontent.com/AgnelSelvan/A1-Technity-Phantom/master/screenshots/login.jpg) ![](https://raw.githubusercontent.com/AgnelSelvan/A1-Technity-Phantom/master/screenshots/signup.jpg)
