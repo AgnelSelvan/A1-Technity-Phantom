@@ -58,15 +58,19 @@ class _ServiceHistoryScreenState extends State<ServiceHistoryScreen> {
         ),
         centerTitle: true),
       body: isLoading ? CustomCircularLoading() : Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
         padding: EdgeInsets.all(8),
         child: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
           child: Column(
-            children: listServicesModel.length == 0 ? Container(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: listServicesModel.length == 0 ? [Container(
               child: Text("No Service Record Exists", style: TextStyle(
                 color: Colors.red
               ),),
-            ) : listServicesModel.map((e) => 
+            )] : listServicesModel.map((e) => 
                 ListTile(
                   title: Text(e.customerName,),
                   subtitle: Text(e.serviceReason,),

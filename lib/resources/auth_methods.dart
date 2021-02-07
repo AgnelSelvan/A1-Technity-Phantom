@@ -15,14 +15,17 @@ class AuthMethods {
   GoogleSignIn _googleSignIn = GoogleSignIn();
 
   Future<User> getCurrentUser() async {
-    DataConnectionStatus connectionStatus = await checkInternet();
-    if (connectionStatus == DataConnectionStatus.connected) {
-      User currentUser;
-      currentUser = _auth.currentUser;
-      return currentUser;
-    } else {
-      return null;
-    }
+    // DataConnectionStatus connectionStatus = await checkInternet();
+    // if (connectionStatus == DataConnectionStatus.connected) {
+    //   User currentUser;
+    //   currentUser = _auth.currentUser;
+    //   return currentUser;
+    // } else {
+    //   return null;
+    // }
+    User currentUser;
+    currentUser = _auth.currentUser;
+    return currentUser;
   }
 
   Future<UserModel> getUserDetails() async {

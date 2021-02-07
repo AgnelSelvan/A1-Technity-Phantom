@@ -209,22 +209,7 @@ class _BillDetailsState extends State<BillDetails> {
       appBar: CustomAppBar(
           bgColor: Colors.white,
           title: Text("Stock Q", style: Variables.appBarTextStyle),
-          actions: [
-            IconButton(
-                icon: Icon(
-                  FontAwesome.file_pdf_o,
-                  size: 16,
-                  color: Colors.red[200],
-                ),
-                onPressed: () {
-                  if (currentBill.isTax == null) {
-                    Dialogs.okDialog(context, 'Error', 'Somthing went wrong!',
-                        Colors.red[200]);
-                  } else {
-                    currentBill.isTax ? getBuyerName() : Text("Kacha");
-                  }
-                })
-          ],
+          actions:null,
           leading: GestureDetector(
             onTap: () {
               Navigator.pop(context);
