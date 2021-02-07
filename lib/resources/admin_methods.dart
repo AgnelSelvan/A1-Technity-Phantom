@@ -4,6 +4,7 @@ import 'package:stock_q/models/bill.dart';
 import 'package:stock_q/models/category.dart';
 import 'package:stock_q/models/paid.dart';
 import 'package:stock_q/models/product.dart';
+import 'package:stock_q/models/services.dart';
 import 'package:stock_q/models/stock.dart';
 import 'package:stock_q/models/sub-category.dart';
 import 'package:stock_q/models/unit.dart';
@@ -23,6 +24,7 @@ class AdminMethods {
   CollectionReference _stocksCollection = _firestore.collection('stocks');
   CollectionReference _billsCollection = _firestore.collection('bills');
   CollectionReference _paidsCollection = _firestore.collection('paids');
+  CollectionReference _servicesCollection = _firestore.collection('services');
 
   Future<void> addSymbolToDb(String formalName, String symbol) async {
     Unit unit = Unit(formalName: formalName, unit: symbol, unitId: symbol);
@@ -351,6 +353,10 @@ class AdminMethods {
       billsList.add(bill);
     }
     return billsList;
+  }
+
+  Future addServiceInDB(ServicesModel serviceModel)async{
+    _servicesCollection.doc(serviceModel.serviceId).set(serviceModel.toMap(serviceModel));
   }
 
 }

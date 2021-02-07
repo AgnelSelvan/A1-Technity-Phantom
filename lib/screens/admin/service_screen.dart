@@ -3,6 +3,7 @@ import 'package:stock_q/models/bill.dart';
 import 'package:stock_q/models/category.dart';
 import 'package:stock_q/models/paid.dart';
 import 'package:stock_q/models/product.dart';
+import 'package:stock_q/models/services.dart';
 import 'package:stock_q/resources/admin_methods.dart';
 import 'package:stock_q/screens/admin/add/add_product.dart';
 import 'package:stock_q/screens/custom_loading.dart';
@@ -20,6 +21,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 
+AdminMethods adminMethods = AdminMethods();
+
 class ServiceScreen extends StatefulWidget {
   ServiceScreen({Key key}) : super(key: key);
 
@@ -31,6 +34,7 @@ class _ServiceScreenState extends State<ServiceScreen> {
   TextEditingController _billNumberController = TextEditingController();
   TextEditingController serviceReasonController = TextEditingController();
   TextEditingController serviceAmountController = TextEditingController();
+  GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   
   Future<void> scanQR() async {
     String barcodeScanRes;
@@ -157,22 +161,24 @@ class _ServiceScreenState extends State<ServiceScreen> {
                 buildRaisedButton(
                     "Confirm", Variables.primaryColor, Colors.white,
                     () async {
-                  //print(_customerNameController.text);
-                  
-                  // bool isBillSubmitted =
-                  //     await _adminMethods.addBillToDb(bill);
-                  // if (isBillSubmitted) {
-                  //   _adminMethods.addBuyToDb(paid);
-                  //   Navigator.pushAndRemoveUntil(
-                  //       context,
-                  //       BouncyPageRoute(widget: RootScreen()),
-                  //       (route) => true);
-                  //   Dialogs.okDialog(context, 'Successfull',
-                  //       'Added Successfully', Colors.green[200]);
-                  // } else {
-                  //   Dialogs.okDialog(context, 'Error',
-                  //       'Somthing went wrong', Colors.red[200]);
-                  // }
+                      ServicesModel servicesModel = ServicesModel(
+                        serviceId: FirebaseFirestore.instance.collection('services').doc().id,
+                        billNo: _billNumberController.text,
+                        serviceAmount: int.parse(serviceAmountController.text),
+                        serviceReason: serviceReasonController.text,
+                        customerName: _customerNameController.text,
+                        timestamp: Timestamp.now()
+                      );
+                      print(servicesModel.timestamp);
+                      adminMethods.addServiceInDB(servicesModel);
+                      Navigator.pop(context);
+                      _billNumberController.clear();
+                      serviceAmountController.clear();
+                      serviceReasonController.clear();
+                      _customerNameController.clear();
+                      final snackbar =
+                          customSnackBar("Added Successfully", Variables.blackColor);
+                      _scaffoldKey.currentState.showSnackBar(snackbar);
                 })
               ],
             );
@@ -191,7 +197,6 @@ class _ServiceScreenState extends State<ServiceScreen> {
                 color: Colors.yellow[100],
                 borderRadius: BorderRadius.circular(8)),
             child: TextField(
-              enabled: false,
               maxLines: 1,
               style: Variables.inputTextStyle,
               keyboardType: TextInputType.number,
@@ -217,7 +222,6 @@ class _ServiceScreenState extends State<ServiceScreen> {
                 color: Colors.yellow[100],
                 borderRadius: BorderRadius.circular(8)),
             child: TextField(
-              enabled: false,
               maxLines: 1,
               style: Variables.inputTextStyle,
               keyboardType: TextInputType.text,
@@ -242,7 +246,6 @@ class _ServiceScreenState extends State<ServiceScreen> {
                 color: Colors.yellow[100],
                 borderRadius: BorderRadius.circular(8)),
             child: TextField(
-              enabled: false,
               maxLines: 1,
               style: Variables.inputTextStyle,
               keyboardType: TextInputType.number,

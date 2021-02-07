@@ -1,3 +1,5 @@
+import 'package:flutter/services.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:stock_q/models/bill.dart';
 import 'package:stock_q/resources/admin_methods.dart';
 import 'package:stock_q/screens/admin/bill_detail_screen.dart';
@@ -21,6 +23,7 @@ class HistoryScreen extends StatefulWidget {
 }
 
 class _HistoryScreenState extends State<HistoryScreen> {
+  String billNo = "";
   List<Bill> billsList = List();
   bool isLoading = false;
 
@@ -43,6 +46,26 @@ class _HistoryScreenState extends State<HistoryScreen> {
     //print(billsList.length);
   }
 
+  
+  Future<void> scanQR() async {
+    String barcodeScanRes;
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    try {
+      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
+          "#ff6666", "Cancel", true, ScanMode.QR);
+      //print(barcodeScanRes);
+    } on PlatformException {
+      barcodeScanRes = 'Failed to get platform version.';
+    }
+
+    if (!mounted) return;
+
+    setState(() {
+      billNo = barcodeScanRes;
+    });
+  }
+
+
   @override
   void initState() {
     super.initState();
@@ -55,7 +78,14 @@ class _HistoryScreenState extends State<HistoryScreen> {
       appBar: CustomAppBar(
           bgColor: Colors.white,
           title: Text("Stock Q", style: Variables.appBarTextStyle),
-          actions: null,
+          actions: [
+            IconButton(
+                  icon: Icon(
+                    FontAwesome.qrcode,
+                    color: Variables.primaryColor,
+                  ),
+                  onPressed: () => scanQR())
+          ],
           leading: GestureDetector(
             onTap: () {
               Navigator.pop(context);
