@@ -130,6 +130,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 builder: (context, snaphot) {
                                   var docs = snaphot.data.docs;
                                   Stock stock = Stock.fromMap(docs[0].data());
+                                  if(snapshot.hasData)
                                   return Row(
                                     children: [
                                       Text(
@@ -145,6 +146,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                           : Text(stock.qty.toString())
                                     ],
                                   );
+                                  return CustomCircularLoading();
                                 }),
                           ],
                         ),

@@ -94,41 +94,44 @@ class _TaxReportState extends State<TaxReport> {
                   child: Container(
                     alignment: Alignment.center,
                     height: 50.0,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Row(
-                          children: <Widget>[
-                            Container(
-                              child: Row(
-                                children: <Widget>[
-                                  Icon(
-                                    Icons.date_range,
-                                    size: 18.0,
-                                    color: Colors.teal,
-                                  ),
-                                  Text(
-                                    _fromDate == null
-                                        ? 'From Date'
-                                        : "${DateFormat('dd/MM/yyyy').format(_fromDate.toDate())}",
-                                    style: TextStyle(
-                                        color: Colors.teal,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 18.0),
-                                  ),
-                                ],
-                              ),
-                            )
-                          ],
-                        ),
-                        Text(
-                          "  Change",
-                          style: TextStyle(
-                              color: Colors.teal,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18.0),
-                        ),
-                      ],
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Row(
+                            children: <Widget>[
+                              Container(
+                                child: Row(
+                                  children: <Widget>[
+                                    Icon(
+                                      Icons.date_range,
+                                      size: 18.0,
+                                      color: Colors.teal,
+                                    ),
+                                    Text(
+                                      _fromDate == null
+                                          ? 'From Date'
+                                          : "${DateFormat('dd/MM/yyyy').format(_fromDate.toDate())}",
+                                      style: TextStyle(
+                                          color: Colors.teal,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18.0),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                          Text(
+                            "  Change",
+                            style: TextStyle(
+                                color: Colors.teal,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18.0),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   color: Colors.white,

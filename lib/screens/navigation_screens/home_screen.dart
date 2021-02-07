@@ -36,58 +36,13 @@ class _HomeScreenState extends State<HomeScreen>
 
   getCurrentUserDetails() async {
     User user = await _authMethods.getCurrentUser();
-    _authMethods.isPhoneNoExists(user).then((bool isPhoneExists) {
-      //print('isPhoneExists:$isPhoneExists');
-      if (!isPhoneExists) {
-        showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10)),
-                title: Text("Enter Mobile number"),
-                content: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 15),
-                  decoration: BoxDecoration(
-                      color: Colors.grey[100],
-                      borderRadius: BorderRadius.circular(8)),
-                  child: TextFormField(
-                    cursorColor: Variables.primaryColor,
-                    validator: (value) {
-                      if (value.isEmpty)
-                        return "You cannot have an Mobile number!";
-                      return null;
-                    },
-                    maxLines: 1,
-                    keyboardType: TextInputType.number,
-                    style: Variables.inputTextStyle,
-                    decoration: InputDecoration(
-                        prefixIcon: Icon(
-                          Icons.dialpad,
-                          size: 16,
-                        ),
-                        border: InputBorder.none,
-                        hintText: '1234567890'),
-                    controller: phoneNumberController,
-                  ),
-                ),
-                actions: <Widget>[
-                  buildRaisedButton('Confirm'.toUpperCase(), Colors.white,
-                      Variables.primaryColor, () async {
-                        _authMethods.updateMobileNumber(
-                            phoneNumberController.text, user);
-                        Navigator.pop(context);
-                        phoneNumberController.clear();
-                      })
-                ],
-              );
-            });
-      }
-    });
 
     currentUserId = user.uid;
-    currentUser = await _authMethods.getUserDetailsById(currentUserId);
+    _authMethods.getUserDetailsById(currentUserId).then((value){
+      setState(() {
+        currentUser = value;
+      });
+    });
     //print('user:${currentUser.role}');
   }
 
@@ -95,6 +50,7 @@ class _HomeScreenState extends State<HomeScreen>
   void initState() {
     super.initState();
     _tabController = TabController(length: 3, vsync: this);
+    getCurrentUserDetails();
   }
 
   @override
@@ -109,13 +65,13 @@ class _HomeScreenState extends State<HomeScreen>
             style: TextStyle(
                 fontSize: 20,
                 letterSpacing: 1,
-                color: Theme.of(context).accentColor,
+                color: Theme.of(context).primaryColor,
                 fontWeight: FontWeight.w400)),
                 leading: null,
         actions: [
           IconButton(
               icon: Icon(FontAwesome.qrcode,
-                  color: Theme.of(context).accentColor),
+                  color: Theme.of(context).primaryColor),
               onPressed: () => scanQR())
         ],
         centerTitle: true,
@@ -138,23 +94,25 @@ class _HomeScreenState extends State<HomeScreen>
     }
 
     if (!mounted) return;
-    final bool isQrExists = await _adminMethods.isQrExists(barcodeScanRes);
-    if (isQrExists) {
-      Navigator.push(
-          context,
-          BouncyPageRoute(
-              widget: ProductDetails(
-                qrCode: barcodeScanRes,
-              )));
-    } else if (!isQrExists) {
-      currentUser.role == 'admin'
-          ? Navigator.push(
-          context,
-          BouncyPageRoute(
-              widget: AddProduct(
-                qrCode: barcodeScanRes,
-              )))
-          : Text("No Items");
+    if(barcodeScanRes != "-1"){
+      final bool isQrExists = await _adminMethods.isQrExists(barcodeScanRes);
+      if (isQrExists) {
+        Navigator.push(
+            context,
+            BouncyPageRoute(
+                widget: ProductDetails(
+                  qrCode: barcodeScanRes,
+                )));
+      } else if (!isQrExists) {
+        currentUser.role == 'admin'
+            ? Navigator.push(
+            context,
+            BouncyPageRoute(
+                widget: AddProduct(
+                  qrCode: barcodeScanRes,
+                )))
+            : Text("No Items");
+      }
     }
   }
 
@@ -173,7 +131,7 @@ class _HomeScreenState extends State<HomeScreen>
         TabBar(
             controller: _tabController,
             indicatorColor: Colors.transparent,
-            labelColor: Theme.of(context).accentColor,
+            labelColor: Theme.of(context).primaryColor,
             isScrollable: false,
             labelPadding: EdgeInsets.only(right: 45.0),
             unselectedLabelColor: Color(0xFFCDCDCD),

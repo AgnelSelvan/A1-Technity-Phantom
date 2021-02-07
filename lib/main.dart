@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:stock_q/screens/splash/splash_screen.dart';
+import 'package:stock_q/utils/universal_variables.dart';
 
 import 'resources/auth_binding.dart';
 
@@ -25,6 +26,9 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       initialBinding: AuthBinding(),
+      theme: ThemeData(
+        primaryColor: Variables.primaryColor
+      ),
       debugShowCheckedModeBanner: false,
       home: SplashScreen(),
     );

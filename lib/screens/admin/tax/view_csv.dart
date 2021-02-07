@@ -76,30 +76,33 @@ class _LoadAndViewCsvPageState extends State<LoadAndViewCsvPage> {
                           .map(
                             (row) => Padding(
                               padding: const EdgeInsets.symmetric(vertical: 10),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  Container(
-                                      width: 50,
-                                      child: Text(row[0].toString())),
-                                  Container(
-                                      width: 100,
-                                      child: Text(row[1].toString())),
-                                  Container(
-                                      width: 100,
-                                      child: Text(row[2].toString())),
-                                  Container(
-                                      width: 100,
-                                      child: Text(row[3].toString())),
-                                  Container(
-                                      width: 100,
-                                      child: Text(row[4].toString())),
-                                  Container(
-                                      width: 100,
-                                      child: Text(row[5].toString())),
-                                ],
+                              child: SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    Container(
+                                        width: 50,
+                                        child: Text(row[0].toString())),
+                                    Container(
+                                        width: 100,
+                                        child: Text(row[1].toString())),
+                                    Container(
+                                        width: 100,
+                                        child: Text(row[2].toString())),
+                                    Container(
+                                        width: 100,
+                                        child: Text(row[3].toString())),
+                                    Container(
+                                        width: 100,
+                                        child: Text(row[4].toString())),
+                                    Container(
+                                        width: 100,
+                                        child: Text(row[5].toString())),
+                                  ],
+                                ),
                               ),
                             ),
                           )

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:intl/intl.dart';
 import 'package:stock_q/models/services.dart';
 import 'package:stock_q/screens/admin/service_screen.dart';
 import 'package:stock_q/screens/custom_loading.dart';
@@ -69,7 +70,16 @@ class _ServiceHistoryScreenState extends State<ServiceHistoryScreen> {
                 ListTile(
                   title: Text(e.customerName,),
                   subtitle: Text(e.serviceReason,),
-                  trailing: Text("₹ " + e.serviceAmount.toString())
+                  trailing: Column(
+                    children: [
+                      Text("₹ " + e.serviceAmount.toString()),
+                      Text(DateFormat('dd/MM/yyyy')
+                        .format(e.timestamp.toDate())
+                        .toString(), style: TextStyle(
+                          color: Colors.grey[500],
+                        ),),
+                    ],
+                  )
                 )
             ).toList()
           ),
