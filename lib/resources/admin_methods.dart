@@ -375,4 +375,14 @@ class AdminMethods {
       return false;
   }
 
+  Future<List<ServicesModel>> getServicesByBillNo(String billNo) async {
+    QuerySnapshot querySnapshot =  await _servicesCollection.where("bill_no", isEqualTo: billNo).get();
+    List<ServicesModel> listServicesModel = [];
+    querySnapshot.docs.forEach((element) {
+      ServicesModel servicesModel = ServicesModel.fromMap(element.data());
+      listServicesModel.add(servicesModel);
+    });
+    return listServicesModel;
+  }
+
 }

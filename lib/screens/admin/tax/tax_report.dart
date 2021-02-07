@@ -79,6 +79,7 @@ class _TaxReportState extends State<TaxReport> {
             centerTitle: true,
             bgColor: Colors.white),
         body: SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(

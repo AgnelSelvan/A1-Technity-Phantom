@@ -94,7 +94,7 @@ class _SignUpState extends State<SignUp> {
                 ),
                 alignment: Alignment.center,
                 child: SingleChildScrollView(
-                  physics: ClampingScrollPhysics(),
+          physics: BouncingScrollPhysics(),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

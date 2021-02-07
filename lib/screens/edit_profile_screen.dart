@@ -207,6 +207,7 @@ class _EditScreenState extends State<EditScreen> {
 
     Widget _buildUsername(String username) {
       return SingleChildScrollView(
+          physics: BouncingScrollPhysics(),
               child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[

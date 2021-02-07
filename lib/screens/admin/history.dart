@@ -4,6 +4,7 @@ import 'package:stock_q/models/bill.dart';
 import 'package:stock_q/resources/admin_methods.dart';
 import 'package:stock_q/screens/admin/bill_detail_screen.dart';
 import 'package:stock_q/screens/admin/bill_screen.dart';
+import 'package:stock_q/screens/admin/service_history.dart';
 import 'package:stock_q/screens/custom_loading.dart';
 import 'package:stock_q/utils/universal_variables.dart';
 import 'package:stock_q/widgets/bouncy_page_route.dart';
@@ -61,9 +62,11 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
     if (!mounted) return;
     if(await _adminMethods.checkbillNoExists(barcodeScanRes)){
-      print("Yes");
       if(await _adminMethods.isServiceByBillNoExists(barcodeScanRes)){
-        //Go to Service History Page of Particular Bill
+        Navigator.push(
+            context,
+            BouncyPageRoute(
+                widget: ServiceHistoryScreen( billNo: barcodeScanRes, )));
       }
       else{
         final snackBar = SnackBar(

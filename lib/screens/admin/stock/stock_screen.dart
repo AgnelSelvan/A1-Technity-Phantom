@@ -60,6 +60,7 @@ class _StockScreenState extends State<StockScreen>
                             ],
                           ),
                           content: SingleChildScrollView(
+                            physics: BouncingScrollPhysics(),
                             child: Container(
                               width: 300.0,
                               child: Column(

@@ -92,7 +92,7 @@ class _LoginState extends State<Login> {
                 ),
                 alignment: Alignment.center,
                 child: SingleChildScrollView(
-                  physics: ClampingScrollPhysics(),
+                  physics: BouncingScrollPhysics(),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
