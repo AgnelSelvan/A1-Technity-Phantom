@@ -374,6 +374,14 @@ class AdminMethods {
     else
       return false;
   }
+  
+  Future<String> getBillIdbyBillNo(String billNo)async {
+    QuerySnapshot querySnapshot =  await _billsCollection.where("bill_no", isEqualTo: billNo).get();
+    if(querySnapshot.docs.length == 1)
+      return querySnapshot.docs[0].data()['bill_id'];
+    else
+      return "";
+  }
 
   Future<List<ServicesModel>> getServicesByBillNo(String billNo) async {
     QuerySnapshot querySnapshot =  await _servicesCollection.where("bill_no", isEqualTo: billNo).get();

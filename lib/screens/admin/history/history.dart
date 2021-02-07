@@ -28,6 +28,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
   List<Bill> billsList = List();
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   bool isLoading = false;
+  bool isServiceHistory = false;
 
   getAllHistory() async {
     setState(() {
@@ -48,6 +49,72 @@ class _HistoryScreenState extends State<HistoryScreen> {
     //print(billsList.length);
   }
 
+  askDialog() {
+    showDialog(
+        context: context,
+        barrierDismissible: true,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8.0)),
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text('History'),
+              ],
+            ),
+            content: SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
+              child: Container(
+                width: 300.0,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    InkWell(
+                        child: Container(
+                      margin: EdgeInsets.only(top: 8.0),
+                      child: FlatButton(
+                        color: Colors.yellow[100],
+                        child: new Text(
+                          "Get Bill Details",
+                          style: TextStyle(
+                              color: Variables.blackColor),
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            isServiceHistory = false;
+                          });
+                          scanQR();
+                        },
+                      ),
+                    )),
+                    InkWell(
+                        child: Container(
+                      margin: EdgeInsets.only(top: 8.0),
+                      child: FlatButton(
+                        color: Colors.yellow[100],
+                        child: new Text(
+                          "Get Service History",
+                          style: TextStyle(
+                              color: Variables.blackColor),
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            isServiceHistory = true;
+                          });
+                          scanQR();
+                        },
+                      ),
+                    )),
+                  ],
+                ),
+              ),
+            ),
+          );
+        });
+  }
   
   Future<void> scanQR() async {
     String barcodeScanRes;
@@ -62,11 +129,20 @@ class _HistoryScreenState extends State<HistoryScreen> {
 
     if (!mounted) return;
     if(await _adminMethods.checkbillNoExists(barcodeScanRes)){
-      if(await _adminMethods.isServiceByBillNoExists(barcodeScanRes)){
+      if(!isServiceHistory){
+        String billId = await _adminMethods.getBillIdbyBillNo(barcodeScanRes);
+        print(billId);
+        Navigator.pop(context);
+        Navigator.push(
+              context,
+              BouncyPageRoute(
+                  widget: BillDetails(billId: billId, )));
+      }
+      else if(await _adminMethods.isServiceByBillNoExists(barcodeScanRes)){
         Navigator.push(
             context,
             BouncyPageRoute(
-                widget: ServiceHistoryScreen( billNo: barcodeScanRes, )));
+                widget: ServiceHistoryScreen(billNo: barcodeScanRes, )));
       }
       else{
         final snackBar = SnackBar(
@@ -114,7 +190,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                     FontAwesome.qrcode,
                     color: Variables.primaryColor,
                   ),
-                  onPressed: () => scanQR())
+                  onPressed: () => askDialog())
           ],
           leading: GestureDetector(
             onTap: () {

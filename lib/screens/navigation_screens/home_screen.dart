@@ -83,6 +83,7 @@ class _HomeScreenState extends State<HomeScreen>
   }
 
   Future<void> scanQR() async {
+    getCurrentUserDetails();
     String barcodeScanRes;
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
