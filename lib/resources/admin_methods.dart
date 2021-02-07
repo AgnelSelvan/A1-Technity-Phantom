@@ -359,4 +359,20 @@ class AdminMethods {
     _servicesCollection.doc(serviceModel.serviceId).set(serviceModel.toMap(serviceModel));
   }
 
+  Future<bool> checkbillNoExists(String billNo) async {
+    QuerySnapshot querySnapshot =  await _billsCollection.where("bill_no", isEqualTo: billNo).get();
+    if(querySnapshot.docs.length >= 1)
+      return true;
+    else
+      return false;
+  }
+
+  Future<bool> isServiceByBillNoExists(String billNo)async {
+    QuerySnapshot querySnapshot =  await _servicesCollection.where("bill_no", isEqualTo: billNo).get();
+    if(querySnapshot.docs.length >= 1)
+      return true;
+    else
+      return false;
+  }
+
 }

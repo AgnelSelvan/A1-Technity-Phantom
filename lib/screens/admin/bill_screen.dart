@@ -23,7 +23,8 @@ import 'package:flutter_icons/flutter_icons.dart';
 AdminMethods _adminMethods = AdminMethods();
 
 class BillScreen extends StatefulWidget {
-  BillScreen({Key key}) : super(key: key);
+  final String billNo;
+  BillScreen({Key key, this.billNo}) : super(key: key);
 
   @override
   _BillScreenState createState() => _BillScreenState();
@@ -31,7 +32,7 @@ class BillScreen extends StatefulWidget {
 
 class _BillScreenState extends State<BillScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
-  String randomNumber;
+  String randomNumber = "";
   TextEditingController _codeFieldController = TextEditingController();
   TextEditingController _billNumberController;
   TextEditingController _qtyController;
@@ -63,7 +64,12 @@ class _BillScreenState extends State<BillScreen> {
   }
 
   getBillNo() async {
-    randomNumber = await _adminMethods.getBillNo();
+    if(widget.billNo != null){
+      randomNumber = widget.billNo;
+    }
+    else{
+      randomNumber = await _adminMethods.getBillNo();
+    }
     setState(() {
       _billNumberController =
           TextEditingController(text: randomNumber.toString());

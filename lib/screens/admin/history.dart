@@ -3,6 +3,7 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:stock_q/models/bill.dart';
 import 'package:stock_q/resources/admin_methods.dart';
 import 'package:stock_q/screens/admin/bill_detail_screen.dart';
+import 'package:stock_q/screens/admin/bill_screen.dart';
 import 'package:stock_q/screens/custom_loading.dart';
 import 'package:stock_q/utils/universal_variables.dart';
 import 'package:stock_q/widgets/bouncy_page_route.dart';
@@ -23,8 +24,8 @@ class HistoryScreen extends StatefulWidget {
 }
 
 class _HistoryScreenState extends State<HistoryScreen> {
-  String billNo = "";
   List<Bill> billsList = List();
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   bool isLoading = false;
 
   getAllHistory() async {
@@ -59,10 +60,35 @@ class _HistoryScreenState extends State<HistoryScreen> {
     }
 
     if (!mounted) return;
-
-    setState(() {
-      billNo = barcodeScanRes;
-    });
+    if(await _adminMethods.checkbillNoExists(barcodeScanRes)){
+      print("Yes");
+      if(await _adminMethods.isServiceByBillNoExists(barcodeScanRes)){
+        //Go to Service History Page of Particular Bill
+      }
+      else{
+        final snackBar = SnackBar(
+          content: Text(
+            'No Service Record Exists for Bill No : ' + barcodeScanRes,
+            style: TextStyle(color: Colors.white),
+          ),
+          duration: Duration(seconds: 5),
+          backgroundColor: Colors.red[400],
+        );
+        _scaffoldKey.currentState.showSnackBar(snackBar);
+      }
+    }
+    else{
+      final snackBar = SnackBar(
+        content: Text(
+          'No Such Bill Record Exists',
+          style: TextStyle(color: Colors.white),
+        ),
+        duration: Duration(seconds: 5),
+        backgroundColor: Colors.red[400],
+      );
+      _scaffoldKey.currentState.showSnackBar(snackBar);
+    }
+      // billNo = barcodeScanRes;
   }
 
 
@@ -75,6 +101,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: CustomAppBar(
           bgColor: Colors.white,
           title: Text("Stock Q", style: Variables.appBarTextStyle),
