@@ -26,6 +26,27 @@ class Utils {
     ));
   }
 
+  static showSnackBar(
+      {@required String text,
+      FlatButton mainButton,
+      Color bgColor = const Color(0xFF313131)}) {
+    if (Get.isSnackbarOpen) Get.back();
+
+    return Get.showSnackbar(GetBar(
+      icon: Icon(
+        Icons.info,
+        color: Colors.white,
+      ),
+      message: text ?? "Try after sometime...",
+      onTap: (object) {},
+      mainButton: mainButton,
+      snackPosition: SnackPosition.BOTTOM,
+      backgroundColor: bgColor,
+      duration: Duration(seconds: 5),
+      snackStyle: SnackStyle.FLOATING,
+    ));
+  }
+
   static Widget waitingScreen() {
     return Scaffold(
       body: Stack(
