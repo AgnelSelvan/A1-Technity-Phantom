@@ -14,12 +14,18 @@ class Auth {
 
   static final FirebaseAuth auth = FirebaseAuth.instance;
 
-  static handleAuth() {
+  static handleAuth() async {
+    AuthController authController = Get.put(AuthController());
+
+    User user = authController.user;
+
+    if (user != null) {
+      await authController.getUserData();
+    }
+
     Navigator.of(Get.context).pushAndRemoveUntil(
         MaterialPageRoute(
-            builder: (_) => Get.find<AuthController>().user != null
-                ? RootScreen()
-                : Login()),
+            builder: (_) => user != null ? RootScreen() : Login()),
         (route) => false);
   }
 

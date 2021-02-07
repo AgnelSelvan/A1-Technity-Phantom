@@ -1,9 +1,10 @@
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:stock_q/models/user.dart';
+import 'package:stock_q/resources/auth_controller.dart';
 import 'package:stock_q/resources/auth_methods.dart';
 import 'package:stock_q/utils/universal_variables.dart';
 import 'package:stock_q/widgets/custom_appbar.dart';
@@ -43,14 +44,20 @@ class _EditScreenState extends State<EditScreen> {
   UserModel currentUser;
 
   getCurrentUserDetails() async {
-    User user = await _authMethods.getCurrentUser();
+    // User user = await _authMethods.getCurrentUser();
+    // setState(() {
+    //   currentUserId = user.uid;
+    // });
+    // await _authMethods.getUserDetailsById(currentUserId).then((UserModel user) {
+    //   setState(() {
+    //     currentUser = user;
+    //   });
+    // });
+
+    UserModel user = Get.find<AuthController>().userModel.value;
+    //print("currentUser:${user.role}");
     setState(() {
-      currentUserId = user.uid;
-    });
-    await _authMethods.getUserDetailsById(currentUserId).then((UserModel user) {
-      setState(() {
-        currentUser = user;
-      });
+      currentUser = user;
     });
 
     //print("Hahii:${currentUser.name}");
@@ -359,127 +366,122 @@ class _EditScreenState extends State<EditScreen> {
           centerTitle: true,
           bgColor: Colors.white),
       body: Container(
-        child: FutureBuilder(
-            future: _authMethods.getUserDetailsById(currentUserId),
-            builder: (context, snapshot) {
-              UserModel currentUser = snapshot.data;
-              return ListView(
-                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+        child: ListView(
+          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+          children: <Widget>[
+            BuildHeader(
+              text: "Edit Profile",
+            ),
+            SizedBox(height: 10),
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(4),
+              ),
+              padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  BuildHeader(
-                    text: "Edit Profile",
+                  buildText("Profile Picture", Colors.black26),
+                  SizedBox(height: 10),
+                  Row(
+                    children: <Widget>[
+                      GestureDetector(
+                        onTap: () {
+                          // Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //         builder: (context) => ViewImage(
+                          //               image: currentUser.photoUrl,
+                          //             )));
+                        },
+                        child: CircleAvatar(
+                          radius: 50,
+                          backgroundColor: Colors.white,
+                          backgroundImage: currentUser.profilePhoto == null ||
+                                  currentUser.profilePhoto == ""
+                              ? AssetImage('assets/images/unknown-user.png')
+                              : CachedNetworkImageProvider(
+                                  currentUser.profilePhoto),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 30,
+                      ),
+                      buildRaisedButton("Upload New Picture",
+                          Colors.yellow[100], Variables.blackColor, () {
+                        selectImage(context);
+                      }),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Container(
+                        child: currentUser.profilePhoto == ""
+                            ? Text("")
+                            : IconButton(
+                                icon: Icon(
+                                  Icons.delete,
+                                  color: Colors.red,
+                                ),
+                                onPressed: () {
+                                  // _deleteProfilePhoto();
+                                }),
+                      )
+                    ],
                   ),
                   SizedBox(height: 10),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        buildText("Profile Picture", Colors.black26),
-                        SizedBox(height: 10),
-                        Row(
-                          children: <Widget>[
-                            GestureDetector(
-                              onTap: () {
-                                // Navigator.push(
-                                //     context,
-                                //     MaterialPageRoute(
-                                //         builder: (context) => ViewImage(
-                                //               image: currentUser.photoUrl,
-                                //             )));
-                              },
-                              child: CircleAvatar(
-                                radius: 50,
-                                backgroundColor: Colors.white,
-                                backgroundImage: currentUser.profilePhoto == ""
-                                    ? AssetImage(
-                                        'assets/images/unknown-user.png')
-                                    : CachedNetworkImageProvider(
-                                        currentUser.profilePhoto),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 30,
-                            ),
-                            buildRaisedButton("Upload New Picture",
-                                Colors.yellow[100], Variables.blackColor, () {
-                              selectImage(context);
-                            }),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Container(
-                              child: currentUser.profilePhoto == ""
-                                  ? Text("")
-                                  : IconButton(
-                                      icon: Icon(
-                                        Icons.delete,
-                                        color: Colors.red,
-                                      ),
-                                      onPressed: () {
-                                        // _deleteProfilePhoto();
-                                      }),
-                            )
-                          ],
-                        ),
-                        SizedBox(height: 10),
-                        _buildUsername(currentUser.username),
-                        SizedBox(height: 10),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: <Widget>[
-                            buildRaisedButton("Save Changes",
-                                Colors.yellow[100], Variables.blackColor, () {
-                              // _updateUsername();
-                            }),
-                          ],
-                        ),
-                        SizedBox(height: 20),
-                      ],
-                    ),
+                  _buildUsername(currentUser.username),
+                  SizedBox(height: 10),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      buildRaisedButton("Save Changes", Colors.yellow[100],
+                          Variables.blackColor, () {
+                        // _updateUsername();
+                      }),
+                    ],
                   ),
                   SizedBox(height: 20),
-                  BuildHeader(text: "Change Password"),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        SizedBox(height: 10),
-                        _buildCurrentPassword(),
-                        SizedBox(height: 20),
-                        SizedBox(height: 10),
-                        _buildChangePassword(),
-                        SizedBox(height: 10),
-                        SizedBox(height: 10),
-                        _buildConfirmChangePassword(),
-                        SizedBox(height: 10),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: <Widget>[
-                            buildRaisedButton("Save Changes",
-                                Colors.yellow[100], Variables.blackColor, () {
-                              // _updatePassword();
-                            }),
-                          ],
-                        ),
-                        SizedBox(height: 20),
-                      ],
-                    ),
-                  ),
                 ],
-              );
-            }),
+              ),
+            ),
+            SizedBox(height: 20),
+            BuildHeader(text: "Change Password"),
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(4),
+              ),
+              padding: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  SizedBox(height: 10),
+                  _buildCurrentPassword(),
+                  SizedBox(height: 20),
+                  SizedBox(height: 10),
+                  _buildChangePassword(),
+                  SizedBox(height: 10),
+                  SizedBox(height: 10),
+                  _buildConfirmChangePassword(),
+                  SizedBox(height: 10),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: <Widget>[
+                      buildRaisedButton("Save Changes", Colors.yellow[100],
+                          Variables.blackColor, () {
+                        // _updatePassword();
+                      }),
+                    ],
+                  ),
+                  SizedBox(height: 20),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

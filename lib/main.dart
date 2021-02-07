@@ -1,7 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:stock_q/resources/auth_methods.dart';
 import 'package:stock_q/screens/splash/splash_screen.dart';
 
 import 'resources/auth_binding.dart';
@@ -21,7 +20,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final AuthMethods _authMethods = AuthMethods();
 
   @override
   Widget build(BuildContext context) {

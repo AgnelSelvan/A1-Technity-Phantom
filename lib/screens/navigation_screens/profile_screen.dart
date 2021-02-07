@@ -1,9 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:expandable/expandable.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:get/get.dart';
 import 'package:stock_q/models/user.dart';
+import 'package:stock_q/resources/auth_controller.dart';
 import 'package:stock_q/resources/auth_methods.dart';
 import 'package:stock_q/screens/admin/add/add_category.dart';
 import 'package:stock_q/screens/admin/add/add_product.dart';
@@ -11,9 +12,9 @@ import 'package:stock_q/screens/admin/admin_page.dart';
 import 'package:stock_q/screens/admin/bill_screen.dart';
 import 'package:stock_q/screens/admin/history.dart';
 import 'package:stock_q/screens/admin/stock/stock_screen.dart';
-import 'package:stock_q/screens/auth_screen.dart';
 import 'package:stock_q/screens/custom_loading.dart';
 import 'package:stock_q/screens/edit_profile_screen.dart';
+import 'package:stock_q/screens/login/login.dart';
 import 'package:stock_q/utils/universal_variables.dart';
 import 'package:stock_q/widgets/bouncy_page_route.dart';
 import 'package:stock_q/widgets/custom_appbar.dart';
@@ -45,11 +46,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
     setState(() {
       isLoading = true;
     });
-    User firebaseUser = await _authMethods.getCurrentUser();
-    setState(() {
-      currentUserId = firebaseUser.uid;
-    });
-    UserModel user = await _authMethods.getUserDetailsById(firebaseUser.uid);
+    // User firebaseUser = await _authMethods.getCurrentUser();
+    // setState(() {
+    //   currentUserId = firebaseUser.uid;
+    // });
+    UserModel user = Get
+        .find<AuthController>()
+        .userModel
+        .value;
     //print("currentUser:${user.role}");
     setState(() {
       currentUser = user;
@@ -66,7 +70,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final bool isSignOut = await _authMethods.signOut();
     if (isSignOut) {
       Navigator.pushAndRemoveUntil(
-          context, BouncyPageRoute(widget: AuthScreen()), (route) => false);
+          context, BouncyPageRoute(widget: Login()), (route) => false);
     }
   }
 
