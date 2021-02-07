@@ -182,13 +182,14 @@ class _AddCategoryState extends State<AddCategory> {
       child: StreamBuilder(
         stream: _adminMethods.fetchAllCategory(),
         builder: (context, snapshot) {
-          var docs = snapshot.data.documents;
+          var docs = snapshot.data.docs;
+          print(docs);
           if (snapshot.hasData) {
             return ListView.builder(
               physics: BouncingScrollPhysics(),
               itemCount: docs.length,
               itemBuilder: (context, index) {
-                Category category = Category.fromMap(docs[index].data);
+                Category category = Category.fromMap(docs[index].data());
                 return Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
@@ -313,7 +314,7 @@ class _AddCategoryState extends State<AddCategory> {
               width: 15,
             ),
             Text(
-              "Add Unit",
+              "Add Category",
               style: TextStyle(
                   letterSpacing: 1, fontSize: 16, color: Variables.blackColor),
             )

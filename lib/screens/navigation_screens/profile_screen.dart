@@ -11,7 +11,6 @@ import 'package:stock_q/screens/admin/add/add_sub_category.dart';
 import 'package:stock_q/screens/admin/add/add_unit.dart';
 import 'package:stock_q/screens/admin/admin_page.dart';
 import 'package:stock_q/screens/admin/bill_screen.dart';
-import 'package:stock_q/screens/admin/borrow/borrow_list.dart';
 import 'package:stock_q/screens/admin/history.dart';
 import 'package:stock_q/screens/admin/stock/stock_screen.dart';
 import 'package:stock_q/screens/admin/tax/tax_calculator.dart';
@@ -251,19 +250,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                             AddCategory()));
                                                   },
                                                 ),
-                                                CustomTile(
-                                                  text:
-                                                  "Add Sub-Category",
-                                                  icon: FontAwesome
-                                                      .list_alt,
-                                                  onTap: () {
-                                                    Navigator.push(
-                                                        context,
-                                                        BouncyPageRoute(
-                                                            widget:
-                                                            AddSubCategory()));
-                                                  },
-                                                ),
+                                                // CustomTile(
+                                                //   text:
+                                                //   "Add Sub-Category",
+                                                //   icon: FontAwesome
+                                                //       .list_alt,
+                                                //   onTap: () {
+                                                //     Navigator.push(
+                                                //         context,
+                                                //         BouncyPageRoute(
+                                                //             widget:
+                                                //             AddSubCategory()));
+                                                //   },
+                                                // ),
                                                 CustomTile(
                                                   text: "Add Product",
                                                   icon: FontAwesome
@@ -276,23 +275,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                             AddProduct()));
                                                   },
                                                 ),
-                                                CustomTile(
-                                                  text: "Add Unit",
-                                                  icon: Icons.ac_unit,
-                                                  onTap: () {
-                                                    Navigator.push(
-                                                        context,
-                                                        BouncyPageRoute(
-                                                            widget:
-                                                            AddUnit()));
-                                                  },
-                                                ),
-                                                CustomTile(
-                                                  text:
-                                                  "Add Regular Customer",
-                                                  icon: Icons.report,
-                                                  onTap: () {},
-                                                )
+                                                // CustomTile(
+                                                //   text: "Add Unit",
+                                                //   icon: Icons.ac_unit,
+                                                //   onTap: () {
+                                                //     Navigator.push(
+                                                //         context,
+                                                //         BouncyPageRoute(
+                                                //             widget:
+                                                //             AddUnit()));
+                                                //   },
+                                                // ),
+                                                // CustomTile(
+                                                //   text:
+                                                //   "Add Regular Customer",
+                                                //   icon: Icons.report,
+                                                //   onTap: () {},
+                                                // )
                                               ],
                                             ),
                                           ))))
@@ -325,26 +324,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           },
                         )
                             : Container(),
-                        CustomTile(
-                          text: "Borrow",
-                          icon: Icons.edit,
-                          onTap: () {
-                            Navigator.push(context,
-                                BouncyPageRoute(widget: BorrowList()));
-                          },
-                        ),
-                        isAdmin
-                            ? CustomTile(
-                          text: "Tax Report",
-                          icon: FontAwesome.hand_paper_o,
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                BouncyPageRoute(
-                                    widget: TaxReport()));
-                          },
-                        )
-                            : Container(),
+                        // isAdmin
+                        //     ? CustomTile(
+                        //   text: "Tax Report",
+                        //   icon: FontAwesome.hand_paper_o,
+                        //   onTap: () {
+                        //     Navigator.push(
+                        //         context,
+                        //         BouncyPageRoute(
+                        //             widget: TaxReport()));
+                        //   },
+                        // )
+                        //     : Container(),
                         isAdmin
                             ? CustomTile(
                           text: "History",
@@ -357,14 +348,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           },
                         )
                             : Container(),
-                        CustomTile(
-                          text: "Tax Calculator",
-                          icon: FontAwesome.calculator,
-                          onTap: () {
-                            Navigator.push(context,
-                                BouncyPageRoute(widget: TaxCalculator()));
-                          },
-                        ),
+                        // CustomTile(
+                        //   text: "Tax Calculator",
+                        //   icon: FontAwesome.calculator,
+                        //   onTap: () {
+                        //     Navigator.push(context,
+                        //         BouncyPageRoute(widget: TaxCalculator()));
+                        //   },
+                        // ),
                         CustomTile(
                           text: "Edit Account",
                           icon: Icons.edit,
@@ -373,26 +364,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 BouncyPageRoute(widget: EditScreen()));
                           },
                         ),
-                        isAdmin
-                            ? CustomTile(
-                          text: "Reports",
-                          icon: Icons.report,
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                BouncyPageRoute(
-                                    widget: ReportScreen()));
-                          },
-                        )
-                            : Container(),
-                        CustomTile(
-                          text: "Give your suggestion",
-                          icon: Icons.chat,
-                          onTap: () {
-                            Navigator.push(context,
-                                BouncyPageRoute(widget: ChatScreen()));
-                          },
-                        ),
+                        // isAdmin
+                        //     ? CustomTile(
+                        //   text: "Reports",
+                        //   icon: Icons.report,
+                        //   onTap: () {
+                        //     Navigator.push(
+                        //         context,
+                        //         BouncyPageRoute(
+                        //             widget: ReportScreen()));
+                        //   },
+                        // )
+                        //     : Container(),
+                        // CustomTile(
+                        //   text: "Give your suggestion",
+                        //   icon: Icons.chat,
+                        //   onTap: () {
+                        //     Navigator.push(context,
+                        //         BouncyPageRoute(widget: ChatScreen()));
+                        //   },
+                        // ),
                       ],
                     ),
                   ),

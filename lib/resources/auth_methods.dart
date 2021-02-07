@@ -41,13 +41,14 @@ class AuthMethods {
   }
 
   Future<bool> signIn(String email, String password) async {
-    try {
+    // try {
       var result = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
+      print(result.user.email);
       return true;
-    } catch (e) {
-      return false;
-    }
+    // } catch (e) {
+    //   return false;
+    // }
   }
 
   Future<bool> isPhoneNoExists(User firebaseUser) async {
@@ -68,23 +69,23 @@ class AuthMethods {
   }
 
   Future<User> googleSignIn() async {
-    try {
       GoogleSignInAccount _signInAccount = await _googleSignIn.signIn();
       if (await _googleSignIn.isSignedIn()) {
-        GoogleSignInAuthentication _signInAuthentication =
-            await _signInAccount.authentication;
+        GoogleSignInAuthentication googleSignInAuthentication = await _signInAccount.authentication;
 
-        GoogleSignInAccount googleSignInAccount = await GoogleSignIn().signIn();
-        User user = await getCurrentUser();
+        final AuthCredential credential = GoogleAuthProvider.credential(
+          accessToken: googleSignInAuthentication.accessToken,
+          idToken: googleSignInAuthentication.idToken
+        );
+        
+        final UserCredential authResult = await _auth.signInWithCredential(credential);
+        final User user = authResult.user;
+
 
         return user;
       } else {
         return null;
       }
-    } catch (e) {
-      //print(e);
-      return null;
-    }
   }
 
   Future<bool> authenticateUserByEmailId(User user) async {
@@ -98,15 +99,6 @@ class AuthMethods {
     return docs.length == 0 ? true : false;
   }
 
-  Future<bool> authenticateUserByPhone(User user) async {
-    QuerySnapshot result = await _userCollection
-        .where(MOBILE_NO_FIELD, isEqualTo: user.phoneNumber.trim())
-        .get();
-
-    final List<DocumentSnapshot> docs = result.docs;
-
-    return docs.length == 0 ? true : false;
-  }
 
   Future<void> addGoogleDataToDb(User currentUser) async {
     String username = Utils.getUsername(currentUser.email);

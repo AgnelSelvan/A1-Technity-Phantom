@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:stock_q/constants/theme.dart';
 import 'package:stock_q/flutter_barcode_scanner.dart';
 import 'package:stock_q/models/user.dart';
 import 'package:stock_q/resources/admin_methods.dart';
@@ -12,13 +10,10 @@ import 'package:stock_q/resources/auth_methods.dart';
 import 'package:stock_q/screens/admin/add/add_product.dart';
 import 'package:stock_q/screens/admin/product_details.dart';
 import 'package:stock_q/screens/canvas_screen.dart';
-import 'package:stock_q/screens/map_screen.dart';
-import 'package:stock_q/screens/thread_screen.dart';
-import 'package:stock_q/theme/theme_notifier.dart';
+import 'package:stock_q/screens/bag_screen.dart';
 import 'package:stock_q/utils/universal_variables.dart';
 import 'package:stock_q/widgets/bouncy_page_route.dart';
 import 'package:stock_q/widgets/custom_appbar.dart';
-import 'package:stock_q/widgets/map.dart';
 import 'package:stock_q/widgets/widgets.dart';
 
 AdminMethods _adminMethods = AdminMethods();
@@ -116,36 +111,13 @@ class _HomeScreenState extends State<HomeScreen>
                 letterSpacing: 1,
                 color: Theme.of(context).accentColor,
                 fontWeight: FontWeight.w400)),
+                leading: null,
         actions: [
           IconButton(
               icon: Icon(FontAwesome.qrcode,
                   color: Theme.of(context).accentColor),
               onPressed: () => scanQR())
         ],
-        leading: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: CircleAvatar(
-            radius: 10,
-            backgroundColor: Theme.of(context).primaryColor,
-            backgroundImage: isDarkTheme
-                ? AssetImage('assets/images/logo/dark-theme-logo.png')
-                : AssetImage('assets/images/logo/light-theme-logo.png'),
-            child: GestureDetector(
-              onDoubleTap: () async {
-                // isDarkTheme = !isDarkTheme;
-                // if (isDarkTheme) {
-                //   themeNotifier.setTheme(darkTheme);
-                // } else {
-                //   themeNotifier.setTheme(lightTheme);
-                // }
-                // var prefs = await SharedPreferences.getInstance();
-                // prefs.setBool('darkMode', isDarkTheme);
-
-                // //print("Dark Theme");
-              },
-            ),
-          ),
-        ),
         centerTitle: true,
       ),
       body: Container(
@@ -207,19 +179,19 @@ class _HomeScreenState extends State<HomeScreen>
             unselectedLabelColor: Color(0xFFCDCDCD),
             tabs: [
               Tab(
-                child: Text('Threads',
+                child: Text('Bags',
                     style: TextStyle(
                       fontSize: 18.0,
                     )),
               ),
               Tab(
-                child: Text('Paper Canvas',
+                child: Text('Shoes',
                     style: TextStyle(
                       fontSize: 18.0,
                     )),
               ),
               Tab(
-                child: Text('Rolls',
+                child: Text('Shirts',
                     style: TextStyle(
                       fontSize: 18.0,
                     )),
@@ -229,27 +201,11 @@ class _HomeScreenState extends State<HomeScreen>
             height: MediaQuery.of(context).size.height / 2.3,
             width: double.infinity,
             child: TabBarView(controller: _tabController, children: [
-              ThreadScreen(),
-              CanvasScreen(),
-              ThreadScreen(),
+              BagScreen(),
+              BagScreen(),
+              BagScreen(),
             ])),
         SizedBox(height: 15.0),
-        GestureDetector(
-          onTap: () {
-            Navigator.push(context, BouncyPageRoute(widget: MapScreen()));
-          },
-          child: Text('Location',
-              style: TextStyle(
-                  fontSize: 28.0,
-                  color: Variables.blackColor,
-                  fontWeight: FontWeight.bold)),
-        ),
-        SizedBox(height: 15.0),
-        Container(
-          width: MediaQuery.of(context).size.width * 0.9,
-          height: 300,
-          child: BuildMap(),
-        )
       ],
     );
   }

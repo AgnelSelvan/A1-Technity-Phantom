@@ -5,7 +5,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:stock_q/models/bill.dart';
 import 'package:stock_q/models/product.dart';
 import 'package:stock_q/resources/admin_methods.dart';
-import 'package:stock_q/screens/admin/borrow/pdf_viewer.dart';
+import 'package:stock_q/widgets/pdf_viewer.dart';
 import 'package:stock_q/screens/custom_loading.dart';
 import 'package:stock_q/utils/universal_variables.dart';
 import 'package:stock_q/utils/utilities.dart';

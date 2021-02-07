@@ -112,7 +112,7 @@ class _AddStockState extends State<AddStock> {
             Icon(
               Icons.arrow_forward_ios,
               size: 16,
-              color: Variables.lightPrimaryColor,
+              color: Colors.yellow[100],
             )
           ],
         ),
@@ -147,7 +147,7 @@ class _AddStockState extends State<AddStock> {
             Icon(
               Icons.arrow_forward_ios,
               size: 16,
-              color: Variables.lightPrimaryColor,
+              color: Colors.yellow[100],
             )
           ],
         ),

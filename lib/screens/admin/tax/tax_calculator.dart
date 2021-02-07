@@ -130,7 +130,7 @@ class _TaxCalculatorState extends State<TaxCalculator> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 buildRaisedButton(
-                    'Calculate', Variables.lightPrimaryColor, Colors.white, () {
+                    'Calculate', Colors.yellow[100], Colors.white, () {
                   calcuateAmount();
                 }),
                 buildRaisedButton(
