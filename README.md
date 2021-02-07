@@ -1,6 +1,6 @@
 # Stock - Q
 
-Stock, Bill Report, Tax Report Maintaince. In short a Inventory Mobile Application. [Download and install the app](http://agnelselvan.me/assets/apk/stock_q-release.apk)
+Stock, Bill Report, Tax Report Maintaince. In short a Inventory Mobile Application. [Download and install the app](https://github.com/AgnelSelvan/A1-Technity-Phantom/tree/master/release-apk/app-release.apk)
 
 
 ## Main Motto of this application
