@@ -114,6 +114,7 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SizeConfig().init(context);
     double defaultSize = SizeConfig.defaultSize;
     return GestureDetector(
       onTap: press,
@@ -132,7 +133,7 @@ class ProductCard extends StatelessWidget {
                 child: Hero(
                   tag: product.id,
                   child: FadeInImage.assetNetwork(
-                    placeholder: "assets/spinner.gif",
+                    placeholder: "assets/images/spinner.gif",
                     image: "https://via.placeholder.com/150",
                     fit: BoxFit.cover,
                   ),

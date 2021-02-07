@@ -205,7 +205,7 @@ class _EditScreenState extends State<EditScreen> {
   @override
   Widget build(BuildContext context) {
     TextEditingController userNameController =
-        TextEditingController(text: currentUser.username);
+        TextEditingController(text: currentUser.username ?? '');
 
     Widget _buildUsername(String username) {
       return Column(

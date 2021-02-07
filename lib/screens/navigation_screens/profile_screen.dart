@@ -6,29 +6,18 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:stock_q/models/user.dart';
 import 'package:stock_q/resources/auth_methods.dart';
 import 'package:stock_q/screens/admin/add/add_category.dart';
-import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:stock_q/screens/admin/add/add_product.dart';
-import 'package:stock_q/screens/admin/add/add_sub_category.dart';
-import 'package:stock_q/screens/admin/add/add_unit.dart';
 import 'package:stock_q/screens/admin/admin_page.dart';
 import 'package:stock_q/screens/admin/bill_screen.dart';
 import 'package:stock_q/screens/admin/history.dart';
 import 'package:stock_q/screens/admin/stock/stock_screen.dart';
-import 'package:stock_q/screens/admin/tax/tax_calculator.dart';
-import 'package:stock_q/screens/admin/tax/tax_report.dart';
 import 'package:stock_q/screens/auth_screen.dart';
-import 'package:stock_q/screens/chat_screen.dart';
-import 'package:stock_q/resources/admin_methods.dart';
 import 'package:stock_q/screens/custom_loading.dart';
 import 'package:stock_q/screens/edit_profile_screen.dart';
-import 'package:flutter/services.dart';
-import 'package:stock_q/screens/report_screen.dart';
 import 'package:stock_q/utils/universal_variables.dart';
 import 'package:stock_q/widgets/bouncy_page_route.dart';
 import 'package:stock_q/widgets/custom_appbar.dart';
 import 'package:stock_q/widgets/dialogs.dart';
-
-AdminMethods _adminMethods = AdminMethods();
 
 class ProfileScreen extends StatefulWidget {
   ProfileScreen({Key key}) : super(key: key);
