@@ -1,6 +1,6 @@
 # Stock - Q
 
-Stock, Bill Report, Tax Report Maintaince. In short a Inventory Mobile Application.
+Stock, Bill Report, Tax Report Maintaince. In short a Inventory Mobile Application. [Download and install the app](http://agnelselvan.me/assets/apk/stock_q-release.apk)
 
 
 ## Main Motto of this application
@@ -8,7 +8,6 @@ Stock, Bill Report, Tax Report Maintaince. In short a Inventory Mobile Applicati
 **Reduce the business holder work by simply scanning the barcode and getting the product details and stocks.**
 
 **The features we are going to implement in this project is adding the tax report, putting the bill based on the barcode like scanning the barcode will automatically put the bill and E-Bill will be generated and we can share the bill if the user has account in out Stock-Q Application .**
-
 
 ## Getting Started
 
