@@ -11,7 +11,10 @@ import 'package:stock_q/screens/admin/add/add_product.dart';
 import 'package:stock_q/screens/admin/admin_page.dart';
 import 'package:stock_q/screens/admin/bill_screen.dart';
 import 'package:stock_q/screens/admin/history.dart';
+import 'package:stock_q/screens/admin/service_screen.dart';
 import 'package:stock_q/screens/admin/stock/stock_screen.dart';
+import 'package:stock_q/screens/admin/add/add_unit.dart';
+import 'package:stock_q/screens/admin/tax/tax_report.dart';
 import 'package:stock_q/screens/custom_loading.dart';
 import 'package:stock_q/screens/edit_profile_screen.dart';
 import 'package:stock_q/screens/login/login.dart';
@@ -231,19 +234,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               AddCategory()));
                                     },
                                   ),
-                                  // CustomTile(
-                                  //   text:
-                                  //   "Add Sub-Category",
-                                  //   icon: FontAwesome
-                                  //       .list_alt,
-                                  //   onTap: () {
-                                  //     Navigator.push(
-                                  //         context,
-                                  //         BouncyPageRoute(
-                                  //             widget:
-                                  //             AddSubCategory()));
-                                  //   },
-                                  // ),
                                   CustomTile(
                                     text: "Add Product",
                                     icon: FontAwesome
@@ -256,23 +246,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               AddProduct()));
                                     },
                                   ),
-                                  // CustomTile(
-                                  //   text: "Add Unit",
-                                  //   icon: Icons.ac_unit,
-                                  //   onTap: () {
-                                  //     Navigator.push(
-                                  //         context,
-                                  //         BouncyPageRoute(
-                                  //             widget:
-                                  //             AddUnit()));
-                                  //   },
-                                  // ),
-                                  // CustomTile(
-                                  //   text:
-                                  //   "Add Regular Customer",
-                                  //   icon: Icons.report,
-                                  //   onTap: () {},
-                                  // )
+                                  CustomTile(
+                                    text: "Add Unit",
+                                    icon: Icons.ac_unit,
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          BouncyPageRoute(
+                                              widget:
+                                              AddUnit()));
+                                    },
+                                  ),
                                 ],
                               ),
                             ))))
@@ -301,18 +285,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           },
                         )
                             : Container(),
-                        // isAdmin
-                        //     ? CustomTile(
-                        //   text: "Tax Report",
-                        //   icon: FontAwesome.hand_paper_o,
-                        //   onTap: () {
-                        //     Navigator.push(
-                        //         context,
-                        //         BouncyPageRoute(
-                        //             widget: TaxReport()));
-                        //   },
-                        // )
-                        //     : Container(),
+                        isAdmin
+                            ? CustomTile(
+                          text: "Services",
+                          icon: FontAwesome.money,
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                BouncyPageRoute(
+                                    widget: ServiceScreen()));
+                          },
+                        )
+                            : Container(),
+                        isAdmin
+                            ? CustomTile(
+                          text: "Tax Report",
+                          icon: FontAwesome.hand_paper_o,
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                BouncyPageRoute(
+                                    widget: TaxReport()));
+                          },
+                        )
+                            : Container(),
                         isAdmin
                             ? CustomTile(
                           text: "History",
